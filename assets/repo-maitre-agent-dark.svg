@@ -2,9 +2,9 @@
 <title id="t">maitre-agent</title>
 <style>
   text { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Ubuntu,'Helvetica Neue',Arial,sans-serif; }
-  text:not([fill]) { fill: #ececf5; }
+  text:not([fill]) { fill: #f3eefa; }
   .mono { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace; }
-  .muted { fill: #9494b0; }
+  .muted { fill: #a79bb8; }
   .title { font-size: 17px; font-weight: 700; }
   .fade { animation: fade .6s ease-out both; }
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -12,16 +12,16 @@
 </style>
 <defs>
   <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#a78bfa"/><stop offset=".55" stop-color="#22d3ee"/><stop offset="1" stop-color="#f472b6"/>
+    <stop offset="0" stop-color="#a78bfa"/><stop offset=".55" stop-color="#fb7185"/><stop offset="1" stop-color="#fb923c"/>
   </linearGradient>
   <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#a78bfa" stop-opacity=".55"/><stop offset=".5" stop-color="#2a2a40"/><stop offset="1" stop-color="#22d3ee" stop-opacity=".45"/>
+    <stop offset="0" stop-color="#a78bfa" stop-opacity=".55"/><stop offset=".5" stop-color="#33243f"/><stop offset="1" stop-color="#fb7185" stop-opacity=".45"/>
   </linearGradient>
 </defs>
-<rect x=".5" y=".5" width="479" height="149" rx="14" fill="#0b0b14" stroke="url(#edge)"/>
+<rect x=".5" y=".5" width="479" height="149" rx="14" fill="#0f0b17" stroke="url(#edge)"/>
 <path transform="translate(24 22) scale(1.0)" d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z" fill="#a78bfa"/>
 <text x="50" y="35" font-size="16" font-weight="700" fill="url(#grad)">maitre-agent</text>
 <text x="24" y="66" font-size="13" class="muted fade" style="animation-delay:0.10s">Plugin Claude Code : une session maître qui pilote des sous-</text>
 <text x="24" y="86" font-size="13" class="muted fade" style="animation-delay:0.18s">agents, vérifie elle-même et laisse une passation reprenable.</text>
-<circle cx="30" cy="124" r="6" fill="#89e051"/><text x="44" y="128" font-size="13">Shell</text><path transform="translate(150 116) scale(1.0)" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z" fill="#9494b0"/><text x="172" y="128" font-size="13" class="muted">2</text><path transform="translate(205 116) scale(1.0)" d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z" fill="#9494b0"/><text x="227" y="128" font-size="13" class="muted">0</text>
+<circle cx="30" cy="124" r="6" fill="#89e051"/><text x="44" y="128" font-size="13">Shell</text><path transform="translate(150 116) scale(1.0)" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z" fill="#a79bb8"/><text x="172" y="128" font-size="13" class="muted">2</text><path transform="translate(205 116) scale(1.0)" d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z" fill="#a79bb8"/><text x="227" y="128" font-size="13" class="muted">0</text>
 </svg>

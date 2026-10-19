@@ -4,26 +4,28 @@
 </picture>
 
 <p align="center">
-  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=A78BFA&center=true&vCenter=true&width=720&lines=%C3%89tudiant%20en%20BUT%20Informatique;Dev%20FiveM%20/%20GTA%20RP%20en%20Lua;Jeux%20Roblox%20en%20Luau;Bots%20Discord%2C%20SaaS%20et%20sites%20en%20TypeScript;Agents%20IA%20avec%20Claude%20Code">
+  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=%C3%89tudiant%20en%20BUT%20Informatique;Dev%20FiveM%20/%20GTA%20RP%20en%20Lua;Jeux%20Roblox%20en%20Luau;Bots%20Discord%2C%20SaaS%20et%20sites%20en%20TypeScript;Agents%20IA%20avec%20Claude%20Code">
 </p>
 
 <p align="center">
-  <a href="https://github.com/MalikMoussaoui?tab=followers"><img alt="Abonnés" src="https://img.shields.io/github/followers/MalikMoussaoui?label=abonn%C3%A9s&style=for-the-badge&logo=github&color=8b5cf6&labelColor=14142a"></a>
-  <img alt="Vues du profil" src="https://komarev.com/ghpvc/?username=MalikMoussaoui&label=vues&style=for-the-badge&color=22d3ee&base=0">
-  <a href="https://github.com/MalikMoussaoui/maitre-agent"><img alt="Étoiles de maitre-agent" src="https://img.shields.io/github/stars/MalikMoussaoui/maitre-agent?label=maitre-agent&style=for-the-badge&logo=claude&logoColor=white&color=f472b6&labelColor=14142a"></a>
+  <a href="https://github.com/MalikMoussaoui?tab=followers"><img alt="Abonnés" src="https://img.shields.io/github/followers/MalikMoussaoui?label=abonn%C3%A9s&style=for-the-badge&logo=github&color=8b5cf6&labelColor=1a1226"></a>
+  <img alt="Vues du profil" src="https://komarev.com/ghpvc/?username=MalikMoussaoui&label=vues&style=for-the-badge&color=fb923c&base=0">
+  <a href="https://github.com/MalikMoussaoui/maitre-agent"><img alt="Étoiles de maitre-agent" src="https://img.shields.io/github/stars/MalikMoussaoui/maitre-agent?label=maitre-agent&style=for-the-badge&logo=claude&logoColor=white&color=fb7185&labelColor=1a1226"></a>
 </p>
 
 ## 🧑‍💻 À propos
 
-```ts
-const malik = {
-  alias: "Chopa",
-  études: "BUT Informatique · IUT du Limousin",
-  métiers: ["dev full-stack", "dev FiveM / GTA RP", "créateur de jeux Roblox"],
-  stackPréférée: ["TypeScript", "React / Next.js", "Fastify", "Lua", "Tailwind"],
-  enCeMoment: ["agents IA avec Claude Code", "bots Discord", "mon portfolio en Astro + Three.js"],
-  horsDuCode: ["esport", "création de contenu", "jeux vidéo"],
-};
+```console
+chopa@github:~$ cat about.md
+
+👤  Malik « Chopa » Moussaoui
+🎓  BUT Informatique · IUT du Limousin
+🛠️  Dev full-stack, FiveM / GTA RP (Lua), jeux Roblox (Luau)
+🤖  Bots Discord, SaaS, et agents IA pilotés avec Claude Code
+🔭  En ce moment : mon portfolio en Astro + Three.js
+🎮  Hors du code : esport, création de contenu, jeux vidéo
+
+chopa@github:~$ ▍
 ```
 
 ## 🛠️ Stack
@@ -73,24 +75,12 @@ const malik = {
 
 <p align="center"><sub>Dépôts publics et privés · mis à jour chaque jour par GitHub Actions</sub></p>
 
-## 🚀 Projets à la une
+## 🚀 Projet à la une
 
 <p align="center">
   <a href="https://github.com/MalikMoussaoui/maitre-agent"><picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/repo-maitre-agent-dark.svg">
-    <img alt="maitre-agent" src="assets/repo-maitre-agent-light.svg" width="49%">
-  </picture></a>
-  <a href="https://github.com/MalikMoussaoui/Valorant_Chaos_Overlay"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-Valorant_Chaos_Overlay-dark.svg">
-    <img alt="Valorant Chaos Overlay" src="assets/repo-Valorant_Chaos_Overlay-light.svg" width="49%">
-  </picture></a>
-  <a href="https://github.com/MalikMoussaoui/SAE_ERP"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-SAE_ERP-dark.svg">
-    <img alt="SAE ERP" src="assets/repo-SAE_ERP-light.svg" width="49%">
-  </picture></a>
-  <a href="https://github.com/MalikMoussaoui/prospect-audit-tool"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-prospect-audit-tool-dark.svg">
-    <img alt="prospect-audit-tool" src="assets/repo-prospect-audit-tool-light.svg" width="49%">
+    <img alt="maitre-agent" src="assets/repo-maitre-agent-light.svg" width="60%">
   </picture></a>
 </p>
 
@@ -114,10 +104,8 @@ const malik = {
 ## 📫 Me trouver
 
 <p align="center">
-  <a href="https://twitch.tv/justbn_"><img alt="Twitch" src="https://img.shields.io/badge/Twitch-justbn__-9146FF?style=for-the-badge&logo=twitch&logoColor=white"></a>
-  <a href="https://instagram.com/justbn_off"><img alt="Instagram" src="https://img.shields.io/badge/Instagram-justbn__off-E4405F?style=for-the-badge&logo=instagram&logoColor=white"></a>
-  <img alt="Discord : adf_bn" src="https://img.shields.io/badge/Discord-adf__bn-5865F2?style=for-the-badge&logo=discord&logoColor=white">
-  <a href="mailto:amalik.moussaoui1710@gmail.com"><img alt="E-mail" src="https://img.shields.io/badge/E--mail-me%20contacter-22d3ee?style=for-the-badge&logo=gmail&logoColor=white"></a>
+  <img alt="Discord : chp.a" src="https://img.shields.io/badge/Discord-chp.a-5865F2?style=for-the-badge&logo=discord&logoColor=white">
+  <a href="mailto:amalik.moussaoui1710@gmail.com"><img alt="E-mail" src="https://img.shields.io/badge/E--mail-me%20contacter-fb923c?style=for-the-badge&logo=gmail&logoColor=white"></a>
 </p>
 
-<img alt="" src="https://capsule-render.vercel.app/api?type=waving&color=0:a78bfa,50:22d3ee,100:f472b6&height=120&section=footer" width="100%">
+<img alt="" src="https://capsule-render.vercel.app/api?type=waving&color=0:a78bfa,50:fb7185,100:fb923c&height=120&section=footer" width="100%">

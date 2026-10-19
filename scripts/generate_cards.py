@@ -21,12 +21,9 @@ DISPLAY_NAME = "Malik Moussaoui"
 TOKEN = os.environ["GH_TOKEN"]
 OUT = pathlib.Path(__file__).resolve().parent.parent / "assets"
 
-# Dépôts mis en avant (publics uniquement : on y renvoie par un lien).
+# Dépôt mis en avant (public uniquement : on y renvoie par un lien).
 FEATURED = {
     "maitre-agent": "Plugin Claude Code : une session maître qui pilote des sous-agents, vérifie elle-même et laisse une passation reprenable.",
-    "Valorant_Chaos_Overlay": "Overlay pour streamers : malus visuels aléatoires en pleine partie (flash, tunnel vision…), 100 % passif et Vanguard-safe.",
-    "SAE_ERP": "ERP d'un centre de formation pour l'IUT du Limousin : Spring Boot, Vue 3, PostgreSQL, Docker, Nginx.",
-    "prospect-audit-tool": "Audit automatique de la performance mobile de sites e-commerce via l'API Google PageSpeed Insights.",
 }
 
 # Fichiers de balisage / config qui faussent la répartition des langages.
@@ -35,11 +32,12 @@ IGNORED_LANGS = {"HTML", "CSS", "SCSS", "EJS", "Dockerfile", "PowerShell", "Batc
 FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Ubuntu,'Helvetica Neue',Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace"
 
+# Palette « sunset » : violet -> corail -> orange.
 THEMES = {
-    "dark": dict(bg="#0b0b14", bg2="#141425", border="#2a2a40", text="#ececf5", muted="#9494b0",
-                 a1="#a78bfa", a2="#22d3ee", a3="#f472b6", track="#23233a"),
-    "light": dict(bg="#ffffff", bg2="#f5f4fb", border="#e3e1f0", text="#17172b", muted="#64647d",
-                  a1="#7c3aed", a2="#0891b2", a3="#db2777", track="#ebe9f5"),
+    "dark": dict(bg="#0f0b17", bg2="#1a1226", border="#33243f", text="#f3eefa", muted="#a79bb8",
+                 a1="#a78bfa", a2="#fb7185", a3="#fb923c", track="#2a1f38"),
+    "light": dict(bg="#ffffff", bg2="#fbf6f3", border="#eadfe8", text="#1d1426", muted="#6e6179",
+                  a1="#7c3aed", a2="#e11d48", a3="#ea580c", track="#f1e9ef"),
 }
 
 
