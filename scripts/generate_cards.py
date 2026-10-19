@@ -252,9 +252,9 @@ def header(t, name):
 </g>
 <text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="17"><tspan fill="{t['a3']}">❯</tspan> claude</text>
 <text x="600" y="160" text-anchor="middle" class="name fade" style="animation-delay:.15s" fill="url(#shine)">{escape(name)}</text>
-<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · je construis des agents IA</text>
+<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · je me lance dans les agents IA</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">Claude Code · agents · TypeScript · Lua · FiveM<tspan fill="{t['a3']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">Claude Code · TypeScript · Lua · FiveM · Roblox<tspan fill="{t['a3']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>"""
     return svg(w, h, body, t, f"{name} aka Chopa")
 
@@ -265,7 +265,7 @@ def terminal_card(t):
     lines = [
         ("prompt", 'claude "présente-toi"'),
         ("out", "Malik « Chopa » Moussaoui, étudiant en BUT Informatique (IUT du Limousin)."),
-        ("out", "Je pilote des agents IA avec Claude Code, et j'ai écrit maitre-agent pour ça."),
+        ("out", "Je me lance dans les agents IA : maitre-agent est mon tout premier projet du genre."),
         ("out", "Côté dev : FiveM / GTA RP, jeux Roblox, bots Discord et SaaS en TypeScript."),
         ("out", "En ce moment : mon portfolio en Astro + Three.js."),
     ]

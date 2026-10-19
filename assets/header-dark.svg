@@ -48,8 +48,8 @@
 </g>
 <text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="17"><tspan fill="#fb923c">❯</tspan> claude</text>
 <text x="600" y="160" text-anchor="middle" class="name fade" style="animation-delay:.15s" fill="url(#shine)">Malik Moussaoui</text>
-<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · je construis des agents IA</text>
+<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · je me lance dans les agents IA</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">Claude Code · agents · TypeScript · Lua · FiveM<tspan fill="#fb923c" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">Claude Code · TypeScript · Lua · FiveM · Roblox<tspan fill="#fb923c" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>
 </svg>

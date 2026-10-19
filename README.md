@@ -4,7 +4,7 @@
 </picture>
 
 <p align="center">
-  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=Je%20construis%20des%20agents%20IA;Claude%20Code%20au%20quotidien;Une%20session%20ma%C3%AEtre%20qui%20pilote%20des%20sous-agents;Dev%20FiveM%20%2F%20Roblox%20%2F%20bots%20Discord%20%2F%20SaaS;%C3%89tudiant%20en%20BUT%20Informatique">
+  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=Je%20me%20lance%20dans%20les%20agents%20IA;Claude%20Code%20au%20quotidien;Mon%20premier%20projet%20d%27agents%20%3A%20maitre-agent;Dev%20FiveM%20%2F%20Roblox%20%2F%20bots%20Discord%20%2F%20SaaS;%C3%89tudiant%20en%20BUT%20Informatique">
 </p>
 
 <p align="center">
@@ -18,19 +18,19 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/about-dark.svg">
-    <img alt="Malik « Chopa » Moussaoui : étudiant en BUT Informatique, je pilote des agents IA avec Claude Code" src="assets/about-light.svg" width="820">
+    <img alt="Malik « Chopa » Moussaoui : étudiant en BUT Informatique, je me lance dans les agents IA avec Claude Code" src="assets/about-light.svg" width="820">
   </picture>
 </p>
 
-## 🤖 L'IA, au centre
+## 🤖 Mon virage IA
 
 | | |
 |---|---|
-| 🧠 **Orchestration d'agents** | [`maitre-agent`](https://github.com/MalikMoussaoui/maitre-agent) : une session maître qui découpe le travail, le confie à des sous-agents, vérifie elle-même et laisse une passation reprenable |
-| 📡 **IA en direct** | Une IA suivie en temps réel dans une expérience sociale (dépôt privé) |
-| ⚙️ **Au quotidien** | Claude Code pour concevoir, coder et tester : chaque projet commence par une fiche à valider, rien n'est construit avant |
+| 🧠 **Mon premier projet d'agents** | [`maitre-agent`](https://github.com/MalikMoussaoui/maitre-agent) (en cours) : une session maître qui découpe le travail, le confie à des sous-agents, vérifie elle-même et laisse une passation reprenable |
+| 📡 **IA en direct** | Projet terminé : une IA suivie en temps réel dans une expérience sociale (dépôt privé) |
+| ⚙️ **Au quotidien** | Claude Code pour concevoir, coder et tester mes projets |
 
-Comment ça tourne, en une image :
+Comment fonctionne maitre-agent, en une image :
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'fontFamily':'ui-sans-serif, system-ui','lineColor':'#fb923c','primaryColor':'#2a1f38','primaryTextColor':'#f3eefa','primaryBorderColor':'#a78bfa'}}}%%
@@ -60,11 +60,9 @@ flowchart LR
 
 ## 🛠️ Stack
 
-<p align="center"><sub><b>IA &amp; AGENTS</b></sub><br>
+<p align="center"><sub><b>IA</b></sub><br>
   <img alt="Claude Code" src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white">
   <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-191919?style=for-the-badge&logo=anthropic&logoColor=white">
-  <img alt="Sous-agents" src="https://img.shields.io/badge/sous--agents-a78bfa?style=for-the-badge">
-  <img alt="Prompt engineering" src="https://img.shields.io/badge/prompt_engineering-fb7185?style=for-the-badge">
   <a href="https://github.com/MalikMoussaoui/maitre-agent"><img alt="maitre-agent" src="https://img.shields.io/badge/maitre--agent-fb923c?style=for-the-badge&logo=github&logoColor=white"></a>
 </p>
 
