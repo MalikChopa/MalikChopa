@@ -4,7 +4,7 @@
 </picture>
 
 <p align="center">
-  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=%C3%89tudiant%20en%20BUT%20Informatique;Dev%20FiveM%20/%20GTA%20RP%20en%20Lua;Jeux%20Roblox%20en%20Luau;Bots%20Discord%2C%20SaaS%20et%20sites%20en%20TypeScript;Agents%20IA%20avec%20Claude%20Code">
+  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=Je%20construis%20des%20agents%20IA;Claude%20Code%20au%20quotidien;Une%20session%20ma%C3%AEtre%20qui%20pilote%20des%20sous-agents;Dev%20FiveM%20%2F%20Roblox%20%2F%20bots%20Discord%20%2F%20SaaS;%C3%89tudiant%20en%20BUT%20Informatique">
 </p>
 
 <p align="center">
@@ -15,20 +15,58 @@
 
 ## 🧑‍💻 À propos
 
-```console
-chopa@github:~$ cat about.md
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/about-dark.svg">
+    <img alt="Malik « Chopa » Moussaoui : étudiant en BUT Informatique, je pilote des agents IA avec Claude Code" src="assets/about-light.svg" width="820">
+  </picture>
+</p>
 
-👤  Malik « Chopa » Moussaoui
-🎓  BUT Informatique · IUT du Limousin
-🛠️  Dev full-stack, FiveM / GTA RP (Lua), jeux Roblox (Luau)
-🤖  Bots Discord, SaaS, et agents IA pilotés avec Claude Code
-🔭  En ce moment : mon portfolio en Astro + Three.js
-🎮  Hors du code : esport, création de contenu, jeux vidéo
+## 🤖 L'IA, au centre
 
-chopa@github:~$ ▍
+| | |
+|---|---|
+| 🧠 **Orchestration d'agents** | [`maitre-agent`](https://github.com/MalikMoussaoui/maitre-agent) : une session maître qui découpe le travail, le confie à des sous-agents, vérifie elle-même et laisse une passation reprenable |
+| 📡 **IA en direct** | Une IA suivie en temps réel dans une expérience sociale (dépôt privé) |
+| ⚙️ **Au quotidien** | Claude Code pour concevoir, coder et tester : chaque projet commence par une fiche à valider, rien n'est construit avant |
+
+Comment ça tourne, en une image :
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'ui-sans-serif, system-ui','lineColor':'#fb923c','primaryColor':'#2a1f38','primaryTextColor':'#f3eefa','primaryBorderColor':'#a78bfa'}}}%%
+flowchart LR
+    A(["Une idée"]) --> B["Cadrage<br/>fiche à valider"]
+    B --> C["Maître agent<br/>découpe et délègue"]
+    C --> D1["Chercheur"]
+    C --> D2["Concepteur"]
+    C --> D3["Exécutant"]
+    C --> D4["Testeur"]
+    C --> D5["Auditeur"]
+    D1 --> E{"Vérification<br/>faite par le maître"}
+    D2 --> E
+    D3 --> E
+    D4 --> E
+    D5 --> E
+    E --> F["HANDOFF.md<br/>reprise possible"]
+    E -.-> C
+
+    classDef master fill:#fb923c,stroke:#fb923c,color:#1a1226,font-weight:bold
+    classDef agent fill:#2a1f38,stroke:#a78bfa,color:#f3eefa
+    classDef gate fill:#33243f,stroke:#fb7185,color:#f3eefa
+    class C master
+    class D1,D2,D3,D4,D5 agent
+    class E,F gate
 ```
 
 ## 🛠️ Stack
+
+<p align="center"><sub><b>IA &amp; AGENTS</b></sub><br>
+  <img alt="Claude Code" src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white">
+  <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-191919?style=for-the-badge&logo=anthropic&logoColor=white">
+  <img alt="Sous-agents" src="https://img.shields.io/badge/sous--agents-a78bfa?style=for-the-badge">
+  <img alt="Prompt engineering" src="https://img.shields.io/badge/prompt_engineering-fb7185?style=for-the-badge">
+  <a href="https://github.com/MalikMoussaoui/maitre-agent"><img alt="maitre-agent" src="https://img.shields.io/badge/maitre--agent-fb923c?style=for-the-badge&logo=github&logoColor=white"></a>
+</p>
 
 <p align="center"><sub><b>LANGAGES</b></sub><br>
   <picture>
@@ -57,7 +95,6 @@ chopa@github:~$ ▍
     <img alt="Roblox Studio, Git, GitHub, GitHub Actions, VS Code, pnpm" src="https://skillicons.dev/icons?i=robloxstudio,git,github,githubactions,vscode,pnpm&theme=light">
   </picture><br>
   <img alt="FiveM" src="https://img.shields.io/badge/FiveM-F40552?style=for-the-badge&logo=fivem&logoColor=white">
-  <img alt="Claude Code" src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white">
 </p>
 
 ## 📊 En chiffres
@@ -91,7 +128,6 @@ chopa@github:~$ ▍
 | 🚓 **FiveM / GTA RP** | Scripts Lua sur mesure (customs, recoil, médias) et outils pour serveurs RP |
 | 🧱 **Roblox** | Jeux en Luau, en solo et en équipe |
 | 🤖 **Bots Discord & SaaS** | Next.js, Fastify, Stripe, MongoDB, Socket.io |
-| 🧠 **IA** | Une IA suivie en direct dans une expérience sociale, des agents qui se pilotent entre eux |
 | 📱 **Mobile** | Flutter, Kotlin, Swift |
 
 ## 🐍 Mes contributions, version snake

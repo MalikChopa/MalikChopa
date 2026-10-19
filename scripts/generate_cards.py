@@ -12,6 +12,7 @@ import json
 import math
 import os
 import pathlib
+import random
 import textwrap
 import urllib.request
 from html import escape
@@ -174,16 +175,59 @@ def card_title(label, t, x=24, y=38):
 
 # ---------------------------------------------------------------- cartes
 
+def neural_net(t, w, h):
+    """Réseau de neurones décoratif : deux blocs de couches sur les côtés, impulsions animées."""
+    rnd = random.Random(7)
+    left_x, right_x = [60, 150, 240, 330], [870, 960, 1050, 1140]
+    counts = [4, 5, 5, 4]
+
+    def layer_nodes(xs):
+        layers = []
+        for x, n in zip(xs, counts):
+            top, bottom = 38, h - 38
+            step = (bottom - top) / (n - 1)
+            layers.append([(x + rnd.uniform(-10, 10), top + i * step + rnd.uniform(-9, 9)) for i in range(n)])
+        return layers
+
+    edges, nodes, pulses = [], [], []
+    for side, xs in (("l", left_x), ("r", right_x)):
+        layers = layer_nodes(xs)
+        for li, layer in enumerate(layers):
+            for (x, y) in layer:
+                nodes.append((x, y))
+            if li + 1 < len(layers):
+                for (x1, y1) in layer:
+                    for (x2, y2) in layers[li + 1]:
+                        edges.append((x1, y1, x2, y2))
+    edge_svg = "".join(f'<line x1="{a:.0f}" y1="{b:.0f}" x2="{c:.0f}" y2="{d:.0f}"/>' for a, b, c, d in edges)
+    colors = [t["a1"], t["a2"], t["a3"]]
+    for i, (a, b, c, d) in enumerate(rnd.sample(edges, 26)):
+        col = colors[i % 3]
+        dur = rnd.uniform(2.2, 4.2)
+        begin = rnd.uniform(0, 4)
+        pulses.append(
+            f'<circle r="3" fill="{col}" opacity="0"><animateMotion dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite" '
+            f'path="M{a:.0f} {b:.0f} L{c:.0f} {d:.0f}"/><animate attributeName="opacity" values="0;1;1;0" '
+            f'dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite"/></circle>')
+    node_svg = []
+    for i, (x, y) in enumerate(nodes):
+        col = colors[i % 3]
+        node_svg.append(
+            f'<circle cx="{x:.0f}" cy="{y:.0f}" r="5" fill="{t["bg"]}" stroke="{col}" stroke-width="1.6">'
+            f'<animate attributeName="stroke-opacity" values=".35;1;.35" dur="{rnd.uniform(3, 6):.1f}s" '
+            f'begin="{rnd.uniform(0, 3):.1f}s" repeatCount="indefinite"/></circle>')
+    return (f'<g stroke="{t["a1"]}" stroke-opacity=".16" stroke-width="1">{edge_svg}</g>'
+            f'<g>{"".join(node_svg)}</g><g>{"".join(pulses)}</g>')
+
+
 def header(t, name):
     w, h = 1200, 300
     blobs = f"""
-  <g filter="url(#blur)" opacity=".75">
+  <g filter="url(#blur)" opacity=".6">
     <circle cx="230" cy="80" r="170" fill="{t['a1']}" style="animation: drift1 14s ease-in-out infinite alternate"/>
-    <circle cx="980" cy="230" r="190" fill="{t['a2']}" style="animation: drift2 17s ease-in-out infinite alternate"/>
-    <circle cx="640" cy="320" r="140" fill="{t['a3']}" opacity=".7" style="animation: drift1 20s ease-in-out infinite alternate-reverse"/>
+    <circle cx="980" cy="230" r="190" fill="{t['a3']}" style="animation: drift2 17s ease-in-out infinite alternate"/>
+    <circle cx="640" cy="330" r="140" fill="{t['a2']}" opacity=".7" style="animation: drift1 20s ease-in-out infinite alternate-reverse"/>
   </g>"""
-    grid = "".join(f'<path d="M{x} 0V{h}" />' for x in range(0, w, 40)) + "".join(
-        f'<path d="M0 {y}H{w}" />' for y in range(0, h, 40))
     body = f"""
 <defs>
   <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="70"/></filter>
@@ -198,21 +242,67 @@ def header(t, name):
   @keyframes drift1 {{ to {{ transform: translate(90px, 40px); }} }}
   @keyframes drift2 {{ to {{ transform: translate(-110px, -50px); }} }}
   @keyframes blink {{ 50% {{ opacity: 0; }} }}
-  .name {{ font-size: 76px; font-weight: 800; letter-spacing: -2px; }}
-  .sub {{ font-size: 24px; font-weight: 500; }}
+  .name {{ font-size: 72px; font-weight: 800; letter-spacing: -2px; }}
+  .sub {{ font-size: 23px; font-weight: 500; }}
 </style>
 <g clip-path="url(#clip)">
   {blobs}
-  <rect width="{w}" height="{h}" fill="{t['bg']}" opacity=".55"/>
-  <g stroke="{t['text']}" stroke-opacity=".05">{grid}</g>
+  <rect width="{w}" height="{h}" fill="{t['bg']}" opacity=".6"/>
+  {neural_net(t, w, h)}
 </g>
-<text x="600" y="78" text-anchor="middle" class="mono muted fade" font-size="17">~ $ whoami</text>
-<text x="600" y="168" text-anchor="middle" class="name fade" style="animation-delay:.15s" fill="url(#shine)">{escape(name)}</text>
-<text x="600" y="218" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · développeur full-stack &amp; créateur de jeux</text>
+<text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="17"><tspan fill="{t['a3']}">❯</tspan> claude</text>
+<text x="600" y="160" text-anchor="middle" class="name fade" style="animation-delay:.15s" fill="url(#shine)">{escape(name)}</text>
+<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · je construis des agents IA</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="262" text-anchor="middle" class="mono muted" font-size="15">TypeScript · Lua · FiveM · Roblox · IA<tspan fill="{t['a2']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">Claude Code · agents · TypeScript · Lua · FiveM<tspan fill="{t['a3']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>"""
     return svg(w, h, body, t, f"{name} aka Chopa")
+
+
+def terminal_card(t):
+    """Session « claude » animée : les lignes se tapent l'une après l'autre."""
+    w = 820
+    lines = [
+        ("prompt", 'claude "présente-toi"'),
+        ("out", "Malik « Chopa » Moussaoui, étudiant en BUT Informatique (IUT du Limousin)."),
+        ("out", "Je pilote des agents IA avec Claude Code, et j'ai écrit maitre-agent pour ça."),
+        ("out", "Côté dev : FiveM / GTA RP, jeux Roblox, bots Discord et SaaS en TypeScript."),
+        ("out", "En ce moment : mon portfolio en Astro + Three.js."),
+    ]
+    cw, x0, y0, lh = 9.2, 28, 92, 30
+    body, begin = [], 0.4
+    defs = []
+    for i, (kind, text) in enumerate(lines):
+        y = y0 + i * lh
+        n = len(text)
+        dur = max(0.5, n * 0.028)
+        values = ";".join(f"{(k * cw + 26):.0f}" for k in range(n + 1))
+        defs.append(
+            f'<clipPath id="c{i}"><rect x="{x0 - 4}" y="{y - 18}" width="0" height="26">'
+            f'<animate attributeName="width" values="{values}" dur="{dur:.2f}s" begin="{begin:.2f}s" '
+            f'calcMode="discrete" fill="freeze"/></rect></clipPath>')
+        if kind == "prompt":
+            glyph = f'<text x="{x0}" y="{y}" font-size="15" class="mono" fill="{t["a3"]}">❯</text>'
+            txt = f'<text x="{x0 + 20}" y="{y}" font-size="15" class="mono" xml:space="preserve">{escape(text)}</text>'
+        else:
+            glyph = f'<text x="{x0}" y="{y}" font-size="15" class="mono" fill="{t["a1"]}">●</text>'
+            txt = f'<text x="{x0 + 20}" y="{y}" font-size="15" class="mono">{escape(text)}</text>'
+        body.append(f'<g clip-path="url(#c{i})">{glyph}{txt}</g>')
+        begin += dur + (0.55 if kind == "prompt" else 0.18)
+    h = y0 + len(lines) * lh + 24
+    cursor_y = y0 + len(lines) * lh
+    body.append(f'<g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.01s" begin="{begin:.2f}s" fill="freeze"/>'
+                f'<text x="{x0}" y="{cursor_y}" font-size="15" class="mono" fill="{t["a3"]}">❯</text>'
+                f'<rect x="{x0 + 20}" y="{cursor_y - 14}" width="9" height="18" fill="{t["a3"]}" style="animation: blink 1s steps(1) infinite"/></g>')
+    chrome = (f'<rect x=".5" y=".5" width="{w - 1}" height="40" rx="14" fill="{t["bg2"]}"/>'
+              f'<rect x=".5" y="26" width="{w - 1}" height="15" fill="{t["bg2"]}"/>'
+              f'<path d="M.5 41H{w - .5}" stroke="{t["border"]}"/>'
+              f'<circle cx="26" cy="21" r="6" fill="{t["a2"]}"/><circle cx="46" cy="21" r="6" fill="{t["a3"]}"/>'
+              f'<circle cx="66" cy="21" r="6" fill="{t["a1"]}"/>'
+              f'<text x="{w / 2}" y="26" text-anchor="middle" class="mono muted" font-size="13">chopa — claude</text>')
+    style = '<style>@keyframes blink { 50% { opacity: 0; } }</style>'
+    inner = f'{style}<defs>{"".join(defs)}</defs>{chrome}' + "".join(body)
+    return svg(w, h, inner, t, "À propos de Malik, en session Claude Code")
 
 
 ICONS = {
@@ -332,6 +422,7 @@ def main():
     for theme, t in THEMES.items():
         files = {
             f"header-{theme}.svg": header(t, DISPLAY_NAME),
+            f"about-{theme}.svg": terminal_card(t),
             f"stats-{theme}.svg": stats_card(t, user),
             f"langs-{theme}.svg": langs_card(t, langs),
         }
