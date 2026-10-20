@@ -250,24 +250,24 @@ def header(t, name):
   <rect width="{w}" height="{h}" fill="{t['bg']}" opacity=".6"/>
   {neural_net(t, w, h)}
 </g>
-<text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="17"><tspan fill="{t['a3']}">❯</tspan> claude</text>
+<text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="17"><tspan fill="{t['a3']}">❯</tspan> chopa</text>
 <text x="600" y="160" text-anchor="middle" class="name fade" style="animation-delay:.15s" fill="url(#shine)">{escape(name)}</text>
-<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · je me lance dans les agents IA</text>
+<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · développeur full-stack et créateur de jeux</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">Claude Code · TypeScript · Lua · FiveM · Roblox<tspan fill="{t['a3']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">TypeScript · Lua · FiveM · Roblox · Agents IA<tspan fill="{t['a3']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>"""
     return svg(w, h, body, t, f"{name} aka Chopa")
 
 
 def terminal_card(t):
-    """Session « claude » animée : les lignes se tapent l'une après l'autre."""
+    """Session de terminal animée : les lignes se tapent l'une après l'autre."""
     w = 820
     lines = [
-        ("prompt", 'claude "présente-toi"'),
+        ("prompt", 'whoami'),
         ("out", "Malik « Chopa » Moussaoui, étudiant en BUT Informatique (IUT du Limousin)."),
-        ("out", "Je me lance dans les agents IA : maitre-agent est mon tout premier projet du genre."),
+        ("out", "Je construis des agents IA : maitre-agent est mon premier projet du genre."),
         ("out", "Côté dev : FiveM / GTA RP, jeux Roblox, bots Discord et SaaS en TypeScript."),
-        ("out", "En ce moment : mon portfolio en Astro + Three.js."),
+        ("out", "En ce moment : IA en direct, une IA qui apprend seule à conduire."),
     ]
     cw, x0, y0, lh = 9.2, 28, 92, 30
     body, begin = [], 0.4
@@ -299,10 +299,10 @@ def terminal_card(t):
               f'<path d="M.5 41H{w - .5}" stroke="{t["border"]}"/>'
               f'<circle cx="26" cy="21" r="6" fill="{t["a2"]}"/><circle cx="46" cy="21" r="6" fill="{t["a3"]}"/>'
               f'<circle cx="66" cy="21" r="6" fill="{t["a1"]}"/>'
-              f'<text x="{w / 2}" y="26" text-anchor="middle" class="mono muted" font-size="13">chopa — claude</text>')
+              f'<text x="{w / 2}" y="26" text-anchor="middle" class="mono muted" font-size="13">chopa — zsh</text>')
     style = '<style>@keyframes blink { 50% { opacity: 0; } }</style>'
     inner = f'{style}<defs>{"".join(defs)}</defs>{chrome}' + "".join(body)
-    return svg(w, h, inner, t, "À propos de Malik, en session Claude Code")
+    return svg(w, h, inner, t, "À propos de Malik : étudiant en BUT Informatique, créateur de jeux et d'agents IA")
 
 
 ICONS = {

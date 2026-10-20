@@ -4,12 +4,12 @@
 </picture>
 
 <p align="center">
-  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=Je%20me%20lance%20dans%20les%20agents%20IA;Claude%20Code%20au%20quotidien;Mon%20premier%20projet%20d%27agents%20%3A%20maitre-agent;Dev%20FiveM%20%2F%20Roblox%20%2F%20bots%20Discord%20%2F%20SaaS;%C3%89tudiant%20en%20BUT%20Informatique">
+  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=Mon%20premier%20projet%20d%27agents%20%3A%20maitre-agent;En%20ce%20moment%20%3A%20IA%20en%20direct;Dev%20FiveM%20%2F%20Roblox%20%2F%20bots%20Discord%20%2F%20SaaS;%C3%89tudiant%20en%20BUT%20Informatique">
 </p>
 
 <p align="center">
   <a href="https://github.com/MalikMoussaoui?tab=followers"><img alt="Abonnés" src="https://img.shields.io/github/followers/MalikMoussaoui?label=abonn%C3%A9s&style=for-the-badge&logo=github&color=8b5cf6&labelColor=1a1226"></a>
-  <img alt="Vues du profil" src="https://komarev.com/ghpvc/?username=MalikMoussaoui&label=vues&style=for-the-badge&color=fb923c&base=0">
+  <img alt="Vues du profil" src="https://hits.sh/github.com/MalikMoussaoui.svg?style=for-the-badge&label=vues&color=fb923c&labelColor=1a1226">
   <a href="https://github.com/MalikMoussaoui/maitre-agent"><img alt="Étoiles de maitre-agent" src="https://img.shields.io/github/stars/MalikMoussaoui/maitre-agent?label=maitre-agent&style=for-the-badge&logo=claude&logoColor=white&color=fb7185&labelColor=1a1226"></a>
 </p>
 
@@ -18,7 +18,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/about-dark.svg">
-    <img alt="Malik « Chopa » Moussaoui : étudiant en BUT Informatique, je me lance dans les agents IA avec Claude Code" src="assets/about-light.svg" width="820">
+    <img alt="Malik « Chopa » Moussaoui : étudiant en BUT Informatique, je construis des agents IA et j'apprends à une IA à conduire" src="assets/about-light.svg" width="820">
   </picture>
 </p>
 
@@ -27,8 +27,7 @@
 | | |
 |---|---|
 | 🧠 **Mon premier projet d'agents** | [`maitre-agent`](https://github.com/MalikMoussaoui/maitre-agent) (en cours) : une session maître qui découpe le travail, le confie à des sous-agents, vérifie elle-même et laisse une passation reprenable |
-| 📡 **IA en direct** | Projet terminé : une IA suivie en temps réel dans une expérience sociale (dépôt privé) |
-| ⚙️ **Au quotidien** | Claude Code pour concevoir, coder et tester mes projets |
+| 📡 **IA en direct** | En cours : des IA qui apprennent seules à conduire et à faire la course sur un circuit 2D (apprentissage par renforcement), avec une page web pour suivre leurs progrès en quasi-direct. Le dépôt arrive bientôt |
 
 Comment fonctionne maitre-agent, en une image :
 
