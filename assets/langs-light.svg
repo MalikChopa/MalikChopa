@@ -23,9 +23,9 @@
 <clipPath id="bar"><rect x="24" y="60" width="452" height="10" rx="5"/></clipPath>
 <style>@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }.grow { transform-origin: 24px 0; animation: grow 1.2s cubic-bezier(.3,.7,.2,1) both; }</style>
 <rect x="24" y="60" width="452" height="10" rx="5" fill="#f1e9ef"/>
-<g clip-path="url(#bar)"><g class="grow"><rect x="24.00" y="60" width="201.10" height="10" fill="#89e051"/><rect x="224.50" y="60" width="125.25" height="10" fill="#3572A5"/><rect x="349.15" y="60" width="85.72" height="10" fill="#3178c6"/><rect x="434.27" y="60" width="42.33" height="10" fill="#b07219"/></g></g>
-<g class="fade" style="animation-delay:0.30s"><circle cx="30" cy="101" r="6" fill="#89e051"/><text x="44" y="106" font-size="14" font-weight="600">Shell</text><text x="234" y="106" font-size="13" class="muted mono" text-anchor="end">44.4%</text></g>
-<g class="fade" style="animation-delay:0.38s"><circle cx="30" cy="131" r="6" fill="#3572A5"/><text x="44" y="136" font-size="14" font-weight="600">Python</text><text x="234" y="136" font-size="13" class="muted mono" text-anchor="end">27.6%</text></g>
+<g clip-path="url(#bar)"><g class="grow"><rect x="24.00" y="60" width="201.96" height="10" fill="#89e051"/><rect x="225.36" y="60" width="124.70" height="10" fill="#3572A5"/><rect x="349.45" y="60" width="85.60" height="10" fill="#3178c6"/><rect x="434.46" y="60" width="42.14" height="10" fill="#b07219"/></g></g>
+<g class="fade" style="animation-delay:0.30s"><circle cx="30" cy="101" r="6" fill="#89e051"/><text x="44" y="106" font-size="14" font-weight="600">Shell</text><text x="234" y="106" font-size="13" class="muted mono" text-anchor="end">44.5%</text></g>
+<g class="fade" style="animation-delay:0.38s"><circle cx="30" cy="131" r="6" fill="#3572A5"/><text x="44" y="136" font-size="14" font-weight="600">Python</text><text x="234" y="136" font-size="13" class="muted mono" text-anchor="end">27.5%</text></g>
 <g class="fade" style="animation-delay:0.46s"><circle cx="30" cy="161" r="6" fill="#3178c6"/><text x="44" y="166" font-size="14" font-weight="600">TypeScript</text><text x="234" y="166" font-size="13" class="muted mono" text-anchor="end">18.8%</text></g>
 <g class="fade" style="animation-delay:0.54s"><circle cx="30" cy="191" r="6" fill="#b07219"/><text x="44" y="196" font-size="14" font-weight="600">Java</text><text x="234" y="196" font-size="13" class="muted mono" text-anchor="end">9.2%</text></g>
 </svg>
