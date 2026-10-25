@@ -24,7 +24,8 @@ OUT = pathlib.Path(__file__).resolve().parent.parent / "assets"
 
 # Dépôt mis en avant (public uniquement : on y renvoie par un lien).
 FEATURED = {
-    "maitre-agent": "Plugin Claude Code : une session maître qui pilote des sous-agents, vérifie elle-même et laisse une passation reprenable.",
+    "diapason": "Skill Claude Code : il cadre le projet avec toi, confie le travail à des sous-agents, vérifie lui-même les faits décisifs et laisse une passation reprenable.",
+    "lyra-lyrics": "App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music.",
 }
 
 # Fichiers de balisage / config qui faussent la répartition des langages.
@@ -265,7 +266,7 @@ def terminal_card(t):
     lines = [
         ("prompt", 'whoami'),
         ("out", "Malik « Chopa » Moussaoui, étudiant en BUT Informatique (IUT du Limousin)."),
-        ("out", "Je construis des agents IA : maitre-agent est mon premier projet du genre."),
+        ("out", "Je construis des agents IA : Diapason est mon premier projet du genre."),
         ("out", "Côté dev : FiveM / GTA RP, jeux Roblox, bots Discord et SaaS en TypeScript."),
         ("out", "En ce moment : IA en direct, une IA qui apprend seule à conduire."),
     ]

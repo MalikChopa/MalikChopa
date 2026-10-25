@@ -4,13 +4,13 @@
 </picture>
 
 <p align="center">
-  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=Mon%20premier%20projet%20d%27agents%20%3A%20maitre-agent;En%20ce%20moment%20%3A%20IA%20en%20direct;Dev%20FiveM%20%2F%20Roblox%20%2F%20bots%20Discord%20%2F%20SaaS;%C3%89tudiant%20en%20BUT%20Informatique">
+  <img alt="Ce que je fais" src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2600&pause=900&color=FB923C&center=true&vCenter=true&width=720&lines=Mon%20premier%20projet%20d%27agents%20%3A%20Diapason;Lyra%20Lyrics%20%3A%20les%20paroles%20de%20ta%20musique%20sur%20Mac;En%20ce%20moment%20%3A%20IA%20en%20direct;Dev%20FiveM%20%2F%20Roblox%20%2F%20bots%20Discord%20%2F%20SaaS;%C3%89tudiant%20en%20BUT%20Informatique">
 </p>
 
 <p align="center">
   <a href="https://github.com/MalikMoussaoui?tab=followers"><img alt="Abonnés" src="https://img.shields.io/github/followers/MalikMoussaoui?label=abonn%C3%A9s&style=for-the-badge&logo=github&color=8b5cf6&labelColor=1a1226"></a>
   <img alt="Vues du profil" src="https://hits.sh/github.com/MalikMoussaoui.svg?style=for-the-badge&label=vues&color=fb923c&labelColor=1a1226">
-  <a href="https://github.com/MalikMoussaoui/maitre-agent"><img alt="Étoiles de maitre-agent" src="https://img.shields.io/github/stars/MalikMoussaoui/maitre-agent?label=maitre-agent&style=for-the-badge&logo=claude&logoColor=white&color=fb7185&labelColor=1a1226"></a>
+  <a href="https://github.com/MalikMoussaoui/diapason"><img alt="Étoiles de Diapason" src="https://img.shields.io/github/stars/MalikMoussaoui/diapason?label=Diapason&style=for-the-badge&logo=claude&logoColor=white&color=fb7185&labelColor=1a1226"></a>
 </p>
 
 ## 🧑‍💻 À propos
@@ -26,22 +26,22 @@
 
 | | |
 |---|---|
-| 🧠 **Mon premier projet d'agents** | [`maitre-agent`](https://github.com/MalikMoussaoui/maitre-agent) (en cours) : une session maître qui découpe le travail, le confie à des sous-agents, vérifie elle-même et laisse une passation reprenable |
+| 🧠 **Mon premier projet d'agents** | [`Diapason`](https://github.com/MalikMoussaoui/diapason) (version 1.7) : un skill Claude Code qui cadre le projet avec toi, confie le travail à des sous-agents, vérifie lui-même les faits décisifs et laisse une passation reprenable |
 | 📡 **IA en direct** | En cours : des IA qui apprennent seules à conduire et à faire la course sur un circuit 2D (apprentissage par renforcement), avec une page web pour suivre leurs progrès en quasi-direct. Le dépôt arrive bientôt |
 
-Comment fonctionne maitre-agent, en une image :
+Comment fonctionne Diapason, en une image :
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'fontFamily':'ui-sans-serif, system-ui','lineColor':'#fb923c','primaryColor':'#2a1f38','primaryTextColor':'#f3eefa','primaryBorderColor':'#a78bfa'}}}%%
 flowchart LR
     A(["Une idée"]) --> B["Cadrage<br/>fiche à valider"]
-    B --> C["Maître agent<br/>découpe et délègue"]
+    B --> C["Diapason<br/>découpe et délègue"]
     C --> D1["Chercheur"]
     C --> D2["Concepteur"]
     C --> D3["Exécutant"]
     C --> D4["Testeur"]
     C --> D5["Auditeur"]
-    D1 --> E{"Vérification<br/>faite par le maître"}
+    D1 --> E{"Vérification<br/>faite par Diapason"}
     D2 --> E
     D3 --> E
     D4 --> E
@@ -62,7 +62,7 @@ flowchart LR
 <p align="center"><sub><b>IA</b></sub><br>
   <img alt="Claude Code" src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white">
   <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-191919?style=for-the-badge&logo=anthropic&logoColor=white">
-  <a href="https://github.com/MalikMoussaoui/maitre-agent"><img alt="maitre-agent" src="https://img.shields.io/badge/maitre--agent-fb923c?style=for-the-badge&logo=github&logoColor=white"></a>
+  <a href="https://github.com/MalikMoussaoui/diapason"><img alt="Diapason" src="https://img.shields.io/badge/Diapason-fb923c?style=for-the-badge&logo=github&logoColor=white"></a>
 </p>
 
 <p align="center"><sub><b>LANGAGES</b></sub><br>
@@ -109,14 +109,20 @@ flowchart LR
 
 <p align="center"><sub>Dépôts publics et privés · mis à jour chaque jour par GitHub Actions</sub></p>
 
-## 🚀 Projet à la une
+## 🚀 Projets à la une
 
 <p align="center">
-  <a href="https://github.com/MalikMoussaoui/maitre-agent"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-maitre-agent-dark.svg">
-    <img alt="maitre-agent" src="assets/repo-maitre-agent-light.svg" width="60%">
+  <a href="https://github.com/MalikMoussaoui/diapason"><picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-diapason-dark.svg">
+    <img alt="Diapason, skill Claude Code" src="assets/repo-diapason-light.svg" width="49%">
+  </picture></a>
+  <a href="https://github.com/MalikMoussaoui/lyra-lyrics"><picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-lyra-lyrics-dark.svg">
+    <img alt="Lyra Lyrics, paroles synchronisées sur Mac" src="assets/repo-lyra-lyrics-light.svg" width="49%">
   </picture></a>
 </p>
+
+<p align="center"><sub>🎵 <b>Lyra Lyrics</b> : une app Mac en Swift (version 1.0.1) qui affiche les paroles synchronisées de ce que tu écoutes sur Spotify ou Apple Music.</sub></p>
 
 ### 🔒 En coulisses (dépôts privés)
 
