@@ -17,8 +17,8 @@ import textwrap
 import urllib.request
 from html import escape
 
-USER = os.environ.get("GH_USER", "MalikMoussaoui")
-DISPLAY_NAME = "Malik Moussaoui"
+USER = os.environ.get("GH_USER", "MalikChopa")
+DISPLAY_NAME = "Chopa"
 TOKEN = os.environ["GH_TOKEN"]
 OUT = pathlib.Path(__file__).resolve().parent.parent / "assets"
 
@@ -28,18 +28,38 @@ FEATURED = {
     "lyra-lyrics": "App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music.",
 }
 
+# Cartes sans lien (dépôt privé ou à venir) : écrites à la main, rien n'est lu sur GitHub.
+STATIC = {
+    "kashmo": ("Kashmo", "Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté.", "TypeScript", "Dépôt privé"),
+    "ia-en-direct": ("IA en direct", "Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct.", "Python", "Dépôt à venir"),
+}
+
+# Pile technique, rangée par famille (affichée en pastilles sobres).
+STACK = [
+    ("IA", ["Claude Code", "Diapason", "Stable-Baselines3"]),
+    ("Langages", ["TypeScript", "JavaScript", "Lua", "Luau", "Python", "Java", "Kotlin", "Dart", "Swift", "C#", "Bash"]),
+    ("Front", ["React", "Next.js", "Vue", "Astro", "Tailwind CSS", "Three.js", "Vite", "Flutter"]),
+    ("Back", ["Node.js", "discord.js", "Fastify", "Prisma", "MongoDB", "PostgreSQL", "SQLite", "Spring", "Docker", "Nginx"]),
+    ("Jeux et outils", ["FiveM", "Roblox Studio", "Git", "GitHub Actions", "VS Code", "pnpm"]),
+]
+
 # Fichiers de balisage / config qui faussent la répartition des langages.
 IGNORED_LANGS = {"HTML", "CSS", "SCSS", "EJS", "Dockerfile", "PowerShell", "Batchfile", "Makefile", "Objective-C"}
 
 FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Ubuntu,'Helvetica Neue',Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace"
 
-# Palette « sunset » : violet -> corail -> orange.
+# Palette noir et blanc, avec un seul accent (orange) utilisé avec parcimonie.
 THEMES = {
-    "dark": dict(bg="#0f0b17", bg2="#1a1226", border="#33243f", text="#f3eefa", muted="#a79bb8",
-                 a1="#a78bfa", a2="#fb7185", a3="#fb923c", track="#2a1f38"),
-    "light": dict(bg="#ffffff", bg2="#fbf6f3", border="#eadfe8", text="#1d1426", muted="#6e6179",
-                  a1="#7c3aed", a2="#e11d48", a3="#ea580c", track="#f1e9ef"),
+    "dark": dict(bg="#0a0a0a", bg2="#141414", border="#272727", text="#f2f2f2", muted="#8c8c8c",
+                 a1="#f2f2f2", a2="#c4c4c4", a3="#8c8c8c", track="#232323", accent="#ea580c"),
+    "light": dict(bg="#ffffff", bg2="#f6f6f6", border="#e0e0e0", text="#111111", muted="#6b6b6b",
+                  a1="#111111", a2="#4d4d4d", a3="#999999", track="#ececec", accent="#c2410c"),
+}
+# Rampes de gris pour la barre des langages (du plus utilisé au moins utilisé).
+GRAYS = {
+    "dark": ["#f2f2f2", "#d2d2d2", "#b3b3b3", "#959595", "#787878", "#5f5f5f", "#4a4a4a", "#383838"],
+    "light": ["#111111", "#2d2d2d", "#4a4a4a", "#686868", "#868686", "#a2a2a2", "#bbbbbb", "#cfcfcf"],
 }
 
 
@@ -170,7 +190,7 @@ def svg(w, h, body, t, title):
 
 
 def card_title(label, t, x=24, y=38):
-    return (f'<rect x="{x}" y="{y - 14}" width="4" height="18" rx="2" fill="url(#grad)"/>'
+    return (f'<rect x="{x}" y="{y - 14}" width="4" height="18" rx="2" fill="{t["accent"]}"/>'
             f'<text x="{x + 14}" y="{y}" class="title">{escape(label)}</text>')
 
 
@@ -202,8 +222,9 @@ def neural_net(t, w, h):
                         edges.append((x1, y1, x2, y2))
     edge_svg = "".join(f'<line x1="{a:.0f}" y1="{b:.0f}" x2="{c:.0f}" y2="{d:.0f}"/>' for a, b, c, d in edges)
     colors = [t["a1"], t["a2"], t["a3"]]
+    pulse_colors = [t["accent"], t["a2"], t["a3"]]
     for i, (a, b, c, d) in enumerate(rnd.sample(edges, 26)):
-        col = colors[i % 3]
+        col = pulse_colors[i % 3]
         dur = rnd.uniform(2.2, 4.2)
         begin = rnd.uniform(0, 4)
         pulses.append(
@@ -223,41 +244,25 @@ def neural_net(t, w, h):
 
 def header(t, name):
     w, h = 1200, 300
-    blobs = f"""
-  <g filter="url(#blur)" opacity=".6">
-    <circle cx="230" cy="80" r="170" fill="{t['a1']}" style="animation: drift1 14s ease-in-out infinite alternate"/>
-    <circle cx="980" cy="230" r="190" fill="{t['a3']}" style="animation: drift2 17s ease-in-out infinite alternate"/>
-    <circle cx="640" cy="330" r="140" fill="{t['a2']}" opacity=".7" style="animation: drift1 20s ease-in-out infinite alternate-reverse"/>
-  </g>"""
+    grid = "".join(f'<path d="M{x} 0V{h}"/>' for x in range(0, w, 60)) + "".join(f'<path d="M0 {y}H{w}"/>' for y in range(0, h, 60))
     body = f"""
-<defs>
-  <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="70"/></filter>
-  <clipPath id="clip"><rect width="{w}" height="{h}" rx="14"/></clipPath>
-  <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0" spreadMethod="repeat">
-    <stop offset="0" stop-color="{t['a1']}"/><stop offset=".33" stop-color="{t['a2']}"/>
-    <stop offset=".66" stop-color="{t['a3']}"/><stop offset="1" stop-color="{t['a1']}"/>
-    <animateTransform attributeName="gradientTransform" type="translate" values="-1 0;0 0" dur="6s" repeatCount="indefinite"/>
-  </linearGradient>
-</defs>
+<defs><clipPath id="clip"><rect width="{w}" height="{h}" rx="14"/></clipPath></defs>
 <style>
-  @keyframes drift1 {{ to {{ transform: translate(90px, 40px); }} }}
-  @keyframes drift2 {{ to {{ transform: translate(-110px, -50px); }} }}
   @keyframes blink {{ 50% {{ opacity: 0; }} }}
-  .name {{ font-size: 72px; font-weight: 800; letter-spacing: -2px; }}
-  .sub {{ font-size: 23px; font-weight: 500; }}
+  .name {{ font-size: 84px; font-weight: 700; letter-spacing: -2px; }}
+  .sub {{ font-size: 22px; font-weight: 400; }}
 </style>
 <g clip-path="url(#clip)">
-  {blobs}
-  <rect width="{w}" height="{h}" fill="{t['bg']}" opacity=".6"/>
+  <g stroke="{t['text']}" stroke-opacity=".05">{grid}</g>
   {neural_net(t, w, h)}
 </g>
-<text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="17"><tspan fill="{t['a3']}">❯</tspan> chopa</text>
-<text x="600" y="160" text-anchor="middle" class="name fade" style="animation-delay:.15s" fill="url(#shine)">{escape(name)}</text>
-<text x="600" y="206" text-anchor="middle" class="sub fade" style="animation-delay:.35s">aka <tspan font-weight="800" fill="url(#grad)">Chopa</tspan> · développeur full-stack et créateur de jeux</text>
+<text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="16"><tspan fill="{t['accent']}">❯</tspan> whoami</text>
+<text x="600" y="164" text-anchor="middle" class="name fade" style="animation-delay:.15s">{escape(name)}</text>
+<text x="600" y="210" text-anchor="middle" class="sub muted fade" style="animation-delay:.35s">développeur full-stack · FiveM · Roblox · agents IA</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="250" text-anchor="middle" class="mono muted" font-size="15">TypeScript · Lua · FiveM · Roblox · Agents IA<tspan fill="{t['a3']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">Claude Code · TypeScript · Lua · Swift<tspan fill="{t['accent']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>"""
-    return svg(w, h, body, t, f"{name} aka Chopa")
+    return svg(w, h, body, t, f"{name}, développeur full-stack")
 
 
 def terminal_card(t):
@@ -265,7 +270,7 @@ def terminal_card(t):
     w = 820
     lines = [
         ("prompt", 'whoami'),
-        ("out", "Malik « Chopa » Moussaoui, étudiant en BUT Informatique (IUT du Limousin)."),
+        ("out", "Chopa, étudiant en BUT Informatique."),
         ("out", "Je construis des agents IA : Diapason est mon premier projet du genre."),
         ("out", "Côté dev : FiveM / GTA RP, jeux Roblox, bots Discord et SaaS en TypeScript."),
         ("out", "En ce moment : IA en direct, une IA qui apprend seule à conduire."),
@@ -283,27 +288,27 @@ def terminal_card(t):
             f'<animate attributeName="width" values="{values}" dur="{dur:.2f}s" begin="{begin:.2f}s" '
             f'calcMode="discrete" fill="freeze"/></rect></clipPath>')
         if kind == "prompt":
-            glyph = f'<text x="{x0}" y="{y}" font-size="15" class="mono" fill="{t["a3"]}">❯</text>'
+            glyph = f'<text x="{x0}" y="{y}" font-size="15" class="mono" fill="{t["accent"]}">❯</text>'
             txt = f'<text x="{x0 + 20}" y="{y}" font-size="15" class="mono" xml:space="preserve">{escape(text)}</text>'
         else:
-            glyph = f'<text x="{x0}" y="{y}" font-size="15" class="mono" fill="{t["a1"]}">●</text>'
+            glyph = f'<text x="{x0}" y="{y}" font-size="15" class="mono" fill="{t["muted"]}">●</text>'
             txt = f'<text x="{x0 + 20}" y="{y}" font-size="15" class="mono">{escape(text)}</text>'
         body.append(f'<g clip-path="url(#c{i})">{glyph}{txt}</g>')
         begin += dur + (0.55 if kind == "prompt" else 0.18)
     h = y0 + len(lines) * lh + 24
     cursor_y = y0 + len(lines) * lh
     body.append(f'<g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.01s" begin="{begin:.2f}s" fill="freeze"/>'
-                f'<text x="{x0}" y="{cursor_y}" font-size="15" class="mono" fill="{t["a3"]}">❯</text>'
-                f'<rect x="{x0 + 20}" y="{cursor_y - 14}" width="9" height="18" fill="{t["a3"]}" style="animation: blink 1s steps(1) infinite"/></g>')
+                f'<text x="{x0}" y="{cursor_y}" font-size="15" class="mono" fill="{t["accent"]}">❯</text>'
+                f'<rect x="{x0 + 20}" y="{cursor_y - 14}" width="9" height="18" fill="{t["accent"]}" style="animation: blink 1s steps(1) infinite"/></g>')
     chrome = (f'<rect x=".5" y=".5" width="{w - 1}" height="40" rx="14" fill="{t["bg2"]}"/>'
               f'<rect x=".5" y="26" width="{w - 1}" height="15" fill="{t["bg2"]}"/>'
               f'<path d="M.5 41H{w - .5}" stroke="{t["border"]}"/>'
-              f'<circle cx="26" cy="21" r="6" fill="{t["a2"]}"/><circle cx="46" cy="21" r="6" fill="{t["a3"]}"/>'
-              f'<circle cx="66" cy="21" r="6" fill="{t["a1"]}"/>'
+              f'<circle cx="26" cy="21" r="5" fill="{t["border"]}"/><circle cx="44" cy="21" r="5" fill="{t["border"]}"/>'
+              f'<circle cx="62" cy="21" r="5" fill="{t["border"]}"/>'
               f'<text x="{w / 2}" y="26" text-anchor="middle" class="mono muted" font-size="13">chopa — zsh</text>')
     style = '<style>@keyframes blink { 50% { opacity: 0; } }</style>'
     inner = f'{style}<defs>{"".join(defs)}</defs>{chrome}' + "".join(body)
-    return svg(w, h, inner, t, "À propos de Malik : étudiant en BUT Informatique, créateur de jeux et d'agents IA")
+    return svg(w, h, inner, t, "À propos de Chopa : étudiant en BUT Informatique, jeux, bots et agents IA")
 
 
 ICONS = {
@@ -390,27 +395,55 @@ def langs_card(t, langs):
     return svg(w, h, "\n".join(body), t, "Langages les plus utilisés")
 
 
-def repo_card(t, repo, desc):
+def _card(t, name, desc, lang, right_svg):
     w, h = 480, 150
     lines = textwrap.wrap(desc, 62)[:3]
-    lang = repo["primaryLanguage"] or {"name": "—", "color": t["muted"]}
     body = [
-        icon("repo", 24, 22, t["a1"]),
-        f'<text x="50" y="35" font-size="16" font-weight="700" fill="url(#grad)">{escape(repo["name"])}</text>',
+        icon("repo", 24, 22, t["muted"]),
+        f'<text x="50" y="35" font-size="16" font-weight="700">{escape(name)}</text>',
     ]
     for i, line in enumerate(lines):
         body.append(f'<text x="24" y="{66 + i * 20}" font-size="13" class="muted fade" '
                     f'style="animation-delay:{0.1 + i * 0.08:.2f}s">{escape(line)}</text>')
     y = h - 22
-    body.append(
-        f'<circle cx="30" cy="{y - 4}" r="6" fill="{lang["color"] or t["muted"]}"/>'
-        f'<text x="44" y="{y}" font-size="13">{escape(lang["name"])}</text>'
-        f'{icon("star", 150, y - 12, t["muted"])}'
-        f'<text x="172" y="{y}" font-size="13" class="muted">{repo["stargazerCount"]}</text>'
-        f'{icon("fork", 205, y - 12, t["muted"])}'
-        f'<text x="227" y="{y}" font-size="13" class="muted">{repo["forkCount"]}</text>'
-    )
-    return svg(w, h, "\n".join(body), t, repo["name"])
+    body.append(f'<circle cx="30" cy="{y - 4}" r="5" fill="{t["muted"]}"/><text x="44" y="{y}" font-size="13">{escape(lang)}</text>{right_svg(y)}')
+    return svg(w, h, "\n".join(body), t, name)
+
+
+def repo_card(t, repo, desc):
+    lang = (repo["primaryLanguage"] or {"name": "—"})["name"]
+    def right(y):
+        return (f'{icon("star", 150, y - 12, t["muted"])}<text x="172" y="{y}" font-size="13" class="muted">{repo["stargazerCount"]}</text>'
+                f'{icon("fork", 205, y - 12, t["muted"])}<text x="227" y="{y}" font-size="13" class="muted">{repo["forkCount"]}</text>')
+    return _card(t, repo["name"], desc, lang, right)
+
+
+def static_card(t, name, desc, lang, label):
+    def right(y):
+        return f'<text x="456" y="{y}" font-size="12" class="mono muted" text-anchor="end">{escape(label)}</text>'
+    return _card(t, name, desc, lang, right)
+
+
+def stack_card(t):
+    w, pad, label_w = 820, 24, 120
+    body, y = [], 36
+    for group, items in STACK:
+        x = pad + label_w
+        row_y = y
+        body.append(f'<text x="{pad}" y="{row_y + 5}" font-size="12" class="mono muted">{escape(group.upper())}</text>')
+        for it in items:
+            pw = len(it) * 7.4 + 22
+            if x + pw > w - pad:
+                x = pad + label_w
+                y += 34
+            accent = it in ("Claude Code", "Diapason")
+            stroke = t["accent"] if accent else t["border"]
+            body.append(f'<rect x="{x:.1f}" y="{y - 13}" width="{pw:.1f}" height="26" rx="5" fill="none" stroke="{stroke}"/>'
+                        f'<text x="{x + pw / 2:.1f}" y="{y + 5}" font-size="12.5" text-anchor="middle">{escape(it)}</text>')
+            x += pw + 8
+        y += 44
+    h = y - 10
+    return svg(w, h, "\n".join(body), t, "Pile technique")
 
 
 # ---------------------------------------------------------------- main
@@ -421,15 +454,20 @@ def main():
     by_name = {r["name"]: r for r in user["repos"]}
     OUT.mkdir(exist_ok=True)
     for theme, t in THEMES.items():
+        grays = GRAYS[theme]
+        langs_theme = [(n, p, grays[i % len(grays)]) for i, (n, p, _) in enumerate(langs)]
         files = {
             f"header-{theme}.svg": header(t, DISPLAY_NAME),
             f"about-{theme}.svg": terminal_card(t),
+            f"stack-{theme}.svg": stack_card(t),
             f"stats-{theme}.svg": stats_card(t, user),
-            f"langs-{theme}.svg": langs_card(t, langs),
+            f"langs-{theme}.svg": langs_card(t, langs_theme),
         }
         for name, desc in FEATURED.items():
             if name in by_name and not by_name[name]["isPrivate"]:
                 files[f"repo-{name}-{theme}.svg"] = repo_card(t, by_name[name], desc)
+        for key, (title, desc, lang, label) in STATIC.items():
+            files[f"repo-{key}-{theme}.svg"] = static_card(t, title, desc, lang, label)
         for fname, content in files.items():
             (OUT / fname).write_text(content, encoding="utf-8")
     print(f"{len(THEMES)} thèmes générés dans {OUT} — langages : "

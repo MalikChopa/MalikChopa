@@ -2,9 +2,9 @@
 <title id="t">Langages les plus utilisés</title>
 <style>
   text { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Ubuntu,'Helvetica Neue',Arial,sans-serif; }
-  text:not([fill]) { fill: #f3eefa; }
+  text:not([fill]) { fill: #f2f2f2; }
   .mono { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace; }
-  .muted { fill: #a79bb8; }
+  .muted { fill: #8c8c8c; }
   .title { font-size: 17px; font-weight: 700; }
   .fade { animation: fade .6s ease-out both; }
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -12,21 +12,24 @@
 </style>
 <defs>
   <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#a78bfa"/><stop offset=".55" stop-color="#fb7185"/><stop offset="1" stop-color="#fb923c"/>
+    <stop offset="0" stop-color="#f2f2f2"/><stop offset=".55" stop-color="#c4c4c4"/><stop offset="1" stop-color="#8c8c8c"/>
   </linearGradient>
   <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#a78bfa" stop-opacity=".55"/><stop offset=".5" stop-color="#33243f"/><stop offset="1" stop-color="#fb7185" stop-opacity=".45"/>
+    <stop offset="0" stop-color="#f2f2f2" stop-opacity=".55"/><stop offset=".5" stop-color="#272727"/><stop offset="1" stop-color="#c4c4c4" stop-opacity=".45"/>
   </linearGradient>
 </defs>
-<rect x=".5" y=".5" width="499" height="229" rx="14" fill="#0f0b17" stroke="url(#edge)"/>
-<rect x="24" y="24" width="4" height="18" rx="2" fill="url(#grad)"/><text x="38" y="38" class="title">Langages</text>
+<rect x=".5" y=".5" width="499" height="229" rx="14" fill="#0a0a0a" stroke="url(#edge)"/>
+<rect x="24" y="24" width="4" height="18" rx="2" fill="#ea580c"/><text x="38" y="38" class="title">Langages</text>
 <clipPath id="bar"><rect x="24" y="60" width="452" height="10" rx="5"/></clipPath>
 <style>@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }.grow { transform-origin: 24px 0; animation: grow 1.2s cubic-bezier(.3,.7,.2,1) both; }</style>
-<rect x="24" y="60" width="452" height="10" rx="5" fill="#2a1f38"/>
-<g clip-path="url(#bar)"><g class="grow"><rect x="24.00" y="60" width="177.74" height="10" fill="#F05138"/><rect x="201.14" y="60" width="148.52" height="10" fill="#89e051"/><rect x="349.07" y="60" width="63.51" height="10" fill="#3572A5"/><rect x="411.98" y="60" width="43.60" height="10" fill="#3178c6"/><rect x="454.98" y="60" width="21.62" height="10" fill="#b07219"/></g></g>
-<g class="fade" style="animation-delay:0.30s"><circle cx="30" cy="101" r="6" fill="#F05138"/><text x="44" y="106" font-size="14" font-weight="600">Swift</text><text x="234" y="106" font-size="13" class="muted mono" text-anchor="end">39.2%</text></g>
-<g class="fade" style="animation-delay:0.38s"><circle cx="30" cy="131" r="6" fill="#89e051"/><text x="44" y="136" font-size="14" font-weight="600">Shell</text><text x="234" y="136" font-size="13" class="muted mono" text-anchor="end">32.7%</text></g>
-<g class="fade" style="animation-delay:0.46s"><circle cx="30" cy="161" r="6" fill="#3572A5"/><text x="44" y="166" font-size="14" font-weight="600">Python</text><text x="234" y="166" font-size="13" class="muted mono" text-anchor="end">13.9%</text></g>
-<g class="fade" style="animation-delay:0.54s"><circle cx="30" cy="191" r="6" fill="#3178c6"/><text x="44" y="196" font-size="14" font-weight="600">TypeScript</text><text x="234" y="196" font-size="13" class="muted mono" text-anchor="end">9.5%</text></g>
-<g class="fade" style="animation-delay:0.62s"><circle cx="266" cy="101" r="6" fill="#b07219"/><text x="280" y="106" font-size="14" font-weight="600">Java</text><text x="470" y="106" font-size="13" class="muted mono" text-anchor="end">4.6%</text></g>
+<rect x="24" y="60" width="452" height="10" rx="5" fill="#232323"/>
+<g clip-path="url(#bar)"><g class="grow"><rect x="24.00" y="60" width="203.99" height="10" fill="#f2f2f2"/><rect x="227.39" y="60" width="117.30" height="10" fill="#d2d2d2"/><rect x="344.09" y="60" width="31.46" height="10" fill="#b3b3b3"/><rect x="374.95" y="60" width="28.26" height="10" fill="#959595"/><rect x="402.61" y="60" width="21.96" height="10" fill="#787878"/><rect x="423.98" y="60" width="20.74" height="10" fill="#5f5f5f"/><rect x="444.11" y="60" width="18.81" height="10" fill="#4a4a4a"/><rect x="462.33" y="60" width="14.27" height="10" fill="#383838"/></g></g>
+<g class="fade" style="animation-delay:0.30s"><circle cx="30" cy="101" r="6" fill="#f2f2f2"/><text x="44" y="106" font-size="14" font-weight="600">TypeScript</text><text x="234" y="106" font-size="13" class="muted mono" text-anchor="end">45.0%</text></g>
+<g class="fade" style="animation-delay:0.38s"><circle cx="30" cy="131" r="6" fill="#d2d2d2"/><text x="44" y="136" font-size="14" font-weight="600">JavaScript</text><text x="234" y="136" font-size="13" class="muted mono" text-anchor="end">25.8%</text></g>
+<g class="fade" style="animation-delay:0.46s"><circle cx="30" cy="161" r="6" fill="#b3b3b3"/><text x="44" y="166" font-size="14" font-weight="600">Swift</text><text x="234" y="166" font-size="13" class="muted mono" text-anchor="end">6.8%</text></g>
+<g class="fade" style="animation-delay:0.54s"><circle cx="30" cy="191" r="6" fill="#959595"/><text x="44" y="196" font-size="14" font-weight="600">Vue</text><text x="234" y="196" font-size="13" class="muted mono" text-anchor="end">6.1%</text></g>
+<g class="fade" style="animation-delay:0.62s"><circle cx="266" cy="101" r="6" fill="#787878"/><text x="280" y="106" font-size="14" font-weight="600">Python</text><text x="470" y="106" font-size="13" class="muted mono" text-anchor="end">4.7%</text></g>
+<g class="fade" style="animation-delay:0.70s"><circle cx="266" cy="131" r="6" fill="#5f5f5f"/><text x="280" y="136" font-size="14" font-weight="600">Java</text><text x="470" y="136" font-size="13" class="muted mono" text-anchor="end">4.5%</text></g>
+<g class="fade" style="animation-delay:0.78s"><circle cx="266" cy="161" r="6" fill="#4a4a4a"/><text x="280" y="166" font-size="14" font-weight="600">Shell</text><text x="470" y="166" font-size="13" class="muted mono" text-anchor="end">4.0%</text></g>
+<g class="fade" style="animation-delay:0.86s"><circle cx="266" cy="191" r="6" fill="#383838"/><text x="280" y="196" font-size="14" font-weight="600">Luau</text><text x="470" y="196" font-size="13" class="muted mono" text-anchor="end">3.0%</text></g>
 </svg>
