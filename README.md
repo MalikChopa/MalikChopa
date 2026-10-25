@@ -14,12 +14,17 @@
 
 ## Projets
 
-| Projet | Ce que c'est | Détails |
-|---|---|---|
-| [**Diapason**](https://github.com/MalikChopa/diapason) | Skill Claude Code : il cadre le projet avec toi, confie le travail à des sous-agents, vérifie lui-même les faits décisifs et laisse une passation reprenable. | Shell · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/diapason?label=version&style=flat-square&color=111111&labelColor=3a3a3a) |
-| [**Lyra Lyrics**](https://github.com/MalikChopa/lyra-lyrics) | App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music. | Swift · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/lyra-lyrics?label=version&style=flat-square&color=111111&labelColor=3a3a3a) |
-| **Kashmo** | Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté. | TypeScript · dépôt privé |
-| **IA en direct** | Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct. | Python · dépôt à venir |
+**[Diapason](https://github.com/MalikChopa/diapason)** · Shell · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/diapason?label=version&style=flat-square&color=111111&labelColor=3a3a3a)<br>
+Skill Claude Code : il cadre le projet avec toi, confie le travail à des sous-agents, vérifie lui-même les faits décisifs et laisse une passation reprenable.
+
+**[Lyra Lyrics](https://github.com/MalikChopa/lyra-lyrics)** · Swift · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/lyra-lyrics?label=version&style=flat-square&color=111111&labelColor=3a3a3a)<br>
+App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music.
+
+**Kashmo** · TypeScript · dépôt privé<br>
+Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté.
+
+**IA en direct** · Python · dépôt à venir<br>
+Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct.
 
 <details>
 <summary>Comment fonctionne Diapason</summary>
