@@ -88,7 +88,7 @@ flowchart LR
   </picture>
 </p>
 
-<p align="center"><sub>Dépôts publics et privés · mis à jour chaque jour par GitHub Actions</sub></p>
+<p align="center"><sub>Commits et contributions : tous dépôts, privés compris · dépôts, pull requests et langages : dépôts publics seulement · mis à jour chaque jour par GitHub Actions</sub></p>
 
 ## En coulisses (dépôts privés)
 
