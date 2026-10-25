@@ -20,8 +20,14 @@ Skill Claude Code : il cadre le projet avec toi, confie le travail à des sous-a
 **[Lyra Lyrics](https://github.com/MalikChopa/lyra-lyrics)** · Swift · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/lyra-lyrics?label=version&style=flat-square&color=111111&labelColor=3a3a3a)<br>
 App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music.
 
-**Kashmo** · TypeScript · dépôt privé<br>
+**Kashmo, plateforme Discord** · TypeScript · dépôt privé<br>
 Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté.
+
+**[Kashmo Studio](https://kashmo.fr)** · Roblox<br>
+Studio de jeux indépendant, dont *GOOD LUCK LOSER!*, un jeu de fête en bêta pour 2 à 6 joueurs.
+
+**[Valorant Chaos Overlay](https://github.com/MalikChopa/Valorant_Chaos_Overlay)** · Python<br>
+Overlay pour streamers : malus visuels aléatoires en pleine partie. Conçu pour rester passif (d'après son README).
 
 **IA en direct** · Python · dépôt à venir<br>
 Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct.
@@ -105,5 +111,4 @@ flowchart LR
 
 <p align="center">
   <img alt="Discord : chp.a" src="https://img.shields.io/badge/Discord-chp.a-111111?style=for-the-badge&logo=discord&logoColor=white&labelColor=3a3a3a">
-  <a href="mailto:amalik.moussaoui1710@gmail.com"><img alt="E-mail" src="https://img.shields.io/badge/E--mail-me%20contacter-111111?style=for-the-badge&logo=gmail&logoColor=white&labelColor=3a3a3a"></a>
 </p>
