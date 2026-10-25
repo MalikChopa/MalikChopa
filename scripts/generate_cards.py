@@ -13,7 +13,6 @@ import math
 import os
 import pathlib
 import random
-import textwrap
 import urllib.request
 from html import escape
 
@@ -21,27 +20,6 @@ USER = os.environ.get("GH_USER", "MalikChopa")
 DISPLAY_NAME = "Chopa"
 TOKEN = os.environ["GH_TOKEN"]
 OUT = pathlib.Path(__file__).resolve().parent.parent / "assets"
-
-# Dépôt mis en avant (public uniquement : on y renvoie par un lien).
-FEATURED = {
-    "diapason": "Skill Claude Code : il cadre le projet avec toi, confie le travail à des sous-agents, vérifie lui-même les faits décisifs et laisse une passation reprenable.",
-    "lyra-lyrics": "App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music.",
-}
-
-# Cartes sans lien (dépôt privé ou à venir) : écrites à la main, rien n'est lu sur GitHub.
-STATIC = {
-    "kashmo": ("Kashmo", "Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté.", "TypeScript", "Dépôt privé"),
-    "ia-en-direct": ("IA en direct", "Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct.", "Python", "Dépôt à venir"),
-}
-
-# Pile technique, rangée par famille (affichée en pastilles sobres).
-STACK = [
-    ("IA", ["Claude Code", "Diapason", "Stable-Baselines3"]),
-    ("Langages", ["TypeScript", "JavaScript", "Lua", "Luau", "Python", "Java", "Kotlin", "Dart", "Swift", "C#", "Bash"]),
-    ("Front", ["React", "Next.js", "Vue", "Astro", "Tailwind CSS", "Three.js", "Vite", "Flutter"]),
-    ("Back", ["Node.js", "discord.js", "Fastify", "Prisma", "MongoDB", "PostgreSQL", "SQLite", "Spring", "Docker", "Nginx"]),
-    ("Jeux et outils", ["FiveM", "Roblox Studio", "Git", "GitHub Actions", "VS Code", "pnpm"]),
-]
 
 # Fichiers de balisage / config qui faussent la répartition des langages.
 IGNORED_LANGS = {"HTML", "CSS", "SCSS", "EJS", "Dockerfile", "PowerShell", "Batchfile", "Makefile", "Objective-C"}
@@ -85,6 +63,7 @@ query($login: String!, $after: String) {
       pageInfo { hasNextPage endCursor }
       nodes {
         name isFork isPrivate stargazerCount forkCount description
+        releases { totalCount }
         primaryLanguage { name color }
         languages(first: 20, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name color } }
@@ -276,12 +255,12 @@ def terminal_card(t):
         ("out", "En ce moment : IA en direct, une IA qui apprend seule à conduire."),
     ]
     cw, x0, y0, lh = 9.2, 28, 92, 30
-    body, begin = [], 0.4
+    body, begin = [], 0.15
     defs = []
     for i, (kind, text) in enumerate(lines):
         y = y0 + i * lh
         n = len(text)
-        dur = max(0.5, n * 0.028)
+        dur = max(0.3, n * 0.011)
         values = ";".join(f"{(k * cw + 26):.0f}" for k in range(n + 1))
         defs.append(
             f'<clipPath id="c{i}"><rect x="{x0 - 4}" y="{y - 18}" width="0" height="26">'
@@ -294,7 +273,7 @@ def terminal_card(t):
             glyph = f'<text x="{x0}" y="{y}" font-size="15" class="mono" fill="{t["muted"]}">●</text>'
             txt = f'<text x="{x0 + 20}" y="{y}" font-size="15" class="mono">{escape(text)}</text>'
         body.append(f'<g clip-path="url(#c{i})">{glyph}{txt}</g>')
-        begin += dur + (0.55 if kind == "prompt" else 0.18)
+        begin += dur + (0.25 if kind == "prompt" else 0.1)
     h = y0 + len(lines) * lh + 24
     cursor_y = y0 + len(lines) * lh
     body.append(f'<g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.01s" begin="{begin:.2f}s" fill="freeze"/>'
@@ -336,8 +315,8 @@ def stats_card(t, user):
     since = user["createdAt"][:4]
     rows = [
         ("commit", "Commits (12 mois)", fmt(cc["totalCommitContributions"] + cc["restrictedContributionsCount"])),
-        ("pr", "Pull requests", fmt(user["pullRequests"]["totalCount"])),
-        ("repo", "Dépôts", fmt(user["repositories"]["totalCount"])),
+        ("repo", "Versions publiées", fmt(sum(r["releases"]["totalCount"] for r in user["repos"] if not r["isPrivate"] and not r["isFork"]))),
+        ("star", "Étoiles reçues", fmt(sum(r["stargazerCount"] for r in user["repos"] if not r["isPrivate"] and not r["isFork"]))),
         ("flame", "Série en cours", f"{current} j"),
         ("trophy", "Meilleure série", f"{longest} j"),
     ]
@@ -395,63 +374,11 @@ def langs_card(t, langs):
     return svg(w, h, "\n".join(body), t, "Langages les plus utilisés")
 
 
-def _card(t, name, desc, lang, right_svg):
-    w, h = 480, 150
-    lines = textwrap.wrap(desc, 62)[:3]
-    body = [
-        icon("repo", 24, 22, t["muted"]),
-        f'<text x="50" y="35" font-size="16" font-weight="700">{escape(name)}</text>',
-    ]
-    for i, line in enumerate(lines):
-        body.append(f'<text x="24" y="{66 + i * 20}" font-size="13" class="muted fade" '
-                    f'style="animation-delay:{0.1 + i * 0.08:.2f}s">{escape(line)}</text>')
-    y = h - 22
-    body.append(f'<circle cx="30" cy="{y - 4}" r="5" fill="{t["muted"]}"/><text x="44" y="{y}" font-size="13">{escape(lang)}</text>{right_svg(y)}')
-    return svg(w, h, "\n".join(body), t, name)
-
-
-def repo_card(t, repo, desc):
-    lang = (repo["primaryLanguage"] or {"name": "—"})["name"]
-    def right(y):
-        return (f'{icon("star", 150, y - 12, t["muted"])}<text x="172" y="{y}" font-size="13" class="muted">{repo["stargazerCount"]}</text>'
-                f'{icon("fork", 205, y - 12, t["muted"])}<text x="227" y="{y}" font-size="13" class="muted">{repo["forkCount"]}</text>')
-    return _card(t, repo["name"], desc, lang, right)
-
-
-def static_card(t, name, desc, lang, label):
-    def right(y):
-        return f'<text x="456" y="{y}" font-size="12" class="mono muted" text-anchor="end">{escape(label)}</text>'
-    return _card(t, name, desc, lang, right)
-
-
-def stack_card(t):
-    w, pad, label_w = 820, 24, 120
-    body, y = [], 36
-    for group, items in STACK:
-        x = pad + label_w
-        row_y = y
-        body.append(f'<text x="{pad}" y="{row_y + 5}" font-size="12" class="mono muted">{escape(group.upper())}</text>')
-        for it in items:
-            pw = len(it) * 7.4 + 22
-            if x + pw > w - pad:
-                x = pad + label_w
-                y += 34
-            accent = it in ("Claude Code", "Diapason")
-            stroke = t["accent"] if accent else t["border"]
-            body.append(f'<rect x="{x:.1f}" y="{y - 13}" width="{pw:.1f}" height="26" rx="5" fill="none" stroke="{stroke}"/>'
-                        f'<text x="{x + pw / 2:.1f}" y="{y + 5}" font-size="12.5" text-anchor="middle">{escape(it)}</text>')
-            x += pw + 8
-        y += 44
-    h = y - 10
-    return svg(w, h, "\n".join(body), t, "Pile technique")
-
-
 # ---------------------------------------------------------------- main
 
 def main():
     user = fetch()
     langs = languages(user["repos"])
-    by_name = {r["name"]: r for r in user["repos"]}
     OUT.mkdir(exist_ok=True)
     for theme, t in THEMES.items():
         grays = GRAYS[theme]
@@ -459,15 +386,9 @@ def main():
         files = {
             f"header-{theme}.svg": header(t, DISPLAY_NAME),
             f"about-{theme}.svg": terminal_card(t),
-            f"stack-{theme}.svg": stack_card(t),
             f"stats-{theme}.svg": stats_card(t, user),
             f"langs-{theme}.svg": langs_card(t, langs_theme),
         }
-        for name, desc in FEATURED.items():
-            if name in by_name and not by_name[name]["isPrivate"]:
-                files[f"repo-{name}-{theme}.svg"] = repo_card(t, by_name[name], desc)
-        for key, (title, desc, lang, label) in STATIC.items():
-            files[f"repo-{key}-{theme}.svg"] = static_card(t, title, desc, lang, label)
         for fname, content in files.items():
             (OUT / fname).write_text(content, encoding="utf-8")
     print(f"{len(THEMES)} thèmes générés dans {OUT} — langages : "

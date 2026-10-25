@@ -14,26 +14,12 @@
 
 ## Projets
 
-<p align="center">
-  <a href="https://github.com/MalikChopa/diapason"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-diapason-dark.svg">
-    <img alt="Diapason, skill Claude Code" src="assets/repo-diapason-light.svg" width="49%">
-  </picture></a>
-  <a href="https://github.com/MalikChopa/lyra-lyrics"><picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-lyra-lyrics-dark.svg">
-    <img alt="Lyra Lyrics, paroles synchronisées sur Mac" src="assets/repo-lyra-lyrics-light.svg" width="49%">
-  </picture></a>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-kashmo-dark.svg">
-    <img alt="Kashmo, plateforme Discord (dépôt privé)" src="assets/repo-kashmo-light.svg" width="49%">
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/repo-ia-en-direct-dark.svg">
-    <img alt="IA en direct, une IA apprend à conduire (dépôt à venir)" src="assets/repo-ia-en-direct-light.svg" width="49%">
-  </picture>
-</p>
-
-<p align="center"><sub>Diapason (version 1.7) et Lyra Lyrics (version 1.0.1) sont publics. Kashmo est un dépôt privé, IA en direct n'est pas encore publiée.</sub></p>
+| Projet | Ce que c'est | Détails |
+|---|---|---|
+| [**Diapason**](https://github.com/MalikChopa/diapason) | Skill Claude Code : il cadre le projet avec toi, confie le travail à des sous-agents, vérifie lui-même les faits décisifs et laisse une passation reprenable. | Shell · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/diapason?label=version&style=flat-square&color=111111&labelColor=3a3a3a) |
+| [**Lyra Lyrics**](https://github.com/MalikChopa/lyra-lyrics) | App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music. | Swift · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/lyra-lyrics?label=version&style=flat-square&color=111111&labelColor=3a3a3a) |
+| **Kashmo** | Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté. | TypeScript · dépôt privé |
+| **IA en direct** | Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct. | Python · dépôt à venir |
 
 <details>
 <summary>Comment fonctionne Diapason</summary>
@@ -68,27 +54,31 @@ flowchart LR
 
 ## Stack
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-    <img alt="Pile technique : IA, langages, front, back, jeux et outils" src="assets/stack-light.svg" width="820">
-  </picture>
-</p>
+| | |
+|---|---|
+| **IA** | Claude Code · Diapason · Stable-Baselines3 |
+| **Langages** | TypeScript · JavaScript · Lua · Luau · Python · Java · Kotlin · Dart · Swift · C# · Bash |
+| **Front** | React · Next.js · Vue · Astro · Tailwind CSS · Three.js · Vite · Flutter |
+| **Back** | Node.js · discord.js · Fastify · Prisma · MongoDB · PostgreSQL · SQLite · Spring · Docker · Nginx |
+| **Jeux et outils** | FiveM · Roblox Studio · Git · GitHub Actions · VS Code · pnpm |
 
 ## En chiffres
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/stats-dark.svg">
-    <img alt="Statistiques GitHub" src="assets/stats-light.svg" width="49%">
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/langs-dark.svg">
-    <img alt="Langages les plus utilisés" src="assets/langs-light.svg" width="49%">
+    <img alt="Statistiques GitHub" src="assets/stats-light.svg" width="500">
   </picture>
 </p>
 
-<p align="center"><sub>Commits et contributions : tous dépôts, privés compris · dépôts, pull requests et langages : dépôts publics seulement · mis à jour chaque jour par GitHub Actions</sub></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/langs-dark.svg">
+    <img alt="Langages les plus utilisés" src="assets/langs-light.svg" width="500">
+  </picture>
+</p>
+
+<p align="center"><sub>Commits et contributions : tous dépôts, privés compris · versions, étoiles et langages : dépôts publics seulement · mis à jour chaque jour par GitHub Actions</sub></p>
 
 ## En coulisses (dépôts privés)
 
