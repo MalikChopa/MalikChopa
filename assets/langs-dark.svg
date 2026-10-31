@@ -23,7 +23,7 @@
 <clipPath id="bar"><rect x="24" y="60" width="452" height="10" rx="5"/></clipPath>
 <style>@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }.grow { transform-origin: 24px 0; animation: grow 1.2s cubic-bezier(.3,.7,.2,1) both; }</style>
 <rect x="24" y="60" width="452" height="10" rx="5" fill="#232323"/>
-<g clip-path="url(#bar)"><g class="grow"><rect x="24.00" y="60" width="177.01" height="10" fill="#f2f2f2"/><rect x="200.41" y="60" width="172.35" height="10" fill="#d2d2d2"/><rect x="372.16" y="60" width="61.62" height="10" fill="#b3b3b3"/><rect x="433.18" y="60" width="43.42" height="10" fill="#959595"/></g></g>
+<g clip-path="url(#bar)"><g class="grow"><rect x="24.00" y="60" width="176.92" height="10" fill="#f2f2f2"/><rect x="200.32" y="60" width="172.49" height="10" fill="#d2d2d2"/><rect x="372.21" y="60" width="61.59" height="10" fill="#b3b3b3"/><rect x="433.20" y="60" width="43.40" height="10" fill="#959595"/></g></g>
 <g class="fade" style="animation-delay:0.30s"><circle cx="30" cy="101" r="6" fill="#f2f2f2"/><text x="44" y="106" font-size="14" font-weight="600">Swift</text><text x="234" y="106" font-size="13" class="muted mono" text-anchor="end">39.0%</text></g>
 <g class="fade" style="animation-delay:0.38s"><circle cx="30" cy="131" r="6" fill="#d2d2d2"/><text x="44" y="136" font-size="14" font-weight="600">Shell</text><text x="234" y="136" font-size="13" class="muted mono" text-anchor="end">38.0%</text></g>
 <g class="fade" style="animation-delay:0.46s"><circle cx="30" cy="161" r="6" fill="#b3b3b3"/><text x="44" y="166" font-size="14" font-weight="600">Python</text><text x="234" y="166" font-size="13" class="muted mono" text-anchor="end">13.5%</text></g>
