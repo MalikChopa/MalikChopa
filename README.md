@@ -14,23 +14,17 @@
 
 ## Projets
 
-**[Diapason](https://github.com/MalikChopa/diapason)** · Shell · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/diapason?label=version&style=flat-square&color=111111&labelColor=3a3a3a)<br>
-Skill Claude Code : il cadre le projet avec toi, confie le travail à des sous-agents, vérifie lui-même les faits décisifs et laisse une passation reprenable.
-
-**[Lyra Lyrics](https://github.com/MalikChopa/lyra-lyrics)** · Swift · MIT · ![version](https://img.shields.io/github/v/release/MalikChopa/lyra-lyrics?label=version&style=flat-square&color=111111&labelColor=3a3a3a)<br>
-App macOS : une petite fenêtre toujours au premier plan qui affiche les paroles synchronisées de Spotify ou d'Apple Music.
-
-**Kashmo, plateforme Discord** · TypeScript · dépôt privé<br>
-Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté.
-
-**[Kashmo Studio](https://kashmo.fr)** · Roblox<br>
-Studio de jeux indépendant, dont *GOOD LUCK LOSER!*, un jeu de fête en bêta pour 2 à 6 joueurs.
-
-**[Valorant Chaos Overlay](https://github.com/MalikChopa/Valorant_Chaos_Overlay)** · Python<br>
-Overlay pour streamers : malus visuels aléatoires en pleine partie. Conçu pour rester passif (d'après son README).
-
-**IA en direct** · Python · dépôt à venir<br>
-Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct.
+<!-- PROJETS:DEBUT -->
+<p align="center">
+  <a href="https://github.com/MalikChopa/huezz"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/huezz-dark.svg"><img alt="huezz : Générateur de palettes OKLCH : une couleur de base, 7 rôles, aperçu sur trois ma" src="assets/projets/huezz-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/sumi-niwa"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/sumi-niwa-dark.svg"><img alt="sumi-niwa : Jardin d&#x27;encre génératif en WebGPU : tu plantes, tu souffles, les saisons passen" src="assets/projets/sumi-niwa-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/diapason"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/diapason-dark.svg"><img alt="diapason : Skill Claude Code : ton projet mené par une équipe de sous-agents. Tu décides, e" src="assets/projets/diapason-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/lyra-lyrics"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/lyra-lyrics-dark.svg"><img alt="lyra-lyrics : App macOS : paroles synchronisées toujours au premier plan pour Spotify et Apple" src="assets/projets/lyra-lyrics-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/Valorant_Chaos_Overlay"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/valorant-chaos-overlay-dark.svg"><img alt="Valorant_Chaos_Overlay : Overlay passif pour streamers : malus visuels aléatoires en pleine partie de Val" src="assets/projets/valorant-chaos-overlay-light.svg" width="49%"></picture></a>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/kashmo-dark.svg"><img alt="Kashmo : Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de carte" src="assets/projets/kashmo-light.svg" width="49%"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/ia-en-direct-dark.svg"><img alt="IA en direct : Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web" src="assets/projets/ia-en-direct-light.svg" width="49%"></picture>
+</p>
+<!-- PROJETS:FIN -->
 
 <details>
 <summary>Comment fonctionne Diapason</summary>

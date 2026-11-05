@@ -13,6 +13,8 @@ import math
 import os
 import pathlib
 import random
+import textwrap
+import base64
 import urllib.request
 from html import escape
 
@@ -64,6 +66,8 @@ query($login: String!, $after: String) {
       nodes {
         name isFork isPrivate stargazerCount forkCount description
         releases { totalCount }
+        url homepageUrl pushedAt isArchived
+        latestRelease { tagName }
         primaryLanguage { name color }
         languages(first: 20, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name color } }
@@ -374,6 +378,141 @@ def langs_card(t, langs):
     return svg(w, h, "\n".join(body), t, "Langages les plus utilisés")
 
 
+# ---------------------------------------------------------------- projets (cartes + bloc du README)
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+MARK_A, MARK_B = "<!-- PROJETS:DEBUT -->", "<!-- PROJETS:FIN -->"
+MAX_VISIBLE = 8
+
+
+def load_config():
+    p = ROOT / "projects.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+def collect_projects(user, cfg):
+    """Dépôts publics (sauf forks, archivés, cachés) + projets sans lien, dans l'ordre voulu."""
+    hide = set(cfg.get("cacher", []))
+    tweaks = cfg.get("retouches", {})
+    pool = {}
+    for r in user["repos"]:
+        if r["isPrivate"] or r["isFork"] or r["isArchived"] or r["name"] in hide:
+            continue
+        tw = tweaks.get(r["name"], {})
+        pool[r["name"]] = dict(
+            name=r["name"], url=r["url"], desc=tw.get("desc") or r["description"] or "",
+            lang=(r["primaryLanguage"] or {}).get("name", ""), stars=r["stargazerCount"],
+            tag=(r["latestRelease"] or {}).get("tagName", ""), demo=r["homepageUrl"] or "",
+            pushed=r["pushedAt"], capture=tw.get("capture", ""), ancrage=tw.get("ancrage", "Min"), visuel=tw.get("visuel", ""), label="")
+    ordered = []
+    for n in cfg.get("a_la_une", []) + cfg.get("ordre", []):
+        if n in pool and pool[n] not in ordered:
+            ordered.append(pool[n])
+    if cfg.get("auto_decouverte", True):
+        ordered += sorted((p for p in pool.values() if p not in ordered), key=lambda p: p["pushed"], reverse=True)
+    for x in cfg.get("sans_lien", []):
+        ordered.append(dict(name=x["nom"], url="", desc=x["desc"], lang=x.get("langage", ""), stars=0,
+                            tag="", demo="", pushed="", capture="", ancrage="Min", visuel="", label=x.get("etiquette", "")))
+    featured = set(cfg.get("a_la_une", []))
+    for p in ordered:
+        p["featured"] = p["name"] in featured and bool(p["capture"] or p["visuel"])
+    return ordered
+
+
+def slug(name):
+    return "".join(c.lower() if c.isalnum() else "-" for c in name).strip("-")
+
+
+def schema_visual(t, w, h):
+    """Schéma de fonctionnement de Diapason (dessiné, pas une capture) : idée → cadrage → Diapason → agents → vérification → passation."""
+    y, bw, bh = h // 2, 74, 34
+    xs = [18, 98, 178]
+    out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    labels = ["Idée", "Cadrage", "Diapason"]
+    for i, x in enumerate(xs):
+        acc = i == 2
+        out.append(f'<rect x="{x}" y="{y - bh // 2}" width="{bw - 6}" height="{bh}" rx="5" fill="{t["accent"] if acc else "none"}" stroke="{t["accent"] if acc else t["border"]}"/>'
+                   f'<text x="{x + (bw - 6) / 2}" y="{y + 4}" font-size="11.5" text-anchor="middle" fill="{t["bg"] if acc else t["text"]}" font-weight="{700 if acc else 400}">{labels[i]}</text>')
+        if i < 2:
+            out.append(f'<path d="M{x + bw - 6} {y}h12" stroke="{t["muted"]}"/>')
+    # cinq agents
+    ax = 270
+    for k, name in enumerate(["chercheur", "concepteur", "exécutant", "testeur", "auditeur"]):
+        ay = y - 52 + k * 26
+        out.append(f'<path d="M{xs[2] + bw - 6} {y}L{ax} {ay}" stroke="{t["border"]}"/>'
+                   f'<rect x="{ax}" y="{ay - 10}" width="74" height="20" rx="4" fill="none" stroke="{t["border"]}"/>'
+                   f'<text x="{ax + 37}" y="{ay + 4}" font-size="10" text-anchor="middle" fill="{t["muted"]}">{name}</text>')
+    out.append(f'<path d="M{ax + 74} {y}h14" stroke="{t["muted"]}"/>'
+               f'<rect x="{ax + 88}" y="{y - bh // 2}" width="40" height="{bh}" rx="5" fill="none" stroke="{t["border"]}"/>'
+               f'<text x="{ax + 108}" y="{y + 4}" font-size="10" text-anchor="middle" fill="{t["text"]}">✓</text>')
+    return "".join(out)
+
+
+def project_card(t, p):
+    w = 400
+    thumb_h = 170 if p["featured"] else 0
+    h = thumb_h + 150
+    lines = textwrap.wrap(p["desc"], 46)[:3]
+    body, top = [], thumb_h
+    if thumb_h and p["visuel"] == "schema":
+        body.append(f'<clipPath id="th"><path d="M0 14a14 14 0 0 1 14-14h{w - 28}a14 14 0 0 1 14 14V{thumb_h}H0Z"/></clipPath>'
+                    f'<g clip-path="url(#th)">{schema_visual(t, w, thumb_h)}</g><path d="M0 {thumb_h}H{w}" stroke="{t["border"]}"/>')
+    elif thumb_h:
+        data = base64.b64encode((ROOT / p["capture"]).read_bytes()).decode()
+        body.append(f'<clipPath id="th"><path d="M0 14a14 14 0 0 1 14-14h{w - 28}a14 14 0 0 1 14 14V{thumb_h}H0Z"/></clipPath>'
+                    f'<image href="data:image/jpeg;base64,{data}" x="0" y="0" width="{w}" height="{thumb_h}" '
+                    f'preserveAspectRatio="xMidY{p["ancrage"]} slice" clip-path="url(#th)"/>'
+                    f'<path d="M0 {thumb_h}H{w}" stroke="{t["border"]}"/>')
+    body.append(icon("repo", 22, top + 20, t["muted"]))
+    body.append(f'<text x="46" y="{top + 33}" font-size="16" font-weight="700">{escape(p["name"])}</text>')
+    badge = p["label"] or p["tag"]
+    if badge:
+        body.append(f'<text x="{w - 20}" y="{top + 33}" font-size="12" class="mono muted" text-anchor="end">{escape(badge)}</text>')
+    for i, line in enumerate(lines):
+        body.append(f'<text x="22" y="{top + 62 + i * 19}" font-size="13" class="muted">{escape(line)}</text>')
+    y = top + 134
+    if p["lang"]:
+        body.append(f'<circle cx="28" cy="{y - 4}" r="5" fill="{t["muted"]}"/><text x="42" y="{y}" font-size="12.5">{escape(p["lang"])}</text>')
+    if p["stars"]:
+        body.append(f'{icon("star", 150, y - 12, t["muted"])}<text x="172" y="{y}" font-size="12.5" class="muted">{p["stars"]}</text>')
+    if p["demo"]:
+        body.append(f'<text x="{w - 20}" y="{y}" font-size="12" class="mono" fill="{t["accent"]}" text-anchor="end">démo en ligne ↗</text>')
+    return svg(w, h, "\n".join(body), t, p["name"])
+
+
+def write_projects(projects):
+    out = OUT / "projets"
+    out.mkdir(exist_ok=True)
+    for old in out.glob("*.svg"):
+        old.unlink()
+    for theme, t in THEMES.items():
+        for p in projects:
+            (out / f"{slug(p['name'])}-{theme}.svg").write_text(project_card(t, p), encoding="utf-8")
+
+
+def projects_block(projects):
+    def one(p):
+        pic = (f'<picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/{slug(p["name"])}-dark.svg">'
+               f'<img alt="{escape(p["name"])} : {escape(p["desc"][:80])}" src="assets/projets/{slug(p["name"])}-light.svg" width="49%"></picture>')
+        return f'<a href="{p["url"]}">{pic}</a>' if p["url"] else pic
+    visible, more = projects[:MAX_VISIBLE], projects[MAX_VISIBLE:]
+    html = '<p align="center">\n  ' + "\n  ".join(one(p) for p in visible) + "\n</p>"
+    if more:
+        html += ('\n\n<details>\n<summary>Tous les projets (' + str(len(projects)) + ')</summary>\n\n<p align="center">\n  '
+                 + "\n  ".join(one(p) for p in more) + "\n</p>\n\n</details>")
+    return html
+
+
+def update_readme(projects):
+    p = ROOT / "README.md"
+    s = p.read_text(encoding="utf-8")
+    if MARK_A not in s or MARK_B not in s:
+        print("README : repères PROJETS absents, bloc non mis à jour")
+        return
+    a, b = s.index(MARK_A) + len(MARK_A), s.index(MARK_B)
+    p.write_text(s[:a] + "\n" + projects_block(projects) + "\n" + s[b:], encoding="utf-8")
+
+
 # ---------------------------------------------------------------- main
 
 def main():
@@ -391,6 +530,10 @@ def main():
         }
         for fname, content in files.items():
             (OUT / fname).write_text(content, encoding="utf-8")
+    cfg = load_config()
+    projects = collect_projects(user, cfg)
+    write_projects(projects)
+    update_readme(projects)
     print(f"{len(THEMES)} thèmes générés dans {OUT} — langages : "
           + ", ".join(f"{n} {p:.0f}%" for n, p, _ in langs))
 
