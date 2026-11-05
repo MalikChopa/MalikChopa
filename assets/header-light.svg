@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" fill="none" role="img" aria-labelledby="t">
-<title id="t">Chopa, développeur full-stack</title>
+<title id="t">Chopa : des outils, des jeux et des petits mondes soignés</title>
 <style>
   text { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Ubuntu,'Helvetica Neue',Arial,sans-serif; }
   text:not([fill]) { fill: #111111; }
@@ -32,8 +32,8 @@
 </g>
 <text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="16"><tspan fill="#c2410c">❯</tspan> whoami</text>
 <text x="600" y="164" text-anchor="middle" class="name fade" style="animation-delay:.15s">Chopa</text>
-<text x="600" y="210" text-anchor="middle" class="sub muted fade" style="animation-delay:.35s">développeur full-stack · FiveM · Roblox · agents IA</text>
+<text x="600" y="210" text-anchor="middle" class="sub muted fade" style="animation-delay:.35s">des outils, des jeux et des petits mondes soignés</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">Claude Code · TypeScript · Lua · Swift<tspan fill="#c2410c" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">TypeScript · Swift · Lua · Claude Code<tspan fill="#c2410c" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>
 </svg>

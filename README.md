@@ -16,12 +16,15 @@
 
 <!-- PROJETS:DEBUT -->
 <p align="center">
-  <a href="https://github.com/MalikChopa/huezz"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/huezz-dark.svg"><img alt="huezz : Générateur de palettes OKLCH : une couleur de base, 7 rôles, aperçu sur trois ma" src="assets/projets/huezz-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/lullaby-lake"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/lullaby-lake-dark.svg"><img alt="lullaby-lake : Jeu de pêche zen en pixel art, dans le navigateur : on regarde, on respire, on r" src="assets/projets/lullaby-lake-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/sumi-niwa"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/sumi-niwa-dark.svg"><img alt="sumi-niwa : Jardin d&#x27;encre génératif en WebGPU : tu plantes, tu souffles, les saisons passen" src="assets/projets/sumi-niwa-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/huezz"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/huezz-dark.svg"><img alt="huezz : Générateur de palettes OKLCH : une couleur de base, 7 rôles, aperçu sur trois ma" src="assets/projets/huezz-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/diapason"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/diapason-dark.svg"><img alt="diapason : Skill Claude Code : ton projet mené par une équipe de sous-agents. Tu décides, e" src="assets/projets/diapason-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/lyra-lyrics"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/lyra-lyrics-dark.svg"><img alt="lyra-lyrics : App macOS : paroles synchronisées toujours au premier plan pour Spotify et Apple" src="assets/projets/lyra-lyrics-light.svg" width="49%"></picture></a>
   <picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/kashmo-dark.svg"><img alt="Kashmo : Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de carte" src="assets/projets/kashmo-light.svg" width="49%"></picture>
 </p>
+
+<p align="center"><sub><b>À essayer :</b> <a href="https://malikchopa.github.io/lullaby-lake/">lullaby-lake</a> · <a href="https://MalikChopa.github.io/sumi-niwa/">sumi-niwa</a> · <a href="https://malikchopa.github.io/huezz/">huezz</a></sub></p>
 <!-- PROJETS:FIN -->
 
 <details>

@@ -1,8 +1,9 @@
 {
   "_aide": "Liste manuelle : seuls les dépôts nommés dans « a_la_une » et « ordre » apparaissent (auto_decouverte = false). Pour en ajouter un : l'écrire dans « ordre » (ou « a_la_une » avec une capture). « retouches » règle la description et la capture. « en_attente » garde les projets retirés pour l'instant (IA en direct).",
   "a_la_une": [
-    "huezz",
+    "lullaby-lake",
     "sumi-niwa",
+    "huezz",
     "diapason",
     "lyra-lyrics"
   ],
@@ -28,6 +29,11 @@
     "lyra-lyrics": {
       "desc": "App macOS : paroles synchronisées toujours au premier plan pour Spotify et Apple Music.",
       "visuel": "lyra"
+    },
+    "lullaby-lake": {
+      "desc": "Jeu de pêche zen en pixel art, dans le navigateur : on regarde, on respire, on remplit son carnet.",
+      "visuel": "lullaby",
+      "demo": "https://malikchopa.github.io/lullaby-lake/"
     }
   },
   "sans_lien": [

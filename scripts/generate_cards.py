@@ -241,22 +241,23 @@ def header(t, name):
 </g>
 <text x="600" y="76" text-anchor="middle" class="mono muted fade" font-size="16"><tspan fill="{t['accent']}">❯</tspan> whoami</text>
 <text x="600" y="164" text-anchor="middle" class="name fade" style="animation-delay:.15s">{escape(name)}</text>
-<text x="600" y="210" text-anchor="middle" class="sub muted fade" style="animation-delay:.35s">développeur full-stack · FiveM · Roblox · agents IA</text>
+<text x="600" y="210" text-anchor="middle" class="sub muted fade" style="animation-delay:.35s">des outils, des jeux et des petits mondes soignés</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">Claude Code · TypeScript · Lua · Swift<tspan fill="{t['accent']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">TypeScript · Swift · Lua · Claude Code<tspan fill="{t['accent']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>"""
-    return svg(w, h, body, t, f"{name}, développeur full-stack")
+    return svg(w, h, body, t, f"{name} : des outils, des jeux et des petits mondes soignés")
 
 
 def terminal_card(t):
     """Session de terminal animée : les lignes se tapent l'une après l'autre."""
-    w = 820
+    w = 880
     lines = [
         ("prompt", 'whoami'),
         ("out", "Chopa, étudiant en BUT Informatique."),
-        ("out", "Je construis des agents IA : Diapason est mon premier projet du genre."),
-        ("out", "Côté dev : FiveM / GTA RP, jeux Roblox, bots Discord et SaaS en TypeScript."),
-        ("out", "En ce moment : IA en direct, une IA qui apprend seule à conduire."),
+        ("out", "Je fais des outils, des jeux et des petits mondes soignés, dans le navigateur et sur Mac."),
+        ("out", "Et des agents IA avec Claude Code : Diapason est mon premier projet du genre."),
+        ("out", "Dernier projet : Lullaby Lake, un jeu de pêche zen en pixel art."),
+        ("out", "Côté coulisses : FiveM, Roblox, bots Discord."),
     ]
     cw, x0, y0, lh = 9.2, 28, 92, 30
     body, begin = [], 0.15
@@ -291,7 +292,7 @@ def terminal_card(t):
               f'<text x="{w / 2}" y="26" text-anchor="middle" class="mono muted" font-size="13">chopa — zsh</text>')
     style = '<style>@keyframes blink { 50% { opacity: 0; } }</style>'
     inner = f'{style}<defs>{"".join(defs)}</defs>{chrome}' + "".join(body)
-    return svg(w, h, inner, t, "À propos de Chopa : étudiant en BUT Informatique, jeux, bots et agents IA")
+    return svg(w, h, inner, t, "À propos de Chopa : étudiant en BUT Informatique, outils, jeux et agents IA")
 
 
 ICONS = {
@@ -402,7 +403,7 @@ def collect_projects(user, cfg):
         pool[r["name"]] = dict(
             name=r["name"], url=r["url"], desc=tw.get("desc") or r["description"] or "",
             lang=(r["primaryLanguage"] or {}).get("name", ""), stars=r["stargazerCount"],
-            tag=(r["latestRelease"] or {}).get("tagName", ""), demo=r["homepageUrl"] or "",
+            tag=(r["latestRelease"] or {}).get("tagName", ""), demo=tw.get("demo") or r["homepageUrl"] or "",
             pushed=r["pushedAt"], capture=tw.get("capture", ""), ancrage=tw.get("ancrage", "Min"), visuel=tw.get("visuel", ""), label="")
     ordered = []
     for n in cfg.get("a_la_une", []) + cfg.get("ordre", []):
@@ -569,8 +570,31 @@ def sumi_visual(t, w, h):
     return "".join(out)
 
 
+def lullaby_visual(t, w, h):
+    """Lac de nuit en pixels : lune orange, reflet, ponton, pêcheur, canne et flotteur (dessiné, bords nets)."""
+    out = [f'<g shape-rendering="crispEdges"><rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    for x, y in ((40, 22), (96, 40), (150, 18), (214, 34), (352, 20), (372, 58), (30, 66), (180, 56)):
+        out.append(f'<rect x="{x}" y="{y}" width="2" height="2" fill="{t["muted"]}" opacity=".8"/>')
+    px = 4
+    for i, ww in enumerate((3, 5, 7, 7, 7, 7, 7, 5, 3)):          # lune en pixels
+        out.append(f'<rect x="{300 - ww * px / 2:.0f}" y="{22 + i * px}" width="{ww * px}" height="{px}" fill="{t["accent"]}"/>')
+    out.append(f'<rect x="0" y="94" width="{w}" height="{h - 94}" fill="{t["muted"]}" opacity=".12"/>')
+    for i, (x, y, ln) in enumerate(((20, 104, 40), (90, 112, 26), (140, 124, 46), (220, 106, 30), (330, 118, 36), (60, 140, 50), (176, 148, 34), (262, 138, 44), (350, 152, 30))):
+        out.append(f'<rect x="{x}" y="{y}" width="{ln}" height="2" fill="{t["muted"]}" opacity=".35"/>')
+    for i, y in enumerate((98, 106, 114, 124, 134)):               # reflet de la lune
+        out.append(f'<rect x="{300 - 14 + (i % 2) * 6}" y="{y}" width="{20 - i * 2}" height="2" fill="{t["accent"]}" opacity="{0.8 - i * .13:.2f}"/>')
+    out.append(f'<rect x="0" y="92" width="150" height="4" fill="{t["text"]}" opacity=".85"/>')   # ponton
+    for x in (14, 56, 98, 138):
+        out.append(f'<rect x="{x}" y="96" width="4" height="22" fill="{t["text"]}" opacity=".6"/>')
+    out.append(f'<rect x="116" y="68" width="8" height="8" fill="{t["text"]}"/><rect x="114" y="76" width="12" height="16" fill="{t["text"]}" opacity=".9"/>')  # pêcheur
+    for i in range(14):                                            # canne puis ligne
+        out.append(f'<rect x="{126 + i * 6}" y="{72 - i * 2 if i < 4 else 64 + (i - 4) * 3}" width="6" height="2" fill="{t["muted"]}"/>')
+    out.append(f'<rect x="204" y="100" width="4" height="4" fill="{t["accent"]}"/></g>')
+    return "".join(out)
+
+
 def draw_visual(t, kind, w, h):
-    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual}[kind](t, w, h)
+    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual, "lullaby": lullaby_visual}[kind](t, w, h)
 
 
 def project_card(t, p):
@@ -625,6 +649,10 @@ def projects_block(projects):
     if more:
         html += ('\n\n<details>\n<summary>Tous les projets (' + str(len(projects)) + ')</summary>\n\n<p align="center">\n  '
                  + "\n  ".join(one(p) for p in more) + "\n</p>\n\n</details>")
+    demos = [p for p in projects if p["demo"]]
+    if demos:
+        html += ('\n\n<p align="center"><sub><b>À essayer :</b> '
+                 + " · ".join(f'<a href="{p["demo"]}">{escape(p["name"])}</a>' for p in demos) + "</sub></p>")
     return html
 
 
