@@ -1,16 +1,15 @@
 {
-  "_aide": "Liste manuelle : seuls les dépôts nommés dans « a_la_une » et « ordre » apparaissent (auto_decouverte = false). Pour en ajouter un : l'écrire dans « ordre » (ou « a_la_une » avec une capture). « retouches » règle la description et la capture.",
+  "_aide": "Liste manuelle : seuls les dépôts nommés dans « a_la_une » et « ordre » apparaissent (auto_decouverte = false). Pour en ajouter un : l'écrire dans « ordre » (ou « a_la_une » avec une capture). « retouches » règle la description et la capture. « en_attente » garde les projets retirés pour l'instant (IA en direct).",
   "a_la_une": [
     "huezz",
     "sumi-niwa",
     "diapason",
     "lyra-lyrics"
   ],
-  "ordre": [
-    "Valorant_Chaos_Overlay"
-  ],
+  "ordre": [],
   "cacher": [
     "MalikChopa",
+    "Valorant_Chaos_Overlay",
     "max-panel"
   ],
   "retouches": {
@@ -28,11 +27,7 @@
     },
     "lyra-lyrics": {
       "desc": "App macOS : paroles synchronisées toujours au premier plan pour Spotify et Apple Music.",
-      "capture": "assets/thumbs/lyra-lyrics.jpg",
-      "ancrage": "Mid"
-    },
-    "Valorant_Chaos_Overlay": {
-      "desc": "Overlay passif pour streamers : malus visuels aléatoires en pleine partie de Valorant."
+      "visuel": "lyra"
     }
   },
   "sans_lien": [
@@ -40,14 +35,18 @@
       "nom": "Kashmo",
       "desc": "Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de cartes pour animer une communauté.",
       "langage": "TypeScript",
-      "etiquette": "dépôt privé"
-    },
+      "etiquette": "dépôt privé",
+      "visuel": "kashmo"
+    }
+  ],
+  "auto_decouverte": false,
+  "en_attente": [
     {
       "nom": "IA en direct",
       "desc": "Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web pour suivre ses progrès en quasi-direct.",
       "langage": "Python",
-      "etiquette": "à venir"
+      "etiquette": "à venir",
+      "visuel": "ia"
     }
-  ],
-  "auto_decouverte": false
+  ]
 }

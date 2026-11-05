@@ -412,10 +412,10 @@ def collect_projects(user, cfg):
         ordered += sorted((p for p in pool.values() if p not in ordered), key=lambda p: p["pushed"], reverse=True)
     for x in cfg.get("sans_lien", []):
         ordered.append(dict(name=x["nom"], url="", desc=x["desc"], lang=x.get("langage", ""), stars=0,
-                            tag="", demo="", pushed="", capture="", ancrage="Min", visuel="", label=x.get("etiquette", "")))
+                            tag="", demo="", pushed="", capture="", ancrage="Min", visuel=x.get("visuel", ""), label=x.get("etiquette", "")))
     featured = set(cfg.get("a_la_une", []))
     for p in ordered:
-        p["featured"] = p["name"] in featured and bool(p["capture"] or p["visuel"])
+        p["featured"] = bool(p["capture"] or p["visuel"])
     return ordered
 
 
@@ -448,15 +448,89 @@ def schema_visual(t, w, h):
     return "".join(out)
 
 
+def lyra_visual(t, w, h):
+    """Fenêtre de paroles flottante (dessinée, textes inventés) : ligne précédente, ligne en cours, ligne suivante, progression, commandes."""
+    cx, wx, wy, ww, wh = w / 2, 62, 24, w - 124, 104
+    return (f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>'
+            f'<rect x="{wx}" y="{wy}" width="{ww}" height="{wh}" rx="16" fill="{t["bg"]}" stroke="{t["border"]}"/>'
+            f'<text x="{cx}" y="{wy + 30}" font-size="11.5" text-anchor="middle" fill="{t["muted"]}" opacity=".55">chaque ligne glisse à sa place</text>'
+            f'<text x="{cx}" y="{wy + 58}" font-size="16.5" font-weight="700" text-anchor="middle" fill="{t["text"]}">la ligne en cours s\'allume</text>'
+            f'<text x="{cx}" y="{wy + 84}" font-size="11.5" text-anchor="middle" fill="{t["muted"]}" opacity=".55">synchronisée sur le morceau</text>'
+            f'<rect x="{wx + 28}" y="{wy + wh - 11}" width="{ww - 56}" height="2.5" rx="1.2" fill="{t["border"]}"/>'
+            f'<rect x="{wx + 28}" y="{wy + wh - 11}" width="{(ww - 56) * .42:.1f}" height="2.5" rx="1.2" fill="{t["accent"]}"/>'
+            f'<g fill="{t["muted"]}" transform="translate({cx} {wy + wh + 24})"><path d="M-30 -6l-9 6 9 6z"/><rect x="-5" y="-6" width="3.5" height="12" rx="1"/>'
+            f'<rect x="1.5" y="-6" width="3.5" height="12" rx="1"/><path d="M30 -6l9 6-9 6z"/></g>')
+
+
+def kashmo_visual(t, w, h):
+    """Bot Discord + jeu de cartes (dessiné) : fil de messages avec une commande, et trois cartes en éventail."""
+    out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    for i, (bar1, bar2, cmd) in enumerate([(110, 70, False), (130, 0, True), (90, 120, False)]):
+        y = 34 + i * 42
+        out.append(f'<circle cx="34" cy="{y}" r="11" fill="none" stroke="{t["border"]}"/><circle cx="34" cy="{y}" r="4" fill="{t["accent"] if cmd else t["muted"]}"/>')
+        if cmd:
+            out.append(f'<rect x="56" y="{y - 11}" width="108" height="22" rx="5" fill="none" stroke="{t["accent"]}"/>'
+                       f'<text x="110" y="{y + 4}" font-size="11.5" class="mono" text-anchor="middle" fill="{t["accent"]}">/ticket ouvrir</text>')
+        else:
+            out.append(f'<rect x="56" y="{y - 9}" width="{bar1}" height="5" rx="2.5" fill="{t["muted"]}" opacity=".55"/>')
+            if bar2:
+                out.append(f'<rect x="56" y="{y + 2}" width="{bar2}" height="5" rx="2.5" fill="{t["border"]}"/>')
+    for k, (ang, dx, hi) in enumerate([(-14, -52, False), (14, 52, False), (0, 0, True)]):
+        cx, cy = 300 + dx * .9, 88
+        out.append(f'<g transform="translate({cx} {cy}) rotate({ang})">'
+                   f'<rect x="-34" y="-50" width="68" height="100" rx="7" fill="{t["bg"]}" stroke="{t["accent"] if hi else t["border"]}" stroke-width="{1.4 if hi else 1}"/>'
+                   f'<circle cx="0" cy="-12" r="14" fill="none" stroke="{t["muted"]}" opacity=".6"/><circle cx="0" cy="-12" r="4" fill="{t["accent"] if hi else t["muted"]}"/>'
+                   f'<rect x="-22" y="14" width="44" height="4" rx="2" fill="{t["border"]}"/><rect x="-22" y="24" width="30" height="4" rx="2" fill="{t["border"]}"/></g>')
+    return "".join(out)
+
+
+def ia_visual(t, w, h):
+    """Circuit 2D vu de dessus (le vrai tracé du projet), voiture orange avec ses rayons, et la courbe du meilleur tour qui descend."""
+    ctrl = [(120, 123), (424, 62), (748, 56), (854, 201), (840, 298), (847, 431), (602, 504), (371, 389), (245, 474), (80, 389), (60, 244)]
+    sc, ox, oy = 0.34, 12, 6
+    pts = [(ox + (x - 55) * sc, oy + (y - 50) * sc + 6) for x, y in ctrl]
+    n = len(pts)
+    d = f"M{pts[0][0]:.1f} {pts[0][1]:.1f}"
+    segs = []
+    for i in range(n):
+        p0, p1, p2, p3 = pts[(i - 1) % n], pts[i], pts[(i + 1) % n], pts[(i + 2) % n]
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+        d += f" C{c1[0]:.1f} {c1[1]:.1f} {c2[0]:.1f} {c2[1]:.1f} {p2[0]:.1f} {p2[1]:.1f}"
+        segs.append((p1, c1, c2, p2))
+    def at(i, u):
+        p1, c1, c2, p2 = segs[i]; m = 1 - u
+        x = m**3 * p1[0] + 3 * m * m * u * c1[0] + 3 * m * u * u * c2[0] + u**3 * p2[0]
+        y = m**3 * p1[1] + 3 * m * m * u * c1[1] + 3 * m * u * u * c2[1] + u**3 * p2[1]
+        return x, y
+    (x0, y0), (x1, y1) = at(1, 0.5), at(1, 0.56)
+    ang = math.degrees(math.atan2(y1 - y0, x1 - x0))
+    rays = "".join(f'<line x1="0" y1="0" x2="{34 * math.cos(math.radians(a)):.1f}" y2="{34 * math.sin(math.radians(a)):.1f}" stroke="{t["muted"]}" stroke-width=".9" opacity=".7"/>' for a in (-60, -30, 0, 30, 60))
+    gx, gy = at(8, 0.4)
+    spark = "M" + " L".join(f"{318 + i * 3.6:.1f} {44 + 66 * (1 - math.exp(-i / 7)):.1f}" for i in range(21))
+    return (f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>'
+            f'<path d="{d}Z" fill="none" stroke="{t["border"]}" stroke-width="11" stroke-linejoin="round"/>'
+            f'<path d="{d}Z" fill="none" stroke="{t["muted"]}" stroke-width="1" stroke-dasharray="4 5" opacity=".5"/>'
+            f'<circle cx="{gx:.1f}" cy="{gy:.1f}" r="3.6" fill="{t["muted"]}" opacity=".7"/>'
+            f'<g transform="translate({x0:.1f} {y0:.1f}) rotate({ang:.1f})">{rays}<rect x="-6" y="-3.4" width="12" height="6.8" rx="2" fill="{t["accent"]}"/></g>'
+            f'<text x="318" y="30" font-size="9.5" class="mono" fill="{t["muted"]}">meilleur tour</text>'
+            f'<path d="M318 40V118H394" fill="none" stroke="{t["border"]}"/>'
+            f'<path d="{spark}" fill="none" stroke="{t["accent"]}" stroke-width="1.8" stroke-linecap="round"/>')
+
+
+def draw_visual(t, kind, w, h):
+    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual}[kind](t, w, h)
+
+
 def project_card(t, p):
     w = 400
     thumb_h = 170 if p["featured"] else 0
     h = thumb_h + 150
     lines = textwrap.wrap(p["desc"], 46)[:3]
     body, top = [], thumb_h
-    if thumb_h and p["visuel"] == "schema":
+    if thumb_h and p["visuel"]:
         body.append(f'<clipPath id="th"><path d="M0 14a14 14 0 0 1 14-14h{w - 28}a14 14 0 0 1 14 14V{thumb_h}H0Z"/></clipPath>'
-                    f'<g clip-path="url(#th)">{schema_visual(t, w, thumb_h)}</g><path d="M0 {thumb_h}H{w}" stroke="{t["border"]}"/>')
+                    f'<g clip-path="url(#th)">{draw_visual(t, p["visuel"], w, thumb_h)}</g><path d="M0 {thumb_h}H{w}" stroke="{t["border"]}"/>')
     elif thumb_h:
         data = base64.b64encode((ROOT / p["capture"]).read_bytes()).decode()
         body.append(f'<clipPath id="th"><path d="M0 14a14 14 0 0 1 14-14h{w - 28}a14 14 0 0 1 14 14V{thumb_h}H0Z"/></clipPath>'

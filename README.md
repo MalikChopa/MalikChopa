@@ -20,9 +20,7 @@
   <a href="https://github.com/MalikChopa/sumi-niwa"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/sumi-niwa-dark.svg"><img alt="sumi-niwa : Jardin d&#x27;encre génératif en WebGPU : tu plantes, tu souffles, les saisons passen" src="assets/projets/sumi-niwa-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/diapason"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/diapason-dark.svg"><img alt="diapason : Skill Claude Code : ton projet mené par une équipe de sous-agents. Tu décides, e" src="assets/projets/diapason-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/lyra-lyrics"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/lyra-lyrics-dark.svg"><img alt="lyra-lyrics : App macOS : paroles synchronisées toujours au premier plan pour Spotify et Apple" src="assets/projets/lyra-lyrics-light.svg" width="49%"></picture></a>
-  <a href="https://github.com/MalikChopa/Valorant_Chaos_Overlay"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/valorant-chaos-overlay-dark.svg"><img alt="Valorant_Chaos_Overlay : Overlay passif pour streamers : malus visuels aléatoires en pleine partie de Val" src="assets/projets/valorant-chaos-overlay-light.svg" width="49%"></picture></a>
   <picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/kashmo-dark.svg"><img alt="Kashmo : Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de carte" src="assets/projets/kashmo-light.svg" width="49%"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/ia-en-direct-dark.svg"><img alt="IA en direct : Une IA apprend seule à conduire une voiture sur un circuit 2D, avec une page web" src="assets/projets/ia-en-direct-light.svg" width="49%"></picture>
 </p>
 <!-- PROJETS:FIN -->
 
