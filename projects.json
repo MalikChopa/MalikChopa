@@ -15,11 +15,11 @@
   "retouches": {
     "huezz": {
       "desc": "Générateur de palettes OKLCH : une couleur de base, 7 rôles, aperçu sur trois maquettes et contrôle WCAG.",
-      "capture": "assets/thumbs/huezz.jpg"
+      "visuel": "huezz"
     },
     "sumi-niwa": {
       "desc": "Jardin d'encre génératif en WebGPU : tu plantes, tu souffles, les saisons passent.",
-      "capture": "assets/thumbs/sumi-niwa.jpg"
+      "visuel": "sumi"
     },
     "diapason": {
       "desc": "Skill Claude Code : ton projet mené par une équipe de sous-agents. Tu décides, elle fait le travail et le vérifie.",

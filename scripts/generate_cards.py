@@ -518,8 +518,59 @@ def ia_visual(t, w, h):
             f'<path d="{spark}" fill="none" stroke="{t["accent"]}" stroke-width="1.8" stroke-linecap="round"/>')
 
 
+def _mix(a, b, k):
+    """Mélange deux couleurs #rrggbb (k = part de b)."""
+    pa = [int(a[i:i + 2], 16) for i in (1, 3, 5)]
+    pb = [int(b[i:i + 2], 16) for i in (1, 3, 5)]
+    return "#" + "".join(f"{round(x + (y - x) * k):02x}" for x, y in zip(pa, pb))
+
+
+def huezz_visual(t, w, h):
+    """Palette de 7 rôles en gris avec un seul accent, deux maquettes filaires et une pastille de contraste (dessiné)."""
+    out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    for i in range(7):
+        col = t["accent"] if i == 3 else _mix(t["text"], t["bg"], i / 6 * 0.92)
+        out.append(f'<rect x="{26 + i * 26}" y="24" width="20" height="98" rx="5" fill="{col}"/>')
+    out.append(f'<text x="26" y="144" font-size="10.5" class="mono" fill="{t["muted"]}">oklch(0.64 0.19 45)</text>')
+    out.append(f'<rect x="218" y="26" width="118" height="80" rx="7" fill="{t["bg"]}" stroke="{t["border"]}"/>'
+               f'<path d="M218 40H336" stroke="{t["border"]}"/>'
+               f'<circle cx="228" cy="33" r="2" fill="{t["muted"]}"/><circle cx="236" cy="33" r="2" fill="{t["muted"]}"/>'
+               f'<rect x="230" y="52" width="62" height="7" rx="3.5" fill="{t["text"]}" opacity=".85"/>'
+               f'<rect x="230" y="66" width="86" height="4" rx="2" fill="{t["border"]}"/><rect x="230" y="75" width="70" height="4" rx="2" fill="{t["border"]}"/>'
+               f'<rect x="230" y="87" width="34" height="11" rx="5.5" fill="{t["accent"]}"/>')
+    out.append(f'<rect x="348" y="38" width="36" height="68" rx="9" fill="{t["bg"]}" stroke="{t["border"]}"/>'
+               f'<rect x="355" y="50" width="22" height="5" rx="2.5" fill="{t["text"]}" opacity=".8"/><rect x="355" y="61" width="22" height="3" rx="1.5" fill="{t["border"]}"/>'
+               f'<rect x="355" y="68" width="16" height="3" rx="1.5" fill="{t["border"]}"/><rect x="355" y="90" width="22" height="8" rx="4" fill="{t["accent"]}"/>')
+    out.append(f'<rect x="218" y="120" width="76" height="22" rx="11" fill="none" stroke="{t["accent"]}"/>'
+               f'<text x="256" y="135" font-size="11" class="mono" text-anchor="middle" fill="{t["accent"]}">AA 7,2:1 ✓</text>')
+    return "".join(out)
+
+
+def sumi_visual(t, w, h):
+    """Jardin d'encre : bambous à la ligne, soleil orange, lavis gris (dessiné)."""
+    out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>',
+           f'<path d="M0 142Q70 122 150 140T300 134T400 144V{h}H0Z" fill="{t["muted"]}" opacity=".14"/>',
+           f'<path d="M0 154Q90 140 190 152T400 150V{h}H0Z" fill="{t["muted"]}" opacity=".16"/>',
+           f'<circle cx="318" cy="52" r="17" fill="{t["accent"]}" opacity=".92"/>']
+    stalks = [(92, 18, 6.0, .9), (132, 44, 5.0, .65), (176, 64, 4.0, .45)]
+    for x, top, sw, op in stalks:
+        out.append(f'<path d="M{x} 156V{top}" stroke="{t["text"]}" stroke-width="{sw}" stroke-linecap="round" opacity="{op}"/>')
+        y = 150
+        while y > top + 14:
+            out.append(f'<path d="M{x - sw / 2 - 1.5} {y}h{sw + 3}" stroke="{t["bg2"]}" stroke-width="1.6" opacity=".9"/>')
+            y -= 26
+        for k, (dy, side) in enumerate([(top + 22, 1), (top + 50, -1), (top + 80, 1)]):
+            if dy > 140:
+                continue
+            ln = 34 - k * 4
+            out.append(f'<path d="M{x} {dy}q{side * ln * .55} {-9 - k * 2} {side * ln} {5}q{-side * ln * .5} {-1} {-side * ln} {-5}z" fill="{t["text"]}" opacity="{op * .8:.2f}"/>')
+    for cx, cy, r in ((236, 96, 1.6), (262, 118, 1.2), (214, 128, 1.4), (286, 104, 1.2)):
+        out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{t["muted"]}" opacity=".7"/>')
+    return "".join(out)
+
+
 def draw_visual(t, kind, w, h):
-    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual}[kind](t, w, h)
+    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual}[kind](t, w, h)
 
 
 def project_card(t, p):
