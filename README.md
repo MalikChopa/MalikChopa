@@ -62,11 +62,11 @@ flowchart LR
 
 | | |
 |---|---|
-| **IA** | Claude Code · Diapason · Stable-Baselines3 |
-| **Langages** | TypeScript · JavaScript · Lua · Luau · Python · Java · Kotlin · Dart · Swift · C# · Bash |
-| **Front** | React · Next.js · Vue · Astro · Tailwind CSS · Three.js · Vite · Flutter |
-| **Back** | Node.js · discord.js · Fastify · Prisma · MongoDB · PostgreSQL · SQLite · Spring · Docker · Nginx |
-| **Jeux et outils** | FiveM · Roblox Studio · Git · GitHub Actions · VS Code · pnpm |
+| **Le plus utilisé** | TypeScript · JavaScript · Node.js · React · Next.js · Tailwind CSS · Vite · Fastify · Lua (FiveM) · Luau (Roblox) · Claude Code |
+| **Aussi pratiqué** | Swift · Python · Three.js et WebGPU · Vue · Astro · discord.js · Prisma · MongoDB · SQLite · Git · GitHub Actions |
+| **Vu en cours ou en petit projet** | Java · Spring · PostgreSQL · Docker · Kotlin · Dart et Flutter · C# |
+
+<sub>Classé d'après ce que contiennent mes dépôts, publics et privés.</sub>
 
 ## En chiffres
 
@@ -93,7 +93,7 @@ flowchart LR
 | FiveM / GTA RP | Scripts Lua sur mesure (customs, recoil, médias) et outils pour serveurs RP |
 | Roblox | Jeux en Luau, en solo et en équipe |
 | Bots Discord et SaaS | Next.js, Fastify, Stripe, MongoDB, Socket.io |
-| Mobile | Flutter, Kotlin, Swift |
+| Mobile | Flutter, Kotlin |
 
 ## Contributions
 
