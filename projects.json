@@ -2,6 +2,8 @@
   "_aide": "Liste manuelle : seuls les dépôts nommés dans « a_la_une » et « ordre » apparaissent (auto_decouverte = false). Pour en ajouter un : l'écrire dans « ordre » (ou « a_la_une » avec une capture). « retouches » règle la description et la capture. « en_attente » garde les projets retirés pour l'instant (IA en direct).",
   "a_la_une": [
     "lullaby-lake",
+    "prismaze",
+    "gloam",
     "sumi-niwa",
     "huezz",
     "diapason",
@@ -11,7 +13,8 @@
   "cacher": [
     "MalikChopa",
     "Valorant_Chaos_Overlay",
-    "max-panel"
+    "max-panel",
+    "sol-0-essai"
   ],
   "retouches": {
     "huezz": {
@@ -31,9 +34,19 @@
       "visuel": "lyra"
     },
     "lullaby-lake": {
-      "desc": "Jeu de pêche zen en pixel art, dans le navigateur : on regarde, on respire, on remplit son carnet.",
+      "desc": "Jeu de pêche zen en HD-2D : des personnages en pixel art dans un petit monde en 3D, dans le navigateur.",
       "visuel": "lullaby",
       "demo": "https://malikchopa.github.io/lullaby-lake/"
+    },
+    "prismaze": {
+      "desc": "Jeu de réflexion en labyrinthe de lasers : oriente les miroirs, sépare la lumière, allume chaque cible.",
+      "visuel": "prismaze",
+      "demo": "https://malikchopa.github.io/prismaze/"
+    },
+    "gloam": {
+      "desc": "Jeu d'adresse de nuit : guide un essaim de lucioles à travers les ronces, frôle le danger pour monter ton combo.",
+      "visuel": "gloam",
+      "demo": "https://malikchopa.github.io/gloam/"
     }
   },
   "sans_lien": [

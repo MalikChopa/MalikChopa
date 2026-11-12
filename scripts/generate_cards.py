@@ -243,7 +243,7 @@ def header(t, name):
 <text x="600" y="164" text-anchor="middle" class="name fade" style="animation-delay:.15s">{escape(name)}</text>
 <text x="600" y="210" text-anchor="middle" class="sub muted fade" style="animation-delay:.35s">des outils, des jeux et des petits mondes soignés</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">TypeScript · Swift · Lua · Claude Code<tspan fill="{t['accent']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">TypeScript · JavaScript · Lua · Claude Code<tspan fill="{t['accent']}" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>"""
     return svg(w, h, body, t, f"{name} : des outils, des jeux et des petits mondes soignés")
 
@@ -256,7 +256,7 @@ def terminal_card(t):
         ("out", "Chopa, étudiant en BUT Informatique."),
         ("out", "Je fais des outils, des jeux et des petits mondes soignés, dans le navigateur et sur Mac."),
         ("out", "Et des agents IA avec Claude Code : Diapason est mon premier projet du genre."),
-        ("out", "Dernier projet : Lullaby Lake, un jeu de pêche zen en pixel art."),
+        ("out", "Derniers jeux : Prismaze, GLOAM et Lullaby Lake, dans le navigateur."),
         ("out", "Côté coulisses : FiveM, Roblox, bots Discord."),
     ]
     cw, x0, y0, lh = 9.2, 28, 92, 30
@@ -593,8 +593,63 @@ def lullaby_visual(t, w, h):
     return "".join(out)
 
 
+def prismaze_visual(t, w, h):
+    """Labyrinthe de lasers : un faisceau orange, deux miroirs, un prisme qui sépare la lumière, trois cibles (dessiné)."""
+    tx, ac, mu, bg = t["text"], t["accent"], t["muted"], t["bg2"]
+    out = [f'<rect width="{w}" height="{h}" fill="{bg}"/>']
+    for x in range(40, w, 40):                                     # quadrillage discret
+        out.append(f'<path d="M{x} 0V{h}" stroke="{mu}" opacity=".10"/>')
+    for y in range(34, h, 34):
+        out.append(f'<path d="M0 {y}H{w}" stroke="{mu}" opacity=".10"/>')
+    out.append(f'<rect x="262" y="118" width="46" height="34" fill="{mu}" opacity=".16"/>')   # mur
+    out.append(f'<path d="M0 132H118" stroke="{ac}" stroke-width="2.5"/>')                    # faisceau entrant
+    out.append(f'<path d="M118 132V66H196" stroke="{ac}" stroke-width="2.5" fill="none"/>')   # après le 1er miroir
+    out.append(f'<path d="M104 146L132 118" stroke="{tx}" stroke-width="5" stroke-linecap="round"/>')   # miroir 1
+    out.append(f'<path d="M104 80L132 52" stroke="{tx}" stroke-width="5" stroke-linecap="round"/>')     # miroir 2 (hors faisceau, décor)
+    out.append(f'<path d="M196 42L196 90L238 66Z" fill="{bg}" stroke="{tx}" stroke-width="2" stroke-linejoin="round"/>')   # prisme
+    for (x, y, c, op, lit) in ((350, 28, ac, 1, True), (356, 66, tx, .8, False), (350, 104, mu, .9, False)):
+        out.append(f'<path d="M238 66L{x - 9} {y}" stroke="{c}" stroke-width="2" opacity="{op}"/>')
+        out.append(f'<circle cx="{x}" cy="{y}" r="8" fill="{c if lit else bg}" stroke="{c}" stroke-width="2"/>')
+    return "".join(out)
+
+
+def _bramble(x, y0, y1, t, op):
+    """Une colonne de ronces : deux fils qui zigzaguent et quelques épines."""
+    pts_a, pts_b, thorns = [], [], []
+    y, i = y0, 0
+    while y <= y1:
+        d = 5 if i % 2 else -5
+        pts_a.append(f"{x + d} {y}")
+        pts_b.append(f"{x - d * .6:.1f} {y + 4}")
+        if i % 2 == 0:
+            thorns.append(f'<path d="M{x + d} {y}l{d * 2.2:.1f} -5" stroke="{t["text"]}" stroke-width="1.6" stroke-linecap="round"/>')
+        y += 8
+        i += 1
+    pts_c = [f"{x + (9 if k % 2 else -1):.0f} {y0 + k * 8 + 2}" for k in range(len(pts_a))]
+    return (f'<g opacity="{op}" fill="none" stroke="{t["text"]}" stroke-linejoin="round">'
+            f'<polyline points="{" ".join(pts_a)}" stroke-width="3.5"/>'
+            f'<polyline points="{" ".join(pts_b)}" stroke-width="2.5"/>'
+            f'<polyline points="{" ".join(pts_c)}" stroke-width="1.8"/>{"".join(thorns)}</g>')
+
+
+def gloam_visual(t, w, h):
+    """Nuit dans les ronces : une lanterne orange, son essaim de lucioles, un mur d'épines avec une ouverture (dessiné)."""
+    ac, tx, mu = t["accent"], t["text"], t["muted"]
+    out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    for x, y in ((30, 20), (120, 36), (200, 14), (292, 30), (372, 18), (60, 150), (178, 156), (330, 150)):
+        out.append(f'<circle cx="{x}" cy="{y}" r="1.2" fill="{mu}" opacity=".7"/>')
+    out.append(_bramble(326, 0, 62, t, .35) + _bramble(326, 100, h, t, .35))     # mur lointain
+    out.append(_bramble(226, 0, 52, t, .85) + _bramble(226, 112, h, t, .85))     # mur proche, ouverture au milieu
+    out.append(f'<circle cx="92" cy="82" r="38" fill="{ac}" opacity=".08"/><circle cx="92" cy="82" r="22" fill="{ac}" opacity=".14"/>')
+    for k, (dx, dy) in enumerate(((-18, -8), (-30, 6), (-44, -4), (-24, 20), (-40, 16), (-58, 8), (-52, -16), (-70, 2), (-34, -24), (-64, 22))):
+        out.append(f'<circle cx="{92 + dx}" cy="{82 + dy}" r="{2.4 - k * .1:.1f}" fill="{ac if k % 2 == 0 else tx}" opacity="{0.95 - k * .07:.2f}"/>')
+    out.append(f'<circle cx="92" cy="82" r="7" fill="{ac}"/><path d="M92 70V74" stroke="{tx}" stroke-width="2" stroke-linecap="round"/>')
+    out.append(f'<path d="M104 82H206" stroke="{ac}" stroke-width="1.5" stroke-dasharray="2 6" opacity=".6"/>')
+    return "".join(out)
+
+
 def draw_visual(t, kind, w, h):
-    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual, "lullaby": lullaby_visual}[kind](t, w, h)
+    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual, "lullaby": lullaby_visual, "prismaze": prismaze_visual, "gloam": gloam_visual}[kind](t, w, h)
 
 
 def project_card(t, p):

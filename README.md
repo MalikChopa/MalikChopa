@@ -16,7 +16,9 @@
 
 <!-- PROJETS:DEBUT -->
 <p align="center">
-  <a href="https://github.com/MalikChopa/lullaby-lake"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/lullaby-lake-dark.svg"><img alt="lullaby-lake : Jeu de pêche zen en pixel art, dans le navigateur : on regarde, on respire, on r" src="assets/projets/lullaby-lake-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/lullaby-lake"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/lullaby-lake-dark.svg"><img alt="lullaby-lake : Jeu de pêche zen en HD-2D : des personnages en pixel art dans un petit monde en " src="assets/projets/lullaby-lake-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/prismaze"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/prismaze-dark.svg"><img alt="prismaze : Jeu de réflexion en labyrinthe de lasers : oriente les miroirs, sépare la lumièr" src="assets/projets/prismaze-light.svg" width="49%"></picture></a>
+  <a href="https://github.com/MalikChopa/gloam"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/gloam-dark.svg"><img alt="gloam : Jeu d&#x27;adresse de nuit : guide un essaim de lucioles à travers les ronces, frôle " src="assets/projets/gloam-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/sumi-niwa"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/sumi-niwa-dark.svg"><img alt="sumi-niwa : Jardin d&#x27;encre génératif en WebGPU : tu plantes, tu souffles, les saisons passen" src="assets/projets/sumi-niwa-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/huezz"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/huezz-dark.svg"><img alt="huezz : Générateur de palettes OKLCH : une couleur de base, 7 rôles, aperçu sur trois ma" src="assets/projets/huezz-light.svg" width="49%"></picture></a>
   <a href="https://github.com/MalikChopa/diapason"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/diapason-dark.svg"><img alt="diapason : Skill Claude Code : ton projet mené par une équipe de sous-agents. Tu décides, e" src="assets/projets/diapason-light.svg" width="49%"></picture></a>
@@ -24,7 +26,7 @@
   <picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/kashmo-dark.svg"><img alt="Kashmo : Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de carte" src="assets/projets/kashmo-light.svg" width="49%"></picture>
 </p>
 
-<p align="center"><sub><b>À essayer :</b> <a href="https://malikchopa.github.io/lullaby-lake/">lullaby-lake</a> · <a href="https://MalikChopa.github.io/sumi-niwa/">sumi-niwa</a> · <a href="https://malikchopa.github.io/huezz/">huezz</a></sub></p>
+<p align="center"><sub><b>À essayer :</b> <a href="https://malikchopa.github.io/lullaby-lake/">lullaby-lake</a> · <a href="https://malikchopa.github.io/prismaze/">prismaze</a> · <a href="https://malikchopa.github.io/gloam/">gloam</a> · <a href="https://MalikChopa.github.io/sumi-niwa/">sumi-niwa</a> · <a href="https://malikchopa.github.io/huezz/">huezz</a></sub></p>
 <!-- PROJETS:FIN -->
 
 <details>
@@ -63,7 +65,7 @@ flowchart LR
 | | |
 |---|---|
 | **Le plus utilisé** | TypeScript · JavaScript · Node.js · React · Next.js · Tailwind CSS · Vite · Fastify · Lua (FiveM) · Luau (Roblox) · Claude Code |
-| **Aussi pratiqué** | Swift · Python · Three.js et WebGPU · Vue · Astro · discord.js · Prisma · MongoDB · SQLite · Git · GitHub Actions |
+| **Aussi pratiqué** | Swift · Python · Three.js · WebGL · WebGPU · Vue · Astro · discord.js · Prisma · MongoDB · SQLite · Git · GitHub Actions |
 | **Vu en cours ou en petit projet** | Java · Spring · PostgreSQL · Docker · Kotlin · Dart et Flutter · C# |
 
 <sub>Classé d'après ce que contiennent mes dépôts, publics et privés.</sub>

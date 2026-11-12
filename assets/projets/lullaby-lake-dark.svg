@@ -23,9 +23,9 @@
 <path transform="translate(22 190) scale(1.0)" d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z" fill="#8c8c8c"/>
 <text x="46" y="203" font-size="16" font-weight="700">lullaby-lake</text>
 <text x="380" y="203" font-size="12" class="mono muted" text-anchor="end">v1.0</text>
-<text x="22" y="232" font-size="13" class="muted">Jeu de pêche zen en pixel art, dans le</text>
-<text x="22" y="251" font-size="13" class="muted">navigateur : on regarde, on respire, on</text>
-<text x="22" y="270" font-size="13" class="muted">remplit son carnet.</text>
+<text x="22" y="232" font-size="13" class="muted">Jeu de pêche zen en HD-2D : des personnages en</text>
+<text x="22" y="251" font-size="13" class="muted">pixel art dans un petit monde en 3D, dans le</text>
+<text x="22" y="270" font-size="13" class="muted">navigateur.</text>
 <circle cx="28" cy="300" r="5" fill="#8c8c8c"/><text x="42" y="304" font-size="12.5">JavaScript</text>
 <text x="380" y="304" font-size="12" class="mono" fill="#ea580c" text-anchor="end">démo en ligne ↗</text>
 </svg>

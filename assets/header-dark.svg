@@ -34,6 +34,6 @@
 <text x="600" y="164" text-anchor="middle" class="name fade" style="animation-delay:.15s">Chopa</text>
 <text x="600" y="210" text-anchor="middle" class="sub muted fade" style="animation-delay:.35s">des outils, des jeux et des petits mondes soignés</text>
 <g class="fade" style="animation-delay:.55s">
-  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">TypeScript · Swift · Lua · Claude Code<tspan fill="#ea580c" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
+  <text x="600" y="252" text-anchor="middle" class="mono muted" font-size="14">TypeScript · JavaScript · Lua · Claude Code<tspan fill="#ea580c" style="animation: blink 1s steps(1) infinite"> ▍</tspan></text>
 </g>
 </svg>
