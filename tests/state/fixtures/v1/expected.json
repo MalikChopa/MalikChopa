@@ -1,0 +1,16 @@
+{
+ "stage2_storm": {
+  "events_first_sol": [
+   "storm"
+  ],
+  "replay3_core_sha256": "f29f23041de9b9d3351e18478045652a1f021d0bf6aa5c49d4c0c60f6611dbf1",
+  "sol": 46,
+  "stage": 2
+ },
+ "stage3_impact": {
+  "events_first_sol": [],
+  "replay3_core_sha256": "610127c4bebfa7f661ff2e511b78cc38627ba31172525fbfe12aaaf2916ae271",
+  "sol": 74,
+  "stage": 3
+ }
+}

@@ -1,0 +1,66 @@
+# PROVISIONAL fast stages (J9e, 2026-11-12): used ONLY by tests/fixtures/make_p2_fixtures.py to reach stages 4 and 5 quickly.
+# Differences from config/stages.toml: stage 3 min = 1 and stage 4 min = 1, threshold = 1 (the J8.5-0 placeholders of
+# learn_m4 / update_m5 learn nothing, so the real criterion of stage 4 is not reachable yet). world.toml is NOT overridden.
+# Never used in production. J10 regenerates tests/state/fixtures/v2/ with the real modules.
+recal_factor = 0.9
+recal_second = 5
+consolidation_reminder_hours = 168
+no_progress_cells = 2
+no_progress_drive_ticks = 60
+no_progress_sols = 3
+energy_min_cells = 20
+
+ari_min = 0.8
+ari_min_points = 30
+ari_min_named = 2
+
+[[stage]]
+id = 0
+name = "AWAKENING"
+metric = "couples"
+threshold = 200
+min_hours = 18
+target_hours = 36
+
+[[stage]]
+id = 1
+name = "I CAN MOVE"
+metric = "r2_stable"
+threshold = 0.70
+min_hours = 36
+target_hours = 36
+
+[[stage]]
+id = 2
+name = "LEARNING TO DRIVE"
+metric = "battery"
+threshold = 16
+min_hours = 360
+target_hours = 504
+
+[[stage]]
+id = 3
+name = "ENERGY"
+metric = "no_breakdown_streak"
+threshold = 20
+min_hours = 6
+target_hours = 504
+
+[[stage]]
+id = 4
+name = "SAMPLING"
+metric = "lift"
+threshold = -1.0     # with window = 1 the lift is >= -1 as soon as one sample is drilled (provisional, tests only)
+window = 1
+min_hours = 6
+target_hours = 504
+
+[[stage]]
+id = 5
+name = "ANALYSIS"
+metric = "ari_stable"
+threshold = 10
+min_hours = 1440
+target_hours = 2160
+
+# Hours are written for sols_per_day = 4 (the fast config keeps the former 4 sols per day: min_hours = 6 x former sols).

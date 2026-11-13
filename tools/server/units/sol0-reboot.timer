@@ -1,0 +1,9 @@
+[Unit]
+Description=Sol-0 reboot check every 15 minutes
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=timers.target

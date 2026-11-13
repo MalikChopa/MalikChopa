@@ -1,0 +1,1 @@
+# rover.live : aucune operation numpy supplementaire (views.py n'utilise que np.asarray)

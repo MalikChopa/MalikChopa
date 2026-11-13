@@ -1,0 +1,41 @@
+[Unit]
+Description=Sol-0 live web (SSE, read only)
+After=network-online.target
+
+[Service]
+Type=simple
+User=sol0web
+Group=sol0stream
+WorkingDirectory=/opt/sol0/app
+Environment=PYTHONPATH=src PYTHONHASHSEED=0 TZ=UTC HOME=/nonexistent
+ExecStart=/opt/sol0/venv/bin/python -m rover.live.web --config /etc/sol0/live.toml
+Restart=always
+RestartSec=5
+MemoryMax=512M
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictSUIDSGID=true
+LockPersonality=true
+IPAddressAllow=localhost
+IPAddressDeny=any
+UMask=0027
+CapabilityBoundingSet=
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectClock=true
+ProtectHostname=true
+TasksMax=128
+LimitNOFILE=1024
+ProtectProc=invisible
+ProcSubset=pid
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,1 @@
+Real saved states (world_seed 1 = a TEST seed, never a birth seed) copied from J10's long acceptance run (out/j10/st1/st4 = sol 148, stage 4 entry; st5 = sol 207, stage 5 entry). Used only by tests/live/test_e2e_page.py (INT2B). Do not edit.

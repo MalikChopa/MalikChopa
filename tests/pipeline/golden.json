@@ -1,0 +1,8 @@
+{
+ "pipeline.sol1_core": "sha256:d73f945e0a380f3fad8221390bd3186b38d2daa268145ca197aa2d3f7952b573",
+ "pipeline.sol1_det": "sha256:4366c8d4626b6bc9ba5b98adedda92dda639789e12bc7b85611f9bb9f824d07c",
+ "pipeline.sol1_gif_pixels": "sha256:4258d1b11e5d821545957150ef0adb41330b96ace35bc5734b414acdb78b409b",
+ "pipeline.sol1_journal": "sha256:c863a4d2ac3e4bf9d0041a8cf0b936d8f4edd3d8138d7dcc4e00e3e8e5d14556",
+ "pipeline.sol1_map_pixels": "sha256:f64888f91de0505f3966102120e9960cfb1c457639c5d33e8036d67c2b4df639",
+ "pipeline.sol1_svg": "sha256:f2bb9d51519bd60273ec414b3ac03cce833750428d0191b9d21e6887d06740ba"
+}

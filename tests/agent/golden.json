@@ -1,0 +1,17 @@
+{
+ "agent.camera_night_stage2": "sha256:0e790b8b5acc3ba5bbe588dbc8737bbf3adf14d2134a8c78d82feae2f70eacf3",
+ "agent.camera_night_stage3": "sha256:b16411a266834e79925be031078cfd37acaf4a188c99cce4c19237f539144875",
+ "agent.camera_stage0_b1": "sha256:c1190dd8cbe1d3ec69c91286581eb32dcd4573af632fdaded9667122e765fc74",
+ "agent.camera_stage0_b12": "sha256:01ca6409f708916340fe7ca0a1bb0af60054f8197228a3711a7189f764783b71",
+ "agent.camera_stage0_b96": "sha256:11bc61edf1c902c411915cef0fd3a0b89f56fe89afc2f2db24c8d0b612fad408",
+ "agent.camera_stage2_b1": "sha256:542dfea2fd6f78c1b87cce362b922dd80742488f38a288a077e85b7a4265acbd",
+ "agent.camera_stage2_b12": "sha256:f8263579e819f7715aa26e00479cab70b28e780efae2c94ae6c1108982cfc15c",
+ "agent.camera_stage3_b1": "sha256:9f59d55e28178a5e3bf4bb25b6882aca895377f1c9b899cb1fc3711be2d2d923",
+ "agent.camera_stage3_b12": "sha256:f33c199caf54a9572bf86f040d3d7f8a0ad555ab2eb48a8b0690c1c3d473cdb6",
+ "agent.camera_stage3_b96": "sha256:1240000d5f95480da15f6fefff857537c5ff53f8fa7bab5ccd7c7db8f0820089",
+ "agent.camera_stage4_b1": "sha256:3f0f10de2e5c9544fdfd6f5cfca718baa342c1125d1f26cdfd6f70f6d8be7319",
+ "agent.camera_stage4_b12": "sha256:8f96649d1e7bdad4ea6776d1c214567c3643e1c05fe4110672e7b4d91565ece4",
+ "agent.camera_storm_stage2": "sha256:5d19ee6f7087e90cb50b75465ce31c70a5da1fe7875e1a24fbe58d0ffff3acd9",
+ "agent.camera_storm_stage3": "sha256:d4866a473b55a88d27241d6239fda89af9fc1d36c2c0944932a91027b37f3474",
+ "agent.physics_300": "sha256:e3d21328af3efc46784cb9e16760cee9f12186fb9ca521fa124c069bd1c28007"
+}

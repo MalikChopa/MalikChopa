@@ -1,0 +1,43 @@
+[Unit]
+Description=Sol-0 live engine
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+NotifyAccess=main
+User=sol0
+Group=sol0
+SupplementaryGroups=sol0stream
+WorkingDirectory=/opt/sol0/app
+Environment=PYTHONPATH=src PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 TZ=UTC HOME=/var/lib/sol0
+ExecStartPre=/opt/sol0/app/tools/server/ntp_check.sh
+ExecStart=/opt/sol0/venv/bin/python -m rover live run --config /etc/sol0/live.toml
+Restart=always
+RestartSec=10
+WatchdogSec=180
+MemoryMax=2500M
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictSUIDSGID=true
+LockPersonality=true
+ReadWritePaths=/var/lib/sol0 /var/lib/sol0-stream
+UMask=0027
+CapabilityBoundingSet=
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectClock=true
+ProtectHostname=true
+TasksMax=256
+
+[Install]
+WantedBy=multi-user.target

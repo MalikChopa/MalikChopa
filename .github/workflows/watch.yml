@@ -1,0 +1,39 @@
+name: watch
+# Alert only: reads, compares, goes red. Never plays a sol, never writes (LIVE-DESIGN 8.4).
+on:
+  schedule:
+    - cron: "41 3,15 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sol-0-watch
+  cancel-in-progress: false
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      EXPECTED_LIVE_SHA: ${{ vars.LIVE_PAGE_SHA }}
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - name: collect
+        run: |
+          set -euo pipefail
+          gh api -H "Accept: application/vnd.github.raw" "repos/$REPO/contents/status.json?ref=state" > "$RUNNER_TEMP/status.json"
+          gh api "repos/$REPO" -q .size > "$RUNNER_TEMP/size_kb"
+          gh api "repos/$REPO/git/ref/heads/live-page" -q .object.sha > "$RUNNER_TEMP/live_sha" 2>/dev/null || : > "$RUNNER_TEMP/live_sha"
+      - name: watch
+        run: |
+          python tools/ci/watch.py --status "$RUNNER_TEMP/status.json" --size-kb "$(cat "$RUNNER_TEMP/size_kb")" \
+            --live-sha "$(cat "$RUNNER_TEMP/live_sha")" --expected-sha "$EXPECTED_LIVE_SHA"

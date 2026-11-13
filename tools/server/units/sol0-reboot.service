@@ -1,0 +1,6 @@
+[Unit]
+Description=Sol-0 reboot if required, only when the engine is idle
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sol0/app/tools/server/reboot_check.py --reboot
