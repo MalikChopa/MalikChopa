@@ -92,3 +92,17 @@ def test_actions_mode_unchanged_without_the_new_variables(env):
     assert env.publish(sha="").returncode == 0
     who = env.g(env.tmp, "--git-dir", str(env.remote), "log", "-1", "--format=%an", env.remote_ref("refs/heads/state")).stdout.strip()
     assert who == "github-actions[bot]"
+
+
+def test_server_mode_records_the_pushed_commit_so_the_next_publication_is_accepted(env):
+    """Real server, 2026-11-13: publisher.py passes the same published.sha to every run and expects publish.sh to write
+    the pushed state commit there. Without it, the lease of the 2nd publication expects an absent branch and is refused."""
+    from pathlib import Path
+    script = Path(__file__).resolve().parents[2] / "tools" / "ci" / "publish.sh"
+    shafile = env.tmp / "published.sha"          # never written by the test: only publish.sh fills it
+    e = {**os.environ, **env.base_env, **IDENT}
+    for sol in (1, 2, 3):
+        env.make_out(sol=sol, payload=str(sol))
+        r = subprocess.run(["bash", str(script), "_out", str(shafile)], cwd=str(env.work), env=e, capture_output=True, text=True)
+        assert r.returncode == 0, (sol, r.stdout + r.stderr)
+        assert shafile.read_text().strip() == env.remote_ref("refs/heads/state"), sol

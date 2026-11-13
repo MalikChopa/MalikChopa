@@ -12,6 +12,9 @@ Group=sol0
 SupplementaryGroups=sol0stream
 WorkingDirectory=/opt/sol0/app
 Environment=PYTHONPATH=src PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 TZ=UTC HOME=/var/lib/sol0
+# publish.sh calls `python` (SEC-01): the venv first; /usr/local/bin keeps the python -> python3 link of the kit as a fallback.
+# Read by systemd at the next start of the engine only (a daemon-reload does not change a running process).
+Environment=PATH=/opt/sol0/venv/bin:/usr/local/bin:/usr/bin:/bin
 ExecStartPre=/opt/sol0/app/tools/server/ntp_check.sh
 ExecStart=/opt/sol0/venv/bin/python -m rover live run --config /etc/sol0/live.toml
 Restart=always
@@ -38,6 +41,8 @@ RestrictRealtime=true
 ProtectClock=true
 ProtectHostname=true
 TasksMax=256
+# CPU share (SEC-24): the engine first (Caddy 100, web 50).
+CPUWeight=1000
 
 [Install]
 WantedBy=multi-user.target

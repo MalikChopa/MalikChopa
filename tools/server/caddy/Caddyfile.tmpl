@@ -8,21 +8,101 @@
 		}
 	}
 }
-live.@DOMAIN@ {
-	@api path /stream /now.json /sol.json /health
-	handle @api {
-		reverse_proxy 127.0.0.1:4180 {
-			flush_interval -1
-			header_up X-Forwarded-For {remote_host}
-		}
+# The page (built by install.sh into /opt/sol0/page-releases/<sha>, linked at /opt/sol0/page).
+# encode only here: never in front of /stream (no buffering of the SSE flow).
+# Images are revalidated once a day, everything else (HTML, JS, CSS, JSON: names are not hashed) on every load (SEO plan).
+# Full CSP as an HTTP header (SEC-15, SEC-29): the meta of the page is kept for the GitHub Pages copy.
+(sol0page) {
+	@hidden {
+		path_regexp (^|/)\.
+		not path /.well-known/security.txt
 	}
-	handle {
+	handle @hidden {
 		respond 404
 	}
+	handle {
+		root * /opt/sol0/page
+		encode zstd gzip
+		@img path /about/img/* /icons/* /favicon.ico /og/*
+		@notimg not path /about/img/* /icons/* /favicon.ico /og/*
+		header @img Cache-Control "public, max-age=86400"
+		header @notimg Cache-Control "no-cache"
+		# Intro video (media/*.mp4, fixed name: no-cache like the rest, revalidated). Type forced; ranges are native to
+		# file_server; encode's default covers text-based types only, so video/mp4 is never compressed.
+		@mp4 path *.mp4
+		header @mp4 Content-Type "video/mp4"
+		header X-Frame-Options DENY
+		header Content-Security-Policy "@CSP@"
+		header Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		file_server
+	}
+}
+# Security headers on every answer. One deletion (-Server) defers the whole block to write time; an error answer is
+# written outside the normal chain, hence the same import inside handle_errors (SEC-17).
+(sol0sec) {
 	header {
-		Strict-Transport-Security "max-age=31536000"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
 		X-Content-Type-Options nosniff
 		Referrer-Policy no-referrer
 		-Server
 	}
 }
+# GET and HEAD only (SEC-02, SEC-18): any other method gets 405 from Caddy, before any page, file or proxy.
+(sol0methods) {
+	@badmethod not method GET HEAD
+	handle @badmethod {
+		header Allow "GET, HEAD"
+		respond 405
+	}
+}
+# /.well-known/security.txt (SEC-28), written by install.sh into /opt/sol0/site-files.
+(sol0wellknown) {
+	@sectxt {
+		path /.well-known/security.txt
+		method GET HEAD
+	}
+	handle @sectxt {
+		root * /opt/sol0/site-files
+		rewrite * /security.txt
+		file_server
+	}
+}
+# robots.txt of live.<domain> (SEO plan): the API is never crawled; served before the page or the move to the apex.
+(sol0robotslive) {
+	@robots {
+		path /robots.txt
+		method GET HEAD
+	}
+	handle @robots {
+		root * /opt/sol0/site-files
+		rewrite * /robots-live.txt
+		file_server
+	}
+}
+live.@DOMAIN@ {
+	@api {
+		path /stream /now.json /sol.json /health
+		method GET HEAD
+	}
+	handle @api {
+		header X-Robots-Tag noindex
+		# keepalive off (SEC-02): a fresh upstream connection per request, closed after the answer, so the unread body
+		# of one request can never be read as the start of the next one (HTTP desync).
+		reverse_proxy 127.0.0.1:4180 {
+			transport http {
+				keepalive off
+			}
+			flush_interval -1
+			header_up X-Forwarded-For {remote_host}
+		}
+@@LIVE_CORS@@
+	}
+	import sol0robotslive
+	import sol0wellknown
+	import sol0methods
+@@LIVE_REST@@
+	import sol0sec
+@@ERRORS@@
+}
+@@APEX@@
+@@HTTP@@

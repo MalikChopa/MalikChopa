@@ -1,0 +1,7 @@
+# live.@DOMAIN@ : the page may be crawled, the live API never (it is read-only, but a crawler would hold stream slots).
+User-agent: *
+Disallow: /stream
+Disallow: /now.json
+Disallow: /sol.json
+Disallow: /health
+@APEXONLY@Sitemap: https://@DOMAIN@/sitemap.xml

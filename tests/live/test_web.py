@@ -1,6 +1,7 @@
 import ast
 import http.client
 import json
+import re
 import socket
 import subprocess
 import sys
@@ -84,7 +85,7 @@ def test_health_now_sol_and_cors(server):
     assert "phase" in j and "next" in j          # L3A contract: reboot_check reads them at top level
     assert h["access-control-allow-origin"] == ORIGIN and h["vary"] == "Origin" and "access-control-allow-credentials" not in h
     etag = h["etag"]
-    assert etag == '"5-2"'
+    assert re.fullmatch(r'"[0-9a-f]+-0-0"', etag)       # SEC-22: "<boot>-<seq>-<streams_full>"; primed lines are state, seq 0
     assert get(port, "/now.json", {"X-Forwarded-For": "203.0.113.9"})[0] == 429          # 1 request / 3 s per key
     assert get(port, "/now.json", {"X-Forwarded-For": "203.0.113.10", "If-None-Match": etag})[0] == 304
     code, h, _b = get(port, "/now.json", {"X-Forwarded-For": "203.0.113.11", "Origin": "https://evil.example"})

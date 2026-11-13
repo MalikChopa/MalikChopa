@@ -32,7 +32,11 @@ RestrictNamespaces=true
 RestrictRealtime=true
 ProtectClock=true
 ProtectHostname=true
-TasksMax=128
+# one thread per connection (ThreadingHTTPServer): sse_max 200 + reserved_threads 20 + 40 + 8 (SEC-04, test_server_kit)
+TasksMax=512
+# CPU share (SEC-24): never more than one core, below the engine
+CPUWeight=50
+CPUQuota=100%
 LimitNOFILE=1024
 ProtectProc=invisible
 ProcSubset=pid

@@ -134,12 +134,14 @@ test('M4 a stream with no sol line at all: no exception, no image, the bare canv
   assert.ok(hasText(b, 160, 6, 'SOL 0009', Con.hud(10)));
   v.feed({e: 'phase', ph: 'learn'}, T + 7000);                                  // pause view over the bare canvas
   assert.doesNotThrow(() => draw(v.S));
-  const line = Live.lineText(v.S, assets.i18n.en.line, assets.params);          // the text line of app.js (live-rc13: Live.lineText)
+  // the status line of app.js (live-rc13: Live.lineText; page v2: Live.barLine, `SOL n · hh:mm · activity`, DESIGN.md §5)
+  const line = Live.barLine(v.S, {page: true});
   assert.ok(!/null/.test(line) && /^SOL 9 /.test(line), line);
   const src = fs.readFileSync(path.join(__dirname, '..', '..', 'pages', 'live', 'app.js'), 'utf8');
-  assert.ok(src.includes("$('line').textContent = Live.lineText(S, T().line, assets.params);"));
+  assert.ok(src.includes("$('line').textContent = Live.barLine(S, o);"));
   const q0 = Live.newView();                                                    // no sol, no tick: `--`, never "null"
-  assert.strictEqual(Live.lineText(q0, assets.i18n.en.line, assets.params), 'SOL -- · --:-- · -- · BATTERY --% · -- cm/s');
+  assert.strictEqual(Live.barLine(q0, {page: true}), 'SOL -- · --:-- · --');
+  assert.strictEqual(Live.lineText(q0, 'SOL {s} · {hh}:{mm} · {mode} · BATTERY {b}% · {v} cm/s', assets.params), 'SOL -- · --:-- · -- · BATTERY --% · -- cm/s');
   const q = Live.newView();                                                     // a tick without any sol at all: still no "null"
   Live.applyEvent(q, Object.assign(CTICK(0), {s: undefined}), T);
   assert.strictEqual(q.sol, null);
@@ -225,7 +227,8 @@ test('M1 a cut of the visitor\'s link mid-episode, reconnected 5 s later: CONNEC
   o.onHttp(503); o.onLost();
   assert.strictEqual(o.state, 'SERVER BUSY');
   const src = fs.readFileSync(path.join(__dirname, '..', '..', 'pages', 'live', 'app.js'), 'utf8');
-  assert.ok(/es\.onerror = function \(\) \{ es\.close\(\); es = null; clearTimeout\(openTimer\); link\.onLost\(\); banner\(\); probe\(\); \};/.test(src));
+  // SEC-04 (secpage): the cut is also counted (link.onStreamError) before onLost, for SERVER BUSY after repeated stream failures
+  assert.ok(/es\.onerror = function \(\) \{ es\.close\(\); es = null; clearTimeout\(openTimer\); link\.onStreamError\(\); link\.onLost\(\); banner\(\); probe\(\); \};/.test(src));
 });
 
 test('M5 fresh restart then a fresh status `episode` before any fresh tick: RESUMING (FR REPRISE), panel RESUMING, not WAITING', () => {
@@ -277,7 +280,8 @@ test('M5 fresh restart then a fresh status `episode` before any fresh tick: RESU
   x.feed({e: 'phase', ph: 'hold', why: 'check'}, tr + 82_000);
   assert.strictEqual(x.label(tr + 82_001), 'ENGINE HOLD');
   const src = fs.readFileSync(path.join(__dirname, '..', '..', 'pages', 'live', 'app.js'), 'utf8');
-  assert.ok(src.includes("(st === 'RESUMING' ? Live.resumeText(S, lang) : null)"));
+  // page v2: the same wiring, with the page's table (i18n.json) as 4th argument
+  assert.ok(/st === 'RESUMING' \? Live\.resumeText\(S, lang, o\)/.test(src));
 });
 
 test('data age = max(age of the last tick, age of the drawn image), never under either; no image: the tick\'s', () => {

@@ -1,0 +1,9 @@
+# Plain HTTP (port 80): only a 308 to the same host in HTTPS, without the Server banner (SEC-17). An explicit http://
+# site replaces Caddy's automatic 308 for these hosts; ACME HTTP challenges are answered by Caddy before any route.
+@HTTPHOSTS@ {
+	header {
+		Location https://{host}{uri}
+		-Server
+	}
+	respond 308
+}

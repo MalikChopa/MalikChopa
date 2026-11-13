@@ -112,15 +112,24 @@ test('Python-compatible number formatting (half-even ties, signs)', () => {
   assert.strictEqual(Con.fix(2.675, 2), '2.67'); assert.strictEqual(Con.fix(12.3456, 1), '12.3');
 });
 
-test('page weight <= 200 KB, no third-party script, no URL outside the configuration, no cookie/storage', () => {
-  let total = 0;
-  for (const f of fs.readdirSync(PAGE)) {
-    const txt = fs.readFileSync(path.join(PAGE, f), 'utf8'); total += Buffer.byteLength(txt);
+test('page weight (page v2 budgets, DESIGN.md §9.4), no third-party script, no URL outside the configuration, no cookie/storage', () => {
+  // live-rc13: one 200 KB cap for the whole folder; page v2: JS + CSS <= 150 KB, JSON <= 40 KB, HTML sources (index.html + the two
+  // explainer fragments) <= 250 KB; the explainer images are checked by tools/live/build_page.py (tests/live/test_assets.py)
+  const sizes = {code: 0, json: 0, html: 0};
+  const files = [];
+  // media/: the intro cinematic (binary MP4 and PNG, own budget checked by build_page.py, tests/page/intro.test.js)
+  (function walk(d) { for (const f of fs.readdirSync(d)) { const p = path.join(d, f); if (fs.statSync(p).isDirectory()) { if (f !== 'img' && f !== 'media') walk(p); } else files.push(p); } })(PAGE);
+  for (const p of files) {
+    if (p.endsWith('.md')) continue;                 // about/SOURCES.md: notes for the maintainers, never copied into the page
+    const txt = fs.readFileSync(p, 'utf8'), f = path.relative(PAGE, p);
+    sizes[p.endsWith('.html') ? 'html' : (p.endsWith('.json') ? 'json' : 'code')] += Buffer.byteLength(txt);
     assert.ok(!/https?:\/\//i.test(txt.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>/, '')), `URL in ${f}`);
-    assert.ok(!/document\.cookie|localStorage|sessionStorage|XMLHttpRequest|\beval\(|new Function/.test(txt), `forbidden API in ${f}`);
+    // consigne 52: one exception, the intro's « seen » flag (intro.js, key sol0.intro.seen, read and written in try/catch)
+    const t2 = f === 'intro.js' ? txt.replace(/root\.localStorage\.(getItem|setItem)\(KEY/g, '') : txt;
+    assert.ok(!/document\.cookie|localStorage|sessionStorage|XMLHttpRequest|\beval\(|new Function/.test(t2), `forbidden API in ${f}`);
     assert.ok(!/<script[^>]+src="(https?:)?\/\//i.test(txt), `third-party script in ${f}`);
   }
-  assert.ok(total <= 200 * 1024, `page is ${total} bytes`);
+  assert.ok(sizes.code <= 150 * 1024 && sizes.json <= 40 * 1024 && sizes.html <= 250 * 1024, JSON.stringify(sizes));
 });
 
 test('REPLAY banner when the sol event says replay; season line computed from the sol event', () => {

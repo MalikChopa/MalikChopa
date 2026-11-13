@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export pages/live/assets.json from the Python sources of the console (palette, font, labels, layout constants).
+"""Export pages/live/assets.json from the Python sources of the console (palette, font, mode labels, layout constants).
 
 The page never carries a hand-copied table: `tests/live/test_assets.py` re-runs `build()` and compares it to the file.
 Usage: export_assets.py [--out pages/live/assets.json] [--check]
@@ -18,31 +18,8 @@ from rover import config  # noqa: E402
 from rover.core import consts, dmath  # noqa: E402
 from rover.render import font, palette  # noqa: E402
 
-# UI strings of the live page (FR + EN). The text drawn inside the console stays English (CLAUDE.md).
-I18N = {
-    "en": {
-        "title": "Sol-0 live", "connecting": "CONNECTING", "live": "LIVE", "learning": "LEARNING", "offline": "OFFLINE",
-        "busy": "SERVER BUSY", "silent": "ENGINE SILENT", "replay": "REPLAY",
-        "age": "data age", "season": "YEAR {y} · DAY {d}/{n} · DAYLIGHT {h} h",
-        "line": "SOL {s} · {hh}:{mm} · {mode} · BATTERY {b}% · {v} cm/s",
-        "offline_note": "Server offline since {t} UTC. Showing the last published sol {n} (recorded, not live).",
-        "busy_note": "The server is busy. Retrying in 9 s.", "next": "NEXT SOL {t} UTC",
-        "night": "NIGHT · SLEEPING · SUNRISE IN {m} MIN",
-        "aria": "Live console of the Sol-0 rover: camera, brain, local map, telemetry.",
-        "legend": "Connections: brightness = |weight x input|, dotted = negative. Nodes are exact.",
-    },
-    "fr": {
-        "title": "Sol-0 en direct", "connecting": "CONNEXION", "live": "EN DIRECT", "learning": "APPRENTISSAGE",
-        "offline": "HORS LIGNE", "busy": "SERVEUR OCCUPÉ", "silent": "MOTEUR SILENCIEUX", "replay": "REDIFFUSION",
-        "age": "âge de la donnée", "season": "ANNÉE {y} · JOUR {d}/{n} · JOUR {h} h",
-        "line": "SOL {s} · {hh}:{mm} · {mode} · BATTERIE {b}% · {v} cm/s",
-        "offline_note": "Serveur hors ligne depuis {t} UTC. Dernier sol publié affiché : {n} (enregistré, pas en direct).",
-        "busy_note": "Le serveur est occupé. Nouvel essai dans 9 s.", "next": "SOL SUIVANT {t} UTC",
-        "night": "NUIT · SOMMEIL · LEVER DU SOLEIL DANS {m} MIN",
-        "aria": "Console en direct du rover Sol-0 : caméra, cerveau, carte locale, télémétrie.",
-        "legend": "Connexions : luminosité = |poids x entrée|, pointillé = négatif. Les nœuds sont exacts.",
-    },
-}
+# The texts of the live page (FR + EN, canvas included since 2026-11-13) are in pages/live/i18n.json, not here: assets.json is only
+# what the Python sources say (palette, font, labels of the engine, layout constants). The README images stay English (engine).
 
 
 def build() -> dict:
@@ -70,7 +47,6 @@ def build() -> dict:
             "scan_max_points": p.get("render.scan_max_points"), "brain_top_l1": p.get("render.brain_top_l1"),
             "thick_frac": p.get("render.thick_frac"),
         },
-        "i18n": I18N,
     }
 
 

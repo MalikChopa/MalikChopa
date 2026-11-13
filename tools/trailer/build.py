@@ -1121,7 +1121,7 @@ def s_fade(fi, n):
 
 
 TITLE = "SOL-0"
-HOOK = "WATCH IT LEARN. LIVE. 4 SOLS A DAY."
+HOOK = "WATCH IT LEARN. LIVE. 96 SOLS A DAY."
 
 
 def s_title(fi, n):

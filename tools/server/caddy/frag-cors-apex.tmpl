@@ -1,0 +1,3 @@
+		# the page served at https://@DOMAIN@ reads the API here (cross-origin); the engine only knows the GitHub Pages origin
+		@from_apex header Origin https://@DOMAIN@
+		header @from_apex Access-Control-Allow-Origin https://@DOMAIN@
