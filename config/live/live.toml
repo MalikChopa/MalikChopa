@@ -1,0 +1,35 @@
+# rover live : reglages du processus (hors params_hash ; config.load() ne lit pas ce sous-dossier). LIVE-DESIGN 7.1.
+slot_s = 900
+tick_ms = [700, 700, 650, 600, 600, 600]
+ticks_per_sol = 1200
+end_window_min_s = 45
+late_start_max_s = 300
+heartbeat_s = 15
+status_every_s = 60
+publish_every_sols = 24
+stream_keep_sols = 96
+outs_keep = 3
+outs_daily_keep = 14
+sse_max = 200
+sse_per_key = 4
+reserved_threads = 20
+header_timeout_s = 10
+sse_max_age_s = 3600
+poll_min_s = 3
+listen = "127.0.0.1:4180"
+publish_timeout_s = 300
+publish_retry_s = [120, 600]
+min_free_bytes = 1073741824
+ring_max_bytes = 16777216
+# Valeurs par installation (/etc/sol0/live.toml) : repo, publish ("off" | "on"), pages_origin, data_dir, stream_dir,
+# token_file, identity_file, token_expires, publish_script.
+repo = ""
+publish = "off"
+pages_origin = ""
+data_dir = "/var/lib/sol0"
+stream_dir = "/var/lib/sol0-stream"
+token_file = "/var/lib/sol0/secret/github-token"
+identity_file = "/etc/sol0/identity"
+token_expires = ""
+publish_script = "/opt/sol0/app/tools/ci/publish.sh"
+git_cmd = "git"

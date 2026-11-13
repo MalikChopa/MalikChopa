@@ -1,0 +1,61 @@
+# PROVISIONAL (LC): durations in hours (LIVE-DESIGN 4.2); minimums, not planned dates. Frozen only after LC's first verdict.
+recal_factor = 0.9
+recal_second = 5
+consolidation_reminder_hours = 168
+no_progress_cells = 2
+no_progress_drive_ticks = 60
+no_progress_sols = 3
+energy_min_cells = 20
+
+ari_min = 0.8
+ari_min_points = 30
+ari_min_named = 2
+
+[[stage]]
+id = 0
+name = "AWAKENING"
+metric = "couples"
+threshold = 200
+min_hours = 6
+target_hours = 12
+
+[[stage]]
+id = 1
+name = "I CAN MOVE"
+metric = "r2_stable"
+threshold = 0.70
+min_hours = 12
+target_hours = 12
+
+[[stage]]
+id = 2
+name = "LEARNING TO DRIVE"
+metric = "battery"
+threshold = 16
+min_hours = 168
+target_hours = 240
+
+[[stage]]
+id = 3
+name = "ENERGY"
+metric = "no_breakdown_streak"
+threshold = 20
+min_hours = 336
+target_hours = 432
+
+[[stage]]
+id = 4
+name = "SAMPLING"
+metric = "lift"
+threshold = 26.0
+window = 150
+min_hours = 336
+target_hours = 432
+
+[[stage]]
+id = 5
+name = "ANALYSIS"
+metric = "ari_stable"
+threshold = 10
+min_hours = 1440
+target_hours = 2160

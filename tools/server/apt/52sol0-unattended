@@ -1,0 +1,9 @@
+// Sol-0: security updates, never an automatic reboot (sol0-reboot.timer decides).
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+Unattended-Upgrade::Automatic-Reboot "false";
+Unattended-Upgrade::Origins-Pattern {
+	"origin=Ubuntu,codename=${distro_codename}-security";
+	// Caddy apt repository: origin name not verified (to check in L4).
+	"origin=cloudsmith/caddy/stable";
+};

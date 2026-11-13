@@ -1,0 +1,14 @@
+# P2 matter, arm and spectrometer (SPEC 6.14.1). Changes `params_hash` only: world.toml stays frozen.
+n_common = 10
+sharpen = 3
+subst_octaves = 2
+deposit_mix = 0.85
+soil_rock_hard = 0.25
+soil_sand_grain = 0.2
+soil_dust_grain = -0.2
+sample_noise = 0.015
+patch = 16
+drill_min_battery = 0.35
+drills_max = 6
+drill_cooldown = 40
+analyze_ticks = 10
