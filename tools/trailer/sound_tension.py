@@ -901,7 +901,7 @@ def build_score():
     place(big, tick(subseed(180), False, 0.7), t_hook, 0.2)
     place(dry, thump(36.71, 0.8, 2.0, 0.25), t_hook, 0.25)
     place(big, ping(subseed(181), 1174.66, 0.9), t_hook, 0.05, 0.2)
-    cue(t_hook, "S18", "l'accroche « WATCH IT LEARN. LIVE. 4 SOLS A DAY. » apparaît",
+    cue(t_hook, "S18", "l'accroche « WATCH IT LEARN. LIVE. 96 SOLS A DAY. » apparaît",
         "un dernier tic (réverbéré) + réplique grave douce + tintement ré6")
 
     # ---- reverbs -----------------------------------------------------------------------------------

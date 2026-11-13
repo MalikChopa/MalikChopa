@@ -28,7 +28,9 @@ function sample() {
   return S;
 }
 
-test('header: the live page says SOL START (S.now is the start of the sol); the parity renderer keeps LAST CONTACT', () => {
+// live-rc13 wording kept for renderLive WITHOUT page options (the rc13 drawing, used by the state-machine tests); page v2 (o.page)
+// shows the real start of the slot (`slot0`) under SOL START, never S.now (DESIGN.md D2, tests/page/v2.test.js)
+test('header: renderLive without page options keeps the rc13 SOL START (S.now); the parity renderer keeps LAST CONTACT', () => {
   const S = sample(), a = new Uint8Array(640 * 360), b = new Uint8Array(640 * 360), c = new Uint8Array(640 * 360);
   Live.renderLive(a, S, null);
   Con.renderConsole(b, S, {scanlines: true, contactLabel: 'SOL START'});
@@ -50,6 +52,10 @@ test('sol_end rows: no [OBJECT OBJECT], renamed rows', () => {
 });
 
 test('offline note does not claim "offline since" the last publication time', () => {
+  // page v2: the texts are in pages/live/i18n.json (one source, DESIGN.md D11); app.js writes `d.off.note`
   const src = fs.readFileSync(path.join(__dirname, '..', '..', 'pages', 'live', 'app.js'), 'utf8');
-  assert.ok(!/offline_note/.test(src) && /Last published sol/.test(src) && /Dernier sol publi/.test(src));
+  const t = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'pages', 'live', 'i18n.json'), 'utf8')).strings['d.off.note'];
+  assert.ok(!/offline_note/.test(src) && /tt\('d\.off\.note'/.test(src));
+  assert.ok(/^Server offline\. Last published sol/.test(t.en) && /^Serveur hors ligne\. Dernier sol publi/.test(t.fr));
+  assert.ok(!/since/i.test(t.en) && !/depuis/i.test(t.fr));
 });

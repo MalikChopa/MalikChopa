@@ -1,0 +1,20 @@
+	# Error answers (SEC-17): same security headers, no Server banner; a 404 shows the page's own 404.html (FR + EN,
+	# console style, built by build_page.py) with the status kept by file_server; any other error is a short text.
+	handle_errors {
+		import sol0sec
+		@errpage file {
+			root /opt/sol0/page
+			try_files /{http.error.status_code}.html
+		}
+		handle @errpage {
+			root * /opt/sol0/page
+			rewrite * /{http.error.status_code}.html
+			header Cache-Control "no-cache"
+			header X-Frame-Options DENY
+			header Content-Security-Policy "@CSP@"
+			file_server
+		}
+		handle {
+			respond "{http.error.status_code} {http.error.status_text}"
+		}
+	}

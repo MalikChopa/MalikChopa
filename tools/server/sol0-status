@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+# sol0-status: read-only report of the live server (SEC-01, SEC-03). Writes nothing, starts nothing, never prints a secret.
+# It is the forced command of the `sol0ops` SSH account (authorized_keys: restrict,command="/usr/local/bin/sol0-status"):
+# any command asked by the client is ignored. Also called by `sol0ctl status`. Messages in French.
+# SOL0_ROOT (tests only): prefix of the files read. Network: only 127.0.0.1 (web) and the local TLS port.
+set -u
+export LC_ALL=C
+ROOT="${SOL0_ROOT:-}"
+DATA="$ROOT/var/lib/sol0"
+PY="$(command -v python3 || true)"
+
+echo "== sol0-status (lecture seule) $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+[ -n "${SSH_ORIGINAL_COMMAND:-}" ] && echo "(commande demandée ignorée : ce compte n'exécute que sol0-status)"
+
+echo "== Services"
+for u in rover-live rover-web caddy; do
+  line="$(systemctl show "$u" -p ActiveState -p SubState -p NRestarts -p ActiveEnterTimestamp -p TasksCurrent -p TasksMax \
+          -p CPUWeight -p CPUQuotaPerSecUSec 2>/dev/null | tr '\n' ' ')"
+  printf '%s : %s\n' "$u" "${line:-inconnu}"
+done
+if [ -e "$ROOT/etc/systemd/system/rover-live.service.d/00-hold-until-golive.conf" ]; then
+  echo "Moteur : RETENU (tiroir 00-hold-until-golive présent)"
+fi
+for f in "$ROOT"/etc/systemd/system.control/rover-live.service.d/*.conf "$ROOT"/etc/systemd/system.control/rover-web.service.d/*.conf \
+         "$ROOT"/etc/systemd/system.control/caddy.service.d/*.conf; do
+  [ -e "$f" ] && echo "Réglage à chaud (set-property) : ${f#"$ROOT"}"
+done
+
+echo "== Publication"
+if [ -n "$PY" ]; then
+  "$PY" -I - "$DATA/live/health.json" "$DATA/live/published.json" "$DATA/repo/.git/config" "$(date -u +%s)" <<'PYEOF'
+import json, re, sys, time
+health_p, pub_p, gitcfg_p, now = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4])
+def load(p):
+    try:
+        with open(p, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return None
+def iso(t):
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(t)))
+def age(t):
+    m = (now - int(t)) // 60
+    return "%d h %02d min" % (m // 60, m % 60) if m >= 60 else "%d min" % m
+h = load(health_p)
+if not isinstance(h, dict):
+    print("health.json : illisible ou absent")
+else:
+    b, last = h.get("publish_blocked_since"), h.get("last_publish_s")
+    print("publish_blocked_since : %s" % ("aucun" if b is None else "%s (depuis %s)" % (iso(b), age(b))))
+    print("last_publish_s : %s" % ("jamais" if last is None else "%s (il y a %s)" % (iso(last), age(last))))
+    if h.get("hold"):
+        print("hold : %s" % str(h.get("hold"))[:80])
+    if h.get("token_days") is not None:
+        print("token_days : %s" % h.get("token_days"))
+p = load(pub_p)
+if isinstance(p, dict):
+    print("dernière publication : sol %s, commit %s, %s" % (p.get("sol"), str(p.get("commit", ""))[:12], p.get("utc")))
+else:
+    print("dernière publication : aucune (published.json absent)")
+try:
+    cfg = open(gitcfg_p, encoding="utf-8").read()
+    m = re.search(r'\[remote "origin"\][^\[]*?url\s*=\s*(\S+)', cfg)
+    url = m.group(1) if m else ""
+    if not url:
+        print("clone de publication : pas d'origine")
+    elif "@" in url:
+        print("clone de publication : ATTENTION identifiants dans l'URL d'origine (à retirer)")
+    else:
+        print("clone de publication : %s" % url)
+except OSError:
+    print("clone de publication : ABSENT (pas de dépôt git dans repo/) : la publication échouera")
+PYEOF
+else
+  echo "python3 absent : détail de publication non lu"
+fi
+
+echo "== Web local"
+for path in /health /now.json; do
+  body="$(curl -s -m 5 -w ' [HTTP %{http_code}]' "http://127.0.0.1:4180$path" 2>/dev/null | head -c 400)"
+  printf '%s : %s\n' "$path" "${body:-sans réponse}"
+done
+
+echo "== Système"
+df -P / 2>/dev/null | awk 'NR==2 {print "disque / : " $5 " utilisé, " int($4/1048576) " Go libres"}'
+if [ -e "$ROOT/var/run/reboot-required" ]; then
+  echo "redémarrage requis : oui ($(tr '\n' ' ' < "$ROOT/var/run/reboot-required.pkgs" 2>/dev/null | head -c 200))"
+else
+  echo "redémarrage requis : non"
+fi
+printf 'release moteur : %s ; page : %s\n' "$(readlink "$ROOT/opt/sol0/app" 2>/dev/null || echo '?')" "$(readlink "$ROOT/opt/sol0/page" 2>/dev/null || echo '?')"
+dom="$(sed -n 's/^live\.\([A-Za-z0-9.-]*\) {$/\1/p' "$ROOT/etc/caddy/Caddyfile" 2>/dev/null | head -n1)"
+if [ -n "$dom" ] && command -v openssl >/dev/null 2>&1 && [ -z "$ROOT" ]; then
+  end="$(timeout 8 openssl s_client -connect 127.0.0.1:443 -servername "live.$dom" </dev/null 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null)"
+  echo "certificat live.$dom : ${end#notAfter=}"
+fi
+exit 0

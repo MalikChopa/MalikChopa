@@ -1,29 +1,87 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-tab="live" data-mode="console">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: {{STATE_ORIGIN}}; connect-src 'self' {{STREAM_ORIGIN}} {{STATE_ORIGIN}}; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' {{STATE_ORIGIN}}; media-src 'self'; connect-src 'self' {{STREAM_ORIGIN}} {{STATE_ORIGIN}}; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="img-src 'self' {{STATE_SRC}}; connect-src 'self' {{STREAM_ORIGIN}} {{STATE_SRC}}">
 <meta name="referrer" content="no-referrer">
-<title>Sol-0 live</title>
+<meta name="color-scheme" content="dark">
+<title>{{a:d.title}}</title>
+<meta name="description" id="mdesc" content="{{a:d.desc}}">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<!--SEO-->
 <link rel="stylesheet" href="live.css">
+<script src="route.js"></script>
 </head>
 <body>
-<main>
-<header><h1>SOL-0</h1><span id="state" data-state="CONNECTING" role="status">CONNECTING</span> <a id="langlink" href="#fr">Français</a></header>
-<canvas id="c" width="640" height="360" role="img" aria-label="Live console of the Sol-0 rover"></canvas>
-<div id="off" hidden><img id="offimg" alt="Last published console animation of Sol-0 (recorded, not live)" width="640" height="360"><p id="offnote"></p></div>
-<p id="silentmsg" role="status" hidden></p>
-<p id="line"></p>
-<p id="night"></p>
+<a class="skip" id="skip" href="#en/live">{{t:n.skip}}</a>
+<header id="top">
+<h1>SOL-0</h1>
+<nav id="tabs" aria-label="{{a:n.nav}}"><a id="tab-live" href="#en/live">{{t:n.tab.live}}</a><a id="tab-about" href="#en/about">{{t:n.tab.about}}</a></nav>
+<span class="tools"><button id="introbtn" type="button" hidden><span aria-hidden="true">&#x25B6;&#xFE0E;</span> <span class="ib-t">{{t:n.intro.watch}}</span></button><a id="langlink" href="#fr/live"><span class="l-en" lang="fr">Français</span><span class="l-fr" lang="en">English</span></a><button id="fs" type="button" hidden>{{t:n.fullscreen}}</button></span>
+</header>
+<div id="bar" data-nosnippet><span id="state" data-state="CONNECTING">{{t:d.state.connecting}}</span><span id="line"></span><span id="age"></span><span id="noimg"></span></div>
+<div id="bar2" data-nosnippet><span id="stagebar"></span><span id="next"></span><span id="alive"></span></div>
+<p id="silentmsg" role="status" data-nosnippet hidden></p>
+<p id="stateann" class="sr" role="status" data-nosnippet></p>
+<main id="main">
+<section id="view-live" aria-labelledby="h-live">
+<h2 id="h-live" class="sr" tabindex="-1">{{t:n.tab.live}}</h2>
+<noscript><div class="noscript">{{tb:n.noscript.lead}}{{tb:n.noscript}}<p><a href="{{REPO_URL}}">GitHub · {{REPO}}</a></p></div></noscript>
+<div id="stage" tabindex="-1">
+<div id="console">
+<canvas id="c" width="640" height="360" role="img" aria-label="{{a:d.canvas}}"></canvas>
+<button id="hit-cam" class="hit hit-cam" type="button" data-panel="cam" aria-label="{{a:n.panel.cam}}"><span class="tip" aria-hidden="true">+</span></button>
+<button id="hit-brain" class="hit hit-brain" type="button" data-panel="brain" aria-label="{{a:n.panel.brain}}"><span class="tip" aria-hidden="true">+</span></button>
+<button id="hit-map" class="hit hit-map" type="button" data-panel="map" aria-label="{{a:n.panel.map}}"><span class="tip" aria-hidden="true">+</span></button>
+<button id="hit-tel" class="hit hit-tel" type="button" data-panel="tel" aria-label="{{a:n.panel.tel}}"><span class="tip" aria-hidden="true">+</span></button>
+<button id="hit-inst" class="hit hit-inst" type="button" data-panel="inst" aria-label="{{a:n.panel.inst}}"><span class="tip" aria-hidden="true">+</span></button>
+</div>
+<div id="panels">
+<button id="pb-cam" class="panel" type="button" data-panel="cam" aria-label="{{a:n.panel.cam}}"><canvas id="pc-cam" width="322" height="202" aria-hidden="true"></canvas></button>
+<button id="pb-brain" class="panel" type="button" data-panel="brain" aria-label="{{a:n.panel.brain}}"><canvas id="pc-brain" width="296" height="200" aria-hidden="true"></canvas></button>
+<div id="g-maptel" class="group"><button id="pb-map" class="panel" type="button" data-panel="map" aria-label="{{a:n.panel.map}}"><canvas id="pc-map" width="122" height="122" aria-hidden="true"></canvas></button><button id="pb-tel" class="panel" type="button" data-panel="tel" aria-label="{{a:n.panel.tel}}"><canvas id="pc-tel" width="248" height="120" aria-hidden="true"></canvas></button></div>
+<button id="pb-inst" class="panel" type="button" data-panel="inst" aria-label="{{a:n.panel.inst}}"><canvas id="pc-inst" width="240" height="120" aria-hidden="true"></canvas></button>
+</div>
+<div id="off" hidden><canvas id="offc" width="640" height="360" role="img" aria-label="{{a:d.offstill}}" hidden></canvas><img id="offimg" alt="{{a:d.offimg}}" width="640" height="360" hidden><p id="offnote"></p><p><button id="offplay" type="button" hidden>{{t:n.offplay}}</button></p></div>
+</div>
+<details id="details"><summary>{{t:n.details}}</summary>
 <p id="season"></p>
-<p id="age"></p>
-<p id="next"></p>
-<p id="legend"></p>
+<p>{{t:d.seasonhelp}}</p>
+<p>{{t:d.slothelp}}</p>
+<p>{{t:d.agehelp}}</p>
+<p id="legend">{{t:d.legend}}</p>
+<p>{{t:n.tip}}</p>
+<p><a id="toabout" href="#en/about">{{t:n.howlink}}</a></p>
+</details>
 <p id="summary" class="sr" aria-live="polite"></p>
+</section>
+<section id="view-about" aria-labelledby="h-about">
+<h2 id="h-about" class="sr" tabindex="-1">{{t:n.tab.about}}</h2>
+<div class="l-fr" lang="fr"><!--ABOUT:fr--></div>
+<div class="l-en" lang="en"><!--ABOUT:en--></div>
+</section>
 </main>
+<dialog id="ov" aria-labelledby="ov-title">
+<div class="ovbar"><h2 id="ov-title"></h2><p id="ov-status"></p><span class="ovbtns"><a id="ov-help" href="#en/about">?</a><button id="ov-prev" type="button" aria-label="{{a:n.prev}}">&lsaquo;</button><button id="ov-next" type="button" aria-label="{{a:n.next}}">&rsaquo;</button><button id="ov-close" type="button">{{t:n.close}}</button></span></div>
+<div id="ov-body"><canvas id="ov-c" width="322" height="202" aria-hidden="true"></canvas></div>
+<p id="ov-hint" hidden>{{t:n.rotate}}</p>
+</dialog>
+<dialog id="intro" aria-labelledby="intro-title" aria-describedby="intro-label">
+<div id="intro-box">
+<h2 id="intro-title" class="sr">{{t:n.intro.title}}</h2>
+<p id="intro-label">{{t:n.intro.label}}</p>
+<video id="intro-v" width="640" height="360" muted playsinline preload="none" aria-labelledby="intro-title"></video>
+<p class="introbtns"><button id="intro-play" type="button" hidden>{{t:n.intro.play}}</button><button id="intro-snd" type="button"><span id="intro-snd-on">{{t:n.intro.soundon}}</span><span id="intro-snd-off" hidden>{{t:n.intro.soundoff}}</span></button><button id="intro-skip" type="button">{{t:n.intro.skip}}</button></p>
+</div>
+</dialog>
 <script src="console.js"></script>
 <script src="live.js"></script>
+<script src="layout.js"></script>
 <script src="app.js"></script>
+<script src="intro.js"></script>
 </body>
 </html>

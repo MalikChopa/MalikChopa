@@ -8,3 +8,17 @@ require('./silent.test.js');
 require('./exact.test.js');
 require('./image.test.js');
 require('./app.test.js');
+// page v2 (live-rc14)
+require('./i18n.test.js');
+require('./v2render.test.js');
+require('./layout.test.js');
+require('./ui.test.js');
+require('./about.test.js');
+// VERIF-rc14 fixes (live-rc15)
+require('./verif14.test.js');
+// live-rc16: local time and « alive for »
+require('./local.test.js');
+// security batch 1 + SEO lot A (consigne 50, secpage)
+require('./secpage.test.js');
+// the intro cinematic on the first visit (consigne 52, intro)
+require('./intro.test.js');

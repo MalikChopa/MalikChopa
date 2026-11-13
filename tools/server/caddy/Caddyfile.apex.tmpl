@@ -1,0 +1,11 @@
+@DOMAIN@ {
+	import sol0page
+	import sol0wellknown
+	import sol0methods
+	import sol0sec
+@@ERRORS@@
+}
+www.@DOMAIN@ {
+	redir https://@DOMAIN@{uri} permanent
+	import sol0sec
+}

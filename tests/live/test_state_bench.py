@@ -440,14 +440,14 @@ def runs(flags, step):
     return best
 
 
-_I18N = json.loads((ROOT / "pages" / "live" / "assets.json").read_text(encoding="utf-8"))["i18n"]
+# page v2 (live-rc14): the badge texts come from pages/live/i18n.json (`d.state.*`), no longer from assets.json `i18n` + EXTRA_LABELS
+_I18N = json.loads((ROOT / "pages" / "live" / "i18n.json").read_text(encoding="utf-8"))["strings"]
 _LABEL_KEY = {"CONNECTING": "connecting", "LIVE": "live", "LEARNING": "learning", "OFFLINE": "offline", "SERVER BUSY": "busy",
-              "REPLAY": "replay", "ENGINE SILENT": "silent"}
-_EXTRA = {"ENGINE HOLD": {"en": "ENGINE ON HOLD", "fr": "MOTEUR EN PAUSE"}, "RESUMING": {"en": "RESUMING", "fr": "REPRISE"}}
+              "REPLAY": "replay", "ENGINE SILENT": "silent", "ENGINE HOLD": "hold", "RESUMING": "resuming"}
 
 
 def label_text(label, lang):
-    return _I18N[lang][_LABEL_KEY[label]] if label in _LABEL_KEY else _EXTRA[label][lang]
+    return _I18N["d.state." + _LABEL_KEY[label]][lang]
 
 
 def check_page(vid, v, oracle, step):

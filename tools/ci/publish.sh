@@ -105,6 +105,10 @@ if [ "$pushed" != 1 ]; then
   exit 4
 fi
 echo "state pushed: $commit"
+# Server contract (publisher.py: « publish.sh writes the pushed commit here »): the next run's lease expects it.
+# Without it every publication after the first is refused (lease on an empty expected value). Actions mode: harmless.
+{ printf '%s\n' "$commit" > "$shafile.tmp.$$" && mv -f "$shafile.tmp.$$" "$shafile"; } 2>/dev/null \
+  || echo "::warning::could not record the pushed state commit in $shafile"
 
 # (3) tags
 if [ -n "$tagsfile" ] && [ -s "$tagsfile" ]; then

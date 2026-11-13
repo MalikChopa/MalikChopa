@@ -3,10 +3,14 @@
 // RC12-verif (live-rc12 audit, brief 45 role FIX4):
 //   I1  a `status` must redraw the canvas: RESUMING on the image, not only in the banner;
 //   I2  between a `sol` line and its first tick, the canvas and the text lines must not stay on the previous sol (image, age, line).
+// Page v2 (live-rc14): app.js draws in page mode (texts in the page language, DESIGN.md §8): the texts looked for on the canvas are
+// the i18n.json ones of the visitor's language, at the page-mode positions (LAST FRAME right-aligned at y 202, D13; the bare view's
+// sol number inside the console header, M11); the status line is `SOL n · hh:mm · activity` (DESIGN.md §5).
 const test = require('node:test');
 const assert = require('node:assert');
-const {Con, assets} = require('./helpers.js');
+const {Con} = require('./helpers.js');
 const {makePage, ageSeconds} = require('./app_vm.js');
+const {tx, findText} = require('./page_helpers.js');
 
 const T = 5_000_000;
 const SRV = '2026-11-13T10:00:00Z';
@@ -27,7 +31,9 @@ function hasText(buf, x, y, s, color) {
   for (let i = 0; i < c.length; i++) if (c[i]) { set++; if (buf[i] === c[i]) same++; }
   return set > 0 && same === set;
 }
-const NO_IMG = [8 + Math.floor((320 - Con.textWidth('NO IMAGE YET')) / 2), 24 + 100 + 9, 'NO IMAGE YET', Con.MARK];
+const NO_IMG = (lang) => [8 + Math.floor((320 - Con.textWidth(tx(lang, 'c.cam.noimage'))) / 2), 24 + 100 + 9, tx(lang, 'c.cam.noimage'), Con.MARK];
+const LAST = (lang, n) => { const s = tx(lang, 'c.pause.lastframe', {n}); return [324 - Con.textWidth(s), 202, s, Con.MARK]; };
+const WAITING = (lang) => tx(lang, 'c.pause.endofsol', {ph: tx(lang, 'c.pause.ph.idle')});
 async function connected(lang, snap, h, t) {
   const p = await makePage({t0: t || T, lang, keepBuffer: true});
   p.open();
@@ -47,15 +53,15 @@ test('app.js I1: a fresh status `episode` after a fresh restart redraws the canv
     p.send({e: 'status', phase: 'idle', h: 'ok', utc: SRV}, tr + 5);
     p.send({e: 'phase', ph: 'idle', next: '2026-11-13T09:45:00Z', utc: SRV}, tr + 6);
     p.advance(tr + 1000);
-    assert.ok(hasText(p.buffer, 160, 6, 'END OF SOL | WAITING', Con.hud(10)));
+    assert.ok(hasText(p.buffer, 160, 6, WAITING(lang), Con.hud(10)));
     const ts = tr + 60_000;
     p.send({e: 'status', phase: 'episode', h: 'ok', utc: SRV}, ts);             // the only line of the catch-up (one a minute)
     p.advance(ts + 500);
     assert.ok(p.lastDraw.t >= ts && p.lastDraw.t <= ts + 500, `last draw at +${p.lastDraw.t - ts} ms`);
     assert.strictEqual(p.lastDraw.title, 'RESUMING');
-    assert.ok(hasText(p.buffer, 160, 6, 'RESUMING', Con.hud(10)) && hasText(p.buffer, 340, 28, 'BRAIN | RESUMING', Con.hud(10)));
-    assert.ok(!hasText(p.buffer, 160, 6, 'END OF SOL | WAITING', Con.hud(10)));
-    assert.ok(hasText(p.buffer, 12, 213, 'LAST FRAME T600', Con.MARK));
+    assert.ok(hasText(p.buffer, 160, 6, tx(lang, 'c.pause.resuming'), Con.hud(10)) && hasText(p.buffer, 340, 28, tx(lang, 'c.pause.brain.resuming'), Con.hud(10)));
+    assert.ok(!hasText(p.buffer, 160, 6, WAITING(lang), Con.hud(10)));
+    assert.ok(hasText(p.buffer, ...LAST(lang, 600)));
     assert.strictEqual(p.el('state').dataset.state, 'RESUMING');
     assert.strictEqual(p.el('state').textContent, lang === 'fr' ? 'REPRISE' : 'RESUMING');
     assert.strictEqual(p.el('silentmsg').hidden, false);
@@ -71,7 +77,7 @@ test('app.js I1: a fresh status `episode` after a fresh restart redraws the canv
     p.send(TICK(701), ts + 30_000);                                             // the first fresh tick ends it, on the image too
     p.advance(ts + 30_500);
     assert.strictEqual(p.lastDraw.title, null);
-    assert.ok(!hasText(p.buffer, 160, 6, 'RESUMING', Con.hud(10)));
+    assert.ok(!hasText(p.buffer, 160, 6, tx(lang, 'c.pause.resuming'), Con.hud(10)));
     p.advance(ts + 31_100);
     assert.strictEqual(p.el('state').dataset.state, 'LIVE');
     assert.deepStrictEqual(p.errors, []);
@@ -95,8 +101,8 @@ test('app.js I2: a late sol start (sol line, then `ff` computed without broadcas
       {e: 'phase', ph: 'idle', next: '2026-11-13T10:15:00Z'}];
     const p = await connected(lang, snap, {engine_silent_s: 30, tick_age_s: 400, cam_age_s: 404, phase_age_s: 30});
     p.advance(T + 1000);
-    assert.ok(hasText(p.buffer, 12, 213, 'LAST FRAME T1192', Con.MARK));
-    assert.ok(hasText(p.buffer, 160, 6, 'END OF SOL | WAITING', Con.hud(10)));
+    assert.ok(hasText(p.buffer, ...LAST(lang, 1192)));
+    assert.ok(hasText(p.buffer, 160, 6, WAITING(lang), Con.hud(10)));
     p.send({e: 'status', phase: 'idle', h: 'ok'}, T + 30_000);
     const ts = T + 31_000;                                                      // the sol line of sol 9, 250 s late
     p.send(SOL(9), ts);
@@ -105,32 +111,35 @@ test('app.js I2: a late sol start (sol line, then `ff` computed without broadcas
     assert.strictEqual(p.lastDraw.sol, 9);
     assert.strictEqual(p.lastDraw.camT, null);
     assert.strictEqual(p.lastDraw.bare, true);
-    assert.ok(hasText(p.buffer, 160, 6, 'SOL 0009', Con.hud(10)));
-    assert.ok(hasText(p.buffer, ...NO_IMG));
-    assert.ok(!hasText(p.buffer, 12, 213, 'LAST FRAME T1192', Con.MARK), 'the image of sol 8 is still drawn under sol 9');
-    assert.ok(!hasText(p.buffer, 160, 6, 'END OF SOL | WAITING', Con.hud(10)));
-    const tpl = assets.i18n[lang].line, noimg = lang === 'fr' ? "pas encore d'image" : 'no image yet';
-    const want = tpl.replace('{s}', 9).replace('{hh}', '--').replace('{mm}', '--').replace('{mode}', '--').replace('{b}', '--').replace('{v}', '--');
+    assert.ok(findText(p.buffer, 'SOL 0009', Con.hud(10), [0, 0, 640, 20]));
+    assert.ok(hasText(p.buffer, ...NO_IMG(lang)));
+    assert.ok(!findText(p.buffer, tx(lang, 'c.pause.lastframe', {n: 1192}), Con.MARK), 'the image of sol 8 is still drawn under sol 9');
+    assert.ok(!hasText(p.buffer, 160, 6, WAITING(lang), Con.hud(10)));
+    const noimg = tx(lang, 'd.noimage');
+    const want = 'SOL 9 · --:-- · --';
     for (let t = ts + 1000; t <= ts + 25_000; t += 250) {                       // the whole window: nothing frozen
       p.advance(t);
       assert.strictEqual(p.el('line').textContent, want);
       assert.ok(p.el('age').writtenAt >= t - 1000, `age text written ${t - p.el('age').writtenAt} ms ago`);
       const a = ageSeconds(p.el('age').textContent);
       assert.ok(a && a.s >= Math.floor((t - ts) / 1000) && a.s <= Math.ceil((t - ts) / 1000) + 1, `${p.el('age').textContent} at +${t - ts}`);
-      assert.ok(p.el('age').textContent.endsWith(' · ' + noimg), p.el('age').textContent);
+      // VERIF-rc14 I1 (live-rc15): the age alone in #age (never shortened by the bar), « no image yet » in #noimg next to it
+      assert.ok(!p.el('age').textContent.includes(noimg), p.el('age').textContent);
+      assert.strictEqual(p.el('noimg').textContent, '· ' + noimg);
       assert.strictEqual(p.el('state').dataset.state, 'LIVE');
     }
     assert.ok(!/null|undefined|NaN/.test(p.el('line').textContent + p.el('age').textContent + p.el('season').textContent));
     p.send(TICK(428), ts + 25_700);                                             // the first broadcast tick (no image: 428 % 8 = 4)
     p.advance(ts + 26_200);
     assert.strictEqual(p.lastDraw.bare, false);
-    assert.ok(hasText(p.buffer, ...NO_IMG));
+    assert.ok(hasText(p.buffer, ...NO_IMG(lang)));
     for (let t = 429; t <= 432; t++) p.send(t === 432 ? CTICK(432) : TICK(t), ts + 25_700 + 600 * (t - 428));
     p.advance(ts + 25_700 + 600 * 4 + 500);
     assert.strictEqual(p.lastDraw.camT, 432);
     p.advance(ts + 25_700 + 600 * 4 + 1500);
-    assert.ok(/^SOL 9 · 08:30 · DRIVE · /.test(p.el('line').textContent), p.el('line').textContent);
+    assert.strictEqual(p.el('line').textContent, 'SOL 9 · 08:30 · ' + tx(lang, 'c.mode.DRIVE'));
     assert.ok(!p.el('age').textContent.includes(noimg));
+    assert.strictEqual(p.el('noimg').textContent, '');
     assert.deepStrictEqual(p.errors, []);
   }
 });
@@ -142,11 +151,12 @@ test('app.js: a visitor arriving during the snapshot never sees the bare view fl
   const q = await connected('en', [SOL()], {engine_silent_s: 1});              // ff in progress: the sol is known, no tick yet
   assert.strictEqual(q.lastDraw && q.lastDraw.bare, true);
   q.advance(T + 1000);
-  assert.ok(hasText(q.buffer, 160, 6, 'SOL 0009', Con.hud(10)) && hasText(q.buffer, ...NO_IMG));
+  assert.ok(findText(q.buffer, 'SOL 0009 | STAGE 0 WAKE', Con.hud(10), [0, 0, 640, 20]) && hasText(q.buffer, ...NO_IMG('en')));
   assert.ok(q.el('line').textContent.startsWith('SOL 9 · --:--'), q.el('line').textContent);
   const r = await connected('en', [], {engine_silent_s: 1});                    // nothing known: nothing drawn, no text line
   r.advance(T + 3000);
-  assert.strictEqual(r.draws.length, 0);
+  assert.strictEqual(r.draws.length, 0);                                        // no console drawn (page v2: the waiting card instead)
+  assert.ok(r.waits.length >= 1 && r.waits.every((w) => w.key !== null));
   assert.strictEqual(r.el('line').textContent, '');
   assert.deepStrictEqual([...p.errors, ...q.errors, ...r.errors], []);
 });

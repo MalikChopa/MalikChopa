@@ -85,8 +85,80 @@ status() {
   if [ -e "$HOLD" ]; then echo "Moteur : RETENU jusqu'à la naissance (sudo sol0ctl birth --at AAAA-MM-JJTHH:MM:SSZ)"; fi
   "$KITDIR/ntp_check.sh" 2>&1 && echo "Horloge : synchronisée" || true
   echo "== Santé"
-  "$(dirname "$(readlink -f "$0")")/healthcheck.sh" || echo "Cause : voir 'sol0ctl logs'. Si 'publish' : sol0ctl token check ; si 'hold' : lire le détail dans $DATA/live/health.json."
+  "$KITDIR/healthcheck.sh" || echo "Cause : voir 'sol0ctl logs'. Si 'publish' : sol0ctl token check ; si 'hold' : lire le détail dans $DATA/live/health.json."
   [ -f "$DATA/live/health.json" ] && cat "$DATA/live/health.json" || true
+  # publication (publish_blocked_since, last publication, clone), limits, system: the read-only report of sol0ops
+  "$KITDIR/sol0-status" | sed -n '/^== Publication/,$p'
+}
+
+# Disk lost (docs/OPERATIONS.md « Disque perdu »): recreate live/birth.json byte for byte from the published birth time,
+# checked against the published seed. Never a new seed; the engine stays HELD (release-hold is a separate step).
+birth_restore() {
+  local utc="" seed="" sum=""
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --utc) utc="${2:-}"; shift ;;
+      --seed) seed="${2:-}"; shift ;;
+      --sha256) sum="${2:-}"; shift ;;
+      *) die "usage: sudo sol0ctl birth-restore --utc AAAA-MM-JJTHH:MM:SSZ --seed GRAINE [--sha256 EMPREINTE]" ;;
+    esac
+    shift
+  done
+  [[ "$utc" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]] || die "Heure de naissance invalide (format AAAA-MM-JJTHH:MM:SSZ, UTC). Rien fait."
+  [[ "$seed" =~ ^[0-9]{1,19}$ ]] || die "Graine invalide (entier publié). Rien fait."
+  [ -z "$sum" ] || [[ "$sum" =~ ^[0-9a-f]{64}$ ]] || die "Empreinte invalide (sha256, 64 caractères hexadécimaux). Rien fait."
+  [ -e "$DATA/live/birth.json" ] && die "birth.json existe déjà : refus (jamais d'écrasement). Rien fait."
+  [ -e "$HOLD" ] || die "Le moteur n'est pas retenu (tiroir absent) : refus, il pourrait naître avant la restauration. Lancer d'abord install.sh. Rien fait."
+  local app="${SOL0_APP:-/opt/sol0/app}" py="${SOL0_PY:-/opt/sol0/venv/bin/python}"
+  local run=(); [ -n "$ROOT" ] || run=(runuser -u sol0 --)
+  [ -d "$DATA/live" ] || { mkdir -p "$DATA/live"; [ -n "$ROOT" ] || chown sol0:sol0 "$DATA/live"; }
+  ${run[@]+"${run[@]}"} "$py" -I -c '
+import hashlib, json, sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1] + "/src")
+from rover.live import birth, disk, schedule
+live, utc, seed, want = Path(sys.argv[2]), sys.argv[3], int(sys.argv[4]), sys.argv[5]
+rec = birth.make_record(schedule.parse_iso(utc))
+if rec["birth_utc"] != utc:
+    sys.exit("birth-restore: heure non canonique")
+if rec["birth_seed"] != seed:
+    sys.exit("birth-restore: la graine recalculée ne correspond pas à la graine publiée : refus, rien écrit")
+data = (json.dumps(rec, sort_keys=True, indent=1, allow_nan=False) + "\n").encode("utf-8")
+if want and hashlib.sha256(data).hexdigest() != want:
+    sys.exit("birth-restore: empreinte différente de celle relevée : refus, rien écrit")
+disk.atomic_write_json(live / "birth.json", rec)
+if (live / "birth.json").read_bytes() != data:
+    sys.exit("birth-restore: contenu écrit inattendu")
+print("birth.json recréé : %s graine %s sha256 %s" % (rec["birth_utc"], rec["birth_seed"], hashlib.sha256(data).hexdigest()))
+' "$app" "$DATA/live" "$utc" "$seed" "$sum" || die "birth.json non recréé : le moteur reste retenu."
+  echo "Moteur toujours RETENU. Étapes suivantes : adopter l'état publié (docs/OPERATIONS.md « Disque perdu »), puis sudo sol0ctl release-hold"
+}
+
+# Releases the hold only when the engine can resume (never restart from sol 0): valid birth record, an adopted output
+# with its state, and the published commit recorded when publication is on.
+release_hold() {
+  [ -e "$HOLD" ] || die "Aucun tiroir de maintien : rien à faire."
+  [ -f "$DATA/live/birth.json" ] || die "birth.json absent : refus (le moteur tirerait une nouvelle graine). Voir sol0ctl birth-restore."
+  local app="${SOL0_APP:-/opt/sol0/app}" py="${SOL0_PY:-/opt/sol0/venv/bin/python}"
+  "$py" -I -c '
+import json, sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1] + "/src")
+from rover.live import birth
+rec = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+if rec.get("birth_seed") != birth.derive_birth_seed(int(rec.get("birth_epoch_s", -1))):
+    sys.exit("release-hold: birth.json incohérent (graine != dérivation) : refus")
+' "$app" "$DATA/live/birth.json" || die "Refus : le moteur reste retenu."
+  local last="" d
+  for d in "$DATA"/outs/sol-[0-9][0-9][0-9][0-9][0-9][0-9]; do [ -d "$d" ] && last="$d"; done
+  [ -n "$last" ] && [ "${last##*/sol-}" != 000000 ] && [ -f "$last/state/MANIFEST.json" ] \
+    || die "Aucun état adopté dans $DATA/outs (sol-NNNNNN avec state/MANIFEST.json, N ≥ 1) : refus, le moteur repartirait du sol 0."
+  if grep -Eq '^publish *= *"on"' "$CONF" 2>/dev/null; then
+    [ -s "$DATA/live/published.sha" ] || die "Publication active mais live/published.sha vide : refus (le bail de publish.sh échouerait). Voir la procédure."
+  fi
+  rm -f "$HOLD"
+  if [ -z "$ROOT" ]; then systemctl daemon-reload; fi
+  echo "Tiroir retiré ($(basename "$last") adopté). Démarrage : sudo systemctl start rover-live ; suivi : sol0ctl status"
 }
 
 case "${1:-}" in
@@ -95,6 +167,8 @@ case "${1:-}" in
     case "${2:-}" in set) token_set ;; check) token_check ;; *) die "usage: sol0ctl token set|check" ;; esac ;;
   status) status ;;
   birth) need_root "$@"; shift; birth "$@" ;;
+  birth-restore) need_root "$@"; shift; birth_restore "$@" ;;
+  release-hold) need_root "$@"; release_hold ;;
   start) need_root "$@"
          if [ -e "$HOLD" ]; then echo "Moteur retenu jusqu'à la naissance (sol0ctl birth --at …) : seul le web est démarré."; systemctl start rover-web
          else systemctl start rover-live rover-web; fi ;;
@@ -104,5 +178,5 @@ case "${1:-}" in
           cd /opt/sol0/app && sudo -u sol0 env PYTHONPATH=src /opt/sol0/venv/bin/python -m rover live verify "$2" ;;
   update|rollback-release|adopt-remote|force-local|restore)
     die "sol0ctl $1 : fourni avec L4/L5 (dépend de la reprise du moteur, voir docs/milestones/L3A-contract.md)" ;;
-  *) die "usage: sol0ctl status|start|stop|logs|token set|check|birth --at ISO|verify SOL" ;;
+  *) die "usage: sol0ctl status|start|stop|logs|token set|check|birth --at ISO|birth-restore --utc ISO --seed N|release-hold|verify SOL" ;;
 esac

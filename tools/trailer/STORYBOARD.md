@@ -33,10 +33,16 @@ lignes de balayage, vignette, grain fixe par plan, palette désert rouille + ble
 | S15 | 29,7 s | 2,2 s | DEHORS | la roue tourne de 14° (avance de 8,5 px d'art), le sable s'accumule devant, des grains tombent des crampons, petite poussière ; puis immobilité | **la première commande atteint la roue** |
 | S16 | 31,9 s | 1,5 s | DEHORS | plan large : le rover en pleine lumière, avancé de 2,6 px d'art (14° de roue), petites traces derrière les roues, poussière qui retombe, voyant allumé, tête toujours baissée | tableau final, calme |
 | S17 | 33,4 s | 1,0 s | noir | fondu au noir | respiration |
-| S18 | 34,4 s | 4,5 s | titre | « SOL-0 » (ambre, fondu par paliers de la rampe HUD), puis « WATCH IT LEARN. LIVE. 4 SOLS A DAY. » (titre à 34,7 s ; accroche visible de 36,0 à 38,9 s, soit 2,9 s) | l'accroche |
+| S18 | 34,4 s | 4,5 s | titre | « SOL-0 » (ambre, fondu par paliers de la rampe HUD), puis « WATCH IT LEARN. LIVE. 96 SOLS A DAY. » (titre à 34,7 s ; accroche visible de 36,0 à 38,9 s, soit 2,9 s) | l'accroche |
 
-Durée totale : **38,9 s**. Texte dessiné (anglais) : `ILLUSTRATION`, `L`, `R`, `SOL-0`, `WATCH IT LEARN. LIVE. 4 SOLS A DAY.`
+Durée totale : **38,9 s**. Texte dessiné (anglais) : `ILLUSTRATION`, `L`, `R`, `SOL-0`, `WATCH IT LEARN. LIVE. 96 SOLS A DAY.`
 Accroches de rechange possibles (non rendues) : « IT STARTS WITH NOTHING. WATCH IT LEARN. », « A PLANET OUTSIDE. A BRAIN INSIDE. ».
+
+**Accroche changée le 2026-11-13 (consigne 52, décision de l'utilisateur à 19:40)** : « 4 SOLS A DAY » était faux depuis le mode direct (96 sols par jour) ; seule la constante `HOOK` de `build.py` change, tout le reste est identique. Mesuré sur `assets/trailer.gif` reconstruit (`build.py --check`, puis `out/cinematique/web/tools/hook_diff.py`) :
+- 1 549 849 octets (avant : 1 549 744), 640 × 360, 315 images GIF, 38 900 ms, 56 couleurs, marquage ILLUSTRATION sur 315/315, aller-retour exact, deux constructions identiques octet pour octet ;
+- seules les 5 images GIF 310-314 (36,0 à 38,9 s, l'accroche visible) diffèrent de l'ancien GIF, et seulement dans le masque des lettres des deux accroches (2 400 pixels, x 105-530, y 196-209) ; les 310 autres images sont identiques octet pour octet (pixels décodés **et** blocs encodés), ainsi que l'en-tête, la palette et les durées ;
+- place : 36 caractères, largeur 430 px à l'échelle 2, x = (640 − 430) // 2 = 105 (marges 105 / 105 ; avant 111 / 111), même règle de centrage, aucun pixel coupé (1 580 pixels de lettres dessinés sur 1 580), dans l'image active ;
+- EF-87 avec `rover.render.photosens` (indices de palette, comme `tests/trailer`) : au plus **1** transition par fenêtre de 1 s, mêmes 8 transitions qu'avant.
 
 ## Pourquoi le film ne divulgue rien
 - Il ne montre que le début : la planète, le rover endormi, le cerveau qui s'éveille, un seul mouvement (la roue tourne de 14°). Ni stade, ni nom de stade, ni module (M0, M1…), ni carte, ni trajet, ni objectif atteint, ni courbe d'apprentissage, ni résultat.
