@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="120" viewBox="0 0 640 120" role="img" aria-label="Sol-0 status: sol 76, stage 2, progress 1 percent" font-family="ui-monospace, Menlo, Consolas, monospace">
+<rect x="0.5" y="0.5" width="639" height="119" fill="#120c0a" stroke="#412d16"/>
+<text x="16" y="32" font-size="22" fill="#ffb347">SOL 76</text>
+<text x="16" y="54" font-size="13" fill="#ffb347">STAGE 2 | LEARNING TO DRIVE</text>
+<rect x="16" y="66" width="300" height="12" fill="#291c10" stroke="#704e22"/>
+<rect x="16" y="66" width="1" height="12" fill="#ffb347"/>
+<text x="336" y="22" font-size="12" fill="#ffb347">ABILITIES | UNLOCKED AT STAGE</text>
+<rect x="336" y="26" width="72" height="30" fill="none" stroke="#704e22"/>
+<path d="M341 36l3 3l6 -7" fill="none" stroke="#ffb347" stroke-width="2"/>
+<text x="354" y="40" font-size="12" fill="#ffb347">STAGE 1</text>
+<text x="342" y="52" font-size="12" fill="#ffb347">move</text>
+<rect x="412" y="26" width="72" height="30" fill="none" stroke="#704e22"/>
+<path d="M417 36A5 5 0 0 1 427 36z" fill="#ffb347"/>
+<text x="430" y="40" font-size="12" fill="#ffb347">STAGE 2</text>
+<text x="418" y="52" font-size="12" fill="#ffb347">drive</text>
+<rect x="488" y="26" width="72" height="30" fill="none" stroke="#704e22"/>
+<circle cx="498" cy="36" r="2" fill="#593e1c"/>
+<text x="506" y="40" font-size="12" fill="#ffb347">STAGE 3</text>
+<text x="494" y="52" font-size="12" fill="#ffb347">energy</text>
+<rect x="564" y="26" width="72" height="30" fill="none" stroke="#704e22"/>
+<circle cx="574" cy="36" r="2" fill="#593e1c"/>
+<text x="582" y="40" font-size="12" fill="#ffb347">STAGE 4</text>
+<text x="570" y="52" font-size="12" fill="#ffb347">sample</text>
+<rect x="336" y="60" width="72" height="30" fill="none" stroke="#704e22"/>
+<circle cx="346" cy="70" r="2" fill="#593e1c"/>
+<text x="354" y="74" font-size="12" fill="#ffb347">STAGE 5</text>
+<text x="342" y="86" font-size="12" fill="#ffb347">analyze</text>
+<rect x="412" y="60" width="72" height="30" fill="none" stroke="#704e22"/>
+<circle cx="422" cy="70" r="2" fill="#593e1c"/>
+<text x="430" y="74" font-size="12" fill="#ffb347">STAGE 6</text>
+<text x="418" y="86" font-size="12" fill="#ffb347">???</text>
+<rect x="488" y="60" width="72" height="30" fill="none" stroke="#704e22"/>
+<circle cx="498" cy="70" r="2" fill="#593e1c"/>
+<text x="506" y="74" font-size="12" fill="#ffb347">STAGE 7</text>
+<text x="494" y="86" font-size="12" fill="#ffb347">???</text>
+<text x="16" y="101" font-size="12" fill="#ffb347">1 % | criterion met: 20/20 test courses (need 16) | 6d 23h left | day 0.0/7.0</text>
+<text x="628" y="114" font-size="12" fill="#ffb347" text-anchor="end">sol start 2026-11-14 07:00 UTC | 96 sols/day</text>
+</svg>
