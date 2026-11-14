@@ -7,3 +7,4 @@ Chaque première fois a un tag Git ; le lien ouvre l'image de la console à cet 
 - **Sol 0024** · Entrée au stade 1 : I CAN MOVE / Entered stage 1: I CAN MOVE · `m-e1-sol0024-first-stage-1`
 - **Sol 0072** · Entrée au stade 2 : LEARNING TO DRIVE / Entered stage 2: LEARNING TO DRIVE · `m-e1-sol0072-first-stage-2`
 - **Sol 0076** · Première cible atteinte / First target reached · `m-e1-sol0076-first-target`
+- **Sol 0094** · Première tempête de poussière / First dust storm · `m-e1-sol0094-first-storm`
