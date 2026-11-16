@@ -9,3 +9,4 @@ Chaque première fois a un tag Git ; le lien ouvre l'image de la console à cet 
 - **Sol 0076** · Première cible atteinte / First target reached · `m-e1-sol0076-first-target`
 - **Sol 0094** · Première tempête de poussière / First dust storm · `m-e1-sol0094-first-storm`
 - **Sol 0219** · Premier ensablement / First time stuck in sand · `m-e1-sol0219-first-stuck`
+- **Sol 0324** · Première panne de batterie / First battery breakdown · `m-e1-sol0324-first-breakdown`
