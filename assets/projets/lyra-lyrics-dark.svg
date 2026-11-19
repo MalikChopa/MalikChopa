@@ -26,4 +26,5 @@
 <text x="22" y="232" font-size="13" class="muted">App macOS : paroles synchronisées toujours au</text>
 <text x="22" y="251" font-size="13" class="muted">premier plan pour Spotify et Apple Music.</text>
 <circle cx="28" cy="300" r="5" fill="#8c8c8c"/><text x="42" y="304" font-size="12.5">Swift</text>
+<text x="380" y="304" font-size="12" class="mono" fill="#ea580c" text-anchor="end">démo en ligne ↗</text>
 </svg>

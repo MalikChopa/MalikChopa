@@ -30,7 +30,7 @@ Tous mes projets sont réunis sur mon site : **[malikchopa.github.io](https://ma
   <picture><source media="(prefers-color-scheme: dark)" srcset="assets/projets/kashmo-dark.svg"><img alt="Kashmo : Plateforme Discord complète : bot, tableau de bord multi-serveur et jeu de carte" src="assets/projets/kashmo-light.svg" width="49%"></picture>
 </p>
 
-<p align="center"><sub><b>À essayer :</b> <a href="https://malikchopa.github.io/lullaby-lake/">lullaby-lake</a> · <a href="https://malikchopa.github.io/prismaze/">prismaze</a> · <a href="https://malikchopa.github.io/gloam/">gloam</a> · <a href="https://MalikChopa.github.io/sumi-niwa/">sumi-niwa</a> · <a href="https://malikchopa.github.io/huezz/">huezz</a></sub></p>
+<p align="center"><sub><b>À essayer :</b> <a href="https://malikchopa.github.io/lullaby-lake/">lullaby-lake</a> · <a href="https://malikchopa.github.io/prismaze/">prismaze</a> · <a href="https://malikchopa.github.io/gloam/">gloam</a> · <a href="https://MalikChopa.github.io/sumi-niwa/">sumi-niwa</a> · <a href="https://malikchopa.github.io/huezz/">huezz</a> · <a href="https://malikchopa.github.io/">diapason</a> · <a href="https://malikchopa.github.io/">lyra-lyrics</a></sub></p>
 <!-- PROJETS:FIN -->
 
 <details>
