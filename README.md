@@ -1,14 +1,18 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg">
-  <img alt="Chopa, développeur full-stack : FiveM, Roblox, agents IA" src="assets/header-light.svg" width="100%">
+  <img alt="Malik Moussaoui (Chopa), développeur full-stack à Toulouse : FiveM, Roblox, agents IA" src="assets/header-light.svg" width="100%">
 </picture>
 
 ## À propos
 
+Je m'appelle **Malik Moussaoui**, alias **Chopa**. Je suis développeur full-stack à Toulouse et étudiant en BUT Informatique. Je crée des jeux qui tournent dans le navigateur (WebGL, WebGPU, Three.js), des scripts FiveM pour serveurs GTA RP, des jeux Roblox, des bots Discord, des apps macOS et des agents IA avec Claude Code.
+
+Tous mes projets sont réunis sur mon site : **[malikchopa.github.io](https://malikchopa.github.io/)**
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/about-dark.svg">
-    <img alt="Chopa : étudiant en BUT Informatique, jeux, bots Discord et agents IA" src="assets/about-light.svg" width="820">
+    <img alt="Malik Moussaoui, alias Chopa : étudiant en BUT Informatique, jeux, bots Discord et agents IA" src="assets/about-light.svg" width="820">
   </picture>
 </p>
 
