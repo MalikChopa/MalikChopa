@@ -12,3 +12,4 @@ Chaque première fois a un tag Git ; le lien ouvre l'image de la console à cet 
 - **Sol 0324** · Première panne de batterie / First battery breakdown · `m-e1-sol0324-first-breakdown`
 - **Sol 0744** · Entrée au stade 3 : ENERGY / Entered stage 3: ENERGY · `m-e1-sol0744-first-stage-3`
 - **Sol 0745** · Première conduite de nuit / First night drive · `m-e1-sol0745-first-night_drive`
+- **Sol 1102** · Première anomalie vue / First anomaly seen · `m-e1-sol1102-first-anomaly`
