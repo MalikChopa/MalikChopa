@@ -648,37 +648,42 @@ def gloam_visual(t, w, h):
     return "".join(out)
 
 
+SAGA_M = 'class="mono"'  # police à chasse fixe des cartes (.mono, styles des cartes)
+
+
+def _saga_lock(x, y, c):
+    return (f'<rect x="{x}" y="{y + 4}" width="9" height="7" rx="1.5" fill="{c}"/>'
+            f'<path d="M{x + 2} {y + 4}v-2a2.5 2.5 0 0 1 5 0v2" stroke="{c}" stroke-width="1.4" fill="none"/>')
+
+
 def saga_visual(t, w, h):
-    """SAGA (dessiné) : à gauche le tableau partagé (branche « saga ») avec ses tâches, à droite trois Claude.
-    Alice et Bob ont pris une tâche, le fichier de Bob est verrouillé, Bob prévient les autres par un message."""
+    """SAGA (dessiné, variante B choisie par Malik le 2026-11-25) : tableau façon kanban (libre, en cours, fait). B : le tableau kanban, colonnes libre / en cours / fait, verrous et noms."""
     ac, tx, mu, bd = t["accent"], t["text"], t["muted"], t["border"]
-    mono = 'font-family="ui-monospace,SFMono-Regular,Menlo,monospace"'
-    out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
-    # Tableau partagé
-    bx, by, bw, bh = 16, 16, 176, 138
-    out.append(f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="8" fill="{t["bg"]}" stroke="{bd}"/>'
-               f'<text x="{bx + 12}" y="{by + 20}" font-size="10.5" fill="{mu}" {mono}>branche saga · tableau</text>'
-               f'<path d="M{bx} {by + 30}H{bx + bw}" stroke="{bd}"/>')
-    rows = [("t1  menu", "alice", "en cours", tx), ("t2  scores", "bob", "verrou", ac), ("t3  tests", "", "libre", mu)]
-    for i, (task, who, state, col) in enumerate(rows):
-        y = by + 52 + i * 30
-        out.append(f'<text x="{bx + 12}" y="{y}" font-size="11" fill="{tx}" {mono}>{task}</text>'
-                   f'<text x="{bx + bw - 12}" y="{y}" font-size="10" text-anchor="end" fill="{col}" {mono}>{(who + " · ") if who else ""}{state}</text>')
-        if state == "verrou":
-            out.append(f'<rect x="{bx + 92}" y="{y - 10}" width="9" height="8" rx="1.5" fill="{ac}"/>'
-                       f'<path d="M{bx + 94} {y - 10}v-2.5a2.5 2.5 0 0 1 5 0V{y - 10}" stroke="{ac}" stroke-width="1.4" fill="none"/>')
-    # Trois Claude, chacun sur sa machine
-    agents = [(258, 40, "alice", tx), (330, 74, "bob", ac), (258, 124, "chloé", mu)]
-    for x, y, name, col in agents:
-        out.append(f'<path d="M{bx + bw} {by + 52 + (0 if name == "alice" else 30 if name == "bob" else 60) - 4}L{x - 15} {y}" stroke="{col if name != "chloé" else bd}" stroke-dasharray="{"0" if name == "bob" else "3 4"}" opacity=".8"/>')
-        out.append(f'<circle cx="{x}" cy="{y}" r="13" fill="{t["bg"]}" stroke="{col}" stroke-width="1.6"/>'
-                   f'<circle cx="{x}" cy="{y}" r="3.6" fill="{col}"/>'
-                   f'<text x="{x}" y="{y + 26}" font-size="9.5" text-anchor="middle" fill="{mu}" {mono}>Claude · {name}</text>')
-    # Message de Bob aux autres
-    out.append(f'<rect x="300" y="12" width="88" height="22" rx="11" fill="none" stroke="{ac}"/>'
-               f'<text x="344" y="27" font-size="10" text-anchor="middle" fill="{ac}" {mono}>« je prends t2 »</text>'
-               f'<path d="M338 34L332 58" stroke="{ac}" stroke-width="1.2"/>')
-    return "".join(out)
+    o = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    cw, gap, x0 = 120, 8, 12
+    cols = [("libre", mu, [("t3 tests", "", False), ("t4 docs", "", False)]),
+            ("en cours", ac, [("t2 scores", "bob", True), ("t5 menu", "alice", True)]),
+            ("fait", tx, [("t1 login", "alice", False)])]
+    for i, (name, col, cards) in enumerate(cols):
+        x = x0 + i * (cw + gap)
+        o.append(f'<text x="{x + 2}" y="22" font-size="10.5" fill="{col}" font-weight="700" {SAGA_M}>{name.upper()}</text>'
+                 f'<path d="M{x} 29H{x + cw}" stroke="{col}" stroke-width="1.6"/>')
+        for k, (task, who, locked) in enumerate(cards):
+            y = 38 + k * 56
+            o.append(f'<rect x="{x}" y="{y}" width="{cw}" height="48" rx="6" fill="{t["bg"]}" stroke="{ac if locked else bd}"/>'
+                     f'<text x="{x + 9}" y="{y + 19}" font-size="11.5" fill="{tx}" {SAGA_M}>{task}</text>')
+            if who:
+                o.append(f'<text x="{x + 9}" y="{y + 37}" font-size="10" fill="{mu}" {SAGA_M}>{who}</text>')
+            if locked:
+                o.append(_saga_lock(x + cw - 20, y + 25, ac))
+            if name == "fait":
+                o.append(f'<path d="M{x + cw - 20} {y + 31}l4 4 7 -9" stroke="{tx}" stroke-width="1.8" fill="none"/>')
+            if name == "libre":
+                o.append(f'<text x="{x + 9}" y="{y + 37}" font-size="10" fill="{mu}" {SAGA_M}>à prendre</text>')
+    # message
+    o.append(f'<text x="{x0 + 2 * (cw + gap) + 2}" y="118" font-size="10" fill="{mu}" {SAGA_M}>branche</text>'
+             f'<text x="{x0 + 2 * (cw + gap) + 2}" y="132" font-size="10.5" font-weight="700" fill="{tx}" {SAGA_M}>saga</text>')
+    return "".join(o)
 
 
 def draw_visual(t, kind, w, h):
