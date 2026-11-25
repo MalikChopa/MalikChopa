@@ -648,8 +648,32 @@ def gloam_visual(t, w, h):
     return "".join(out)
 
 
+def saga_visual(t, w, h):
+    """SAGA (dessiné) : la branche « saga » sert de tableau ; trois Claude y prennent des tâches, l'un tient un verrou
+    (orange), un message passe d'un agent à l'autre."""
+    ac, tx, mu, bd = t["accent"], t["text"], t["muted"], t["border"]
+    out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    by = 44  # la branche saga : une ligne de commits
+    out.append(f'<path d="M24 {by}H{w - 24}" stroke="{bd}" stroke-width="2"/>')
+    for k, x in enumerate(range(40, w - 30, 36)):
+        out.append(f'<circle cx="{x}" cy="{by}" r="{5 if k in (3, 7) else 3.5}" fill="{ac if k == 7 else tx}" opacity="{1 if k in (3, 7) else .55}"/>')
+    out.append(f'<text x="24" y="{by - 14}" font-size="11" fill="{mu}" font-family="monospace">saga · tableau</text>')
+    agents = [(80, "alice"), (200, "bob"), (320, "chloé")]
+    for i, (x, name) in enumerate(agents):
+        y = 122
+        out.append(f'<path d="M{x} {y - 16}L{x if i != 1 else x} {by + 8}" stroke="{ac if i == 1 else bd}" stroke-dasharray="{"0" if i == 1 else "3 5"}"/>')
+        out.append(f'<circle cx="{x}" cy="{y}" r="15" fill="none" stroke="{ac if i == 1 else tx}" stroke-width="1.5"/>'
+                   f'<circle cx="{x}" cy="{y}" r="4" fill="{ac if i == 1 else tx}"/>'
+                   f'<text x="{x}" y="{y + 32}" font-size="10" text-anchor="middle" fill="{mu}" font-family="monospace">{name}</text>')
+    # verrou tenu par bob, message d'alice vers chloé
+    out.append(f'<rect x="214" y="68" width="16" height="13" rx="2" fill="{ac}"/><path d="M217 68v-4a5 5 0 0 1 10 0v4" stroke="{ac}" stroke-width="2" fill="none"/>')
+    out.append(f'<path d="M97 112Q200 86 303 112" stroke="{tx}" stroke-dasharray="2 6" fill="none" opacity=".7"/>'
+               f'<path d="M297 107l7 5-8 3" stroke="{tx}" fill="none" opacity=".7"/>')
+    return "".join(out)
+
+
 def draw_visual(t, kind, w, h):
-    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual, "lullaby": lullaby_visual, "prismaze": prismaze_visual, "gloam": gloam_visual}[kind](t, w, h)
+    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual, "lullaby": lullaby_visual, "prismaze": prismaze_visual, "gloam": gloam_visual, "saga": saga_visual}[kind](t, w, h)
 
 
 def project_card(t, p):

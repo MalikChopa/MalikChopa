@@ -3,7 +3,7 @@
   "a_la_une": [
     "lullaby-lake",
     "prismaze",
-    "gloam",
+    "saga",
     "sumi-niwa",
     "huezz",
     "diapason",
@@ -47,6 +47,10 @@
       "desc": "Jeu d'adresse de nuit : guide un essaim de lucioles à travers les ronces, frôle le danger pour monter ton combo.",
       "visuel": "gloam",
       "demo": "https://malikchopa.github.io/gloam/"
+    },
+    "saga": {
+      "desc": "Skill Claude Code : plusieurs Claude sur un même dépôt git, sans s'écraser (tableau partagé, tâches, verrous, messages).",
+      "visuel": "saga"
     }
   },
   "sans_lien": [
