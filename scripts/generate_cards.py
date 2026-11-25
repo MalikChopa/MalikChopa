@@ -649,26 +649,35 @@ def gloam_visual(t, w, h):
 
 
 def saga_visual(t, w, h):
-    """SAGA (dessiné) : la branche « saga » sert de tableau ; trois Claude y prennent des tâches, l'un tient un verrou
-    (orange), un message passe d'un agent à l'autre."""
+    """SAGA (dessiné) : à gauche le tableau partagé (branche « saga ») avec ses tâches, à droite trois Claude.
+    Alice et Bob ont pris une tâche, le fichier de Bob est verrouillé, Bob prévient les autres par un message."""
     ac, tx, mu, bd = t["accent"], t["text"], t["muted"], t["border"]
+    mono = 'font-family="ui-monospace,SFMono-Regular,Menlo,monospace"'
     out = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
-    by = 44  # la branche saga : une ligne de commits
-    out.append(f'<path d="M24 {by}H{w - 24}" stroke="{bd}" stroke-width="2"/>')
-    for k, x in enumerate(range(40, w - 30, 36)):
-        out.append(f'<circle cx="{x}" cy="{by}" r="{5 if k in (3, 7) else 3.5}" fill="{ac if k == 7 else tx}" opacity="{1 if k in (3, 7) else .55}"/>')
-    out.append(f'<text x="24" y="{by - 14}" font-size="11" fill="{mu}" font-family="monospace">saga · tableau</text>')
-    agents = [(80, "alice"), (200, "bob"), (320, "chloé")]
-    for i, (x, name) in enumerate(agents):
-        y = 122
-        out.append(f'<path d="M{x} {y - 16}L{x if i != 1 else x} {by + 8}" stroke="{ac if i == 1 else bd}" stroke-dasharray="{"0" if i == 1 else "3 5"}"/>')
-        out.append(f'<circle cx="{x}" cy="{y}" r="15" fill="none" stroke="{ac if i == 1 else tx}" stroke-width="1.5"/>'
-                   f'<circle cx="{x}" cy="{y}" r="4" fill="{ac if i == 1 else tx}"/>'
-                   f'<text x="{x}" y="{y + 32}" font-size="10" text-anchor="middle" fill="{mu}" font-family="monospace">{name}</text>')
-    # verrou tenu par bob, message d'alice vers chloé
-    out.append(f'<rect x="214" y="68" width="16" height="13" rx="2" fill="{ac}"/><path d="M217 68v-4a5 5 0 0 1 10 0v4" stroke="{ac}" stroke-width="2" fill="none"/>')
-    out.append(f'<path d="M97 112Q200 86 303 112" stroke="{tx}" stroke-dasharray="2 6" fill="none" opacity=".7"/>'
-               f'<path d="M297 107l7 5-8 3" stroke="{tx}" fill="none" opacity=".7"/>')
+    # Tableau partagé
+    bx, by, bw, bh = 16, 16, 176, 138
+    out.append(f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="8" fill="{t["bg"]}" stroke="{bd}"/>'
+               f'<text x="{bx + 12}" y="{by + 20}" font-size="10.5" fill="{mu}" {mono}>branche saga · tableau</text>'
+               f'<path d="M{bx} {by + 30}H{bx + bw}" stroke="{bd}"/>')
+    rows = [("t1  menu", "alice", "en cours", tx), ("t2  scores", "bob", "verrou", ac), ("t3  tests", "", "libre", mu)]
+    for i, (task, who, state, col) in enumerate(rows):
+        y = by + 52 + i * 30
+        out.append(f'<text x="{bx + 12}" y="{y}" font-size="11" fill="{tx}" {mono}>{task}</text>'
+                   f'<text x="{bx + bw - 12}" y="{y}" font-size="10" text-anchor="end" fill="{col}" {mono}>{(who + " · ") if who else ""}{state}</text>')
+        if state == "verrou":
+            out.append(f'<rect x="{bx + 92}" y="{y - 10}" width="9" height="8" rx="1.5" fill="{ac}"/>'
+                       f'<path d="M{bx + 94} {y - 10}v-2.5a2.5 2.5 0 0 1 5 0V{y - 10}" stroke="{ac}" stroke-width="1.4" fill="none"/>')
+    # Trois Claude, chacun sur sa machine
+    agents = [(258, 40, "alice", tx), (330, 74, "bob", ac), (258, 124, "chloé", mu)]
+    for x, y, name, col in agents:
+        out.append(f'<path d="M{bx + bw} {by + 52 + (0 if name == "alice" else 30 if name == "bob" else 60) - 4}L{x - 15} {y}" stroke="{col if name != "chloé" else bd}" stroke-dasharray="{"0" if name == "bob" else "3 4"}" opacity=".8"/>')
+        out.append(f'<circle cx="{x}" cy="{y}" r="13" fill="{t["bg"]}" stroke="{col}" stroke-width="1.6"/>'
+                   f'<circle cx="{x}" cy="{y}" r="3.6" fill="{col}"/>'
+                   f'<text x="{x}" y="{y + 26}" font-size="9.5" text-anchor="middle" fill="{mu}" {mono}>Claude · {name}</text>')
+    # Message de Bob aux autres
+    out.append(f'<rect x="300" y="12" width="88" height="22" rx="11" fill="none" stroke="{ac}"/>'
+               f'<text x="344" y="27" font-size="10" text-anchor="middle" fill="{ac}" {mono}>« je prends t2 »</text>'
+               f'<path d="M338 34L332 58" stroke="{ac}" stroke-width="1.2"/>')
     return "".join(out)
 
 
