@@ -686,8 +686,31 @@ def saga_visual(t, w, h):
     return "".join(o)
 
 
+def design_visual(t, w, h):
+    """Chopa Design (2026-11-26) : une planche de style, coins carrés : trois carrés de thème (sombre, clair, chaud),
+    un bouton orange, une case cochée et un curseur."""
+    ac, tx, mu, bd = t["accent"], t["text"], t["muted"], t["border"]
+    o = [f'<rect width="{w}" height="{h}" fill="{t["bg2"]}"/>']
+    themes = [("SOMBRE", "#0a0a0a", "#f2f2f2"), ("CLAIR", "#f5f4f0", "#111111"), ("CHAUD", "#f3ebe3", "#0b0807")]
+    for i, (name, bg, fg) in enumerate(themes):
+        x, y = 22 + i * 62, 30
+        o.append(f'<rect x="{x}" y="{y}" width="52" height="52" fill="{bg}" stroke="{bd}"/>'
+                 f'<rect x="{x + 8}" y="{y + 9}" width="24" height="5" fill="{fg}"/><rect x="{x + 8}" y="{y + 19}" width="34" height="3" fill="{fg}" opacity=".55"/>'
+                 f'<rect x="{x + 8}" y="{y + 36}" width="9" height="9" fill="{ac}"/>'
+                 f'<text x="{x}" y="{y + 68}" font-size="9.5" fill="{mu}" {SAGA_M}>{name}</text>')
+    x0 = 230
+    o.append(f'<rect x="{x0}" y="30" width="148" height="34" fill="{ac}"/>'
+             f'<text x="{x0 + 74}" y="51" font-size="11" fill="#0a0a0a" text-anchor="middle" {SAGA_M}>ME CONTACTER</text>')
+    o.append(f'<rect x="{x0}" y="80" width="16" height="16" fill="{ac}"/><path d="M{x0 + 4} {x0 * 0 + 88}l3 3 6 -7" stroke="#0a0a0a" stroke-width="2" fill="none"/>'
+             f'<text x="{x0 + 26}" y="92" font-size="11" fill="{tx}" {SAGA_M}>coins carrés</text>')
+    o.append(f'<path d="M{x0} 124H{x0 + 148}" stroke="{bd}" stroke-width="3"/><path d="M{x0} 124H{x0 + 92}" stroke="{ac}" stroke-width="3"/>'
+             f'<rect x="{x0 + 86}" y="117" width="14" height="14" fill="{tx}"/>')
+    o.append(f'<text x="22" y="148" font-size="10" fill="{mu}" {SAGA_M}>63 pièces · 3 thèmes · 1 orange</text>')
+    return "".join(o)
+
+
 def draw_visual(t, kind, w, h):
-    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual, "lullaby": lullaby_visual, "prismaze": prismaze_visual, "gloam": gloam_visual, "saga": saga_visual}[kind](t, w, h)
+    return {"schema": schema_visual, "lyra": lyra_visual, "kashmo": kashmo_visual, "ia": ia_visual, "huezz": huezz_visual, "sumi": sumi_visual, "lullaby": lullaby_visual, "prismaze": prismaze_visual, "gloam": gloam_visual, "saga": saga_visual, "design": design_visual}[kind](t, w, h)
 
 
 def project_card(t, p):

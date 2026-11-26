@@ -7,7 +7,8 @@
     "sumi-niwa",
     "huezz",
     "diapason",
-    "lyra-lyrics"
+    "lyra-lyrics",
+    "chopa-design"
   ],
   "ordre": [],
   "cacher": [
@@ -51,6 +52,10 @@
     "saga": {
       "desc": "Skill Claude Code : plusieurs Claude sur un même dépôt git, sans s'écraser (tableau partagé, tâches, verrous, messages).",
       "visuel": "saga"
+    },
+    "chopa-design": {
+      "desc": "Mon design system : la bibliothèque de l'identité Chopa (63 pièces, 3 thèmes, un seul orange) et son site de documentation.",
+      "visuel": "design"
     }
   },
   "sans_lien": [
