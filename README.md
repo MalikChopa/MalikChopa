@@ -39,7 +39,7 @@ Tous mes projets sont réunis sur mon site : **[malikchopa.github.io](https://ma
 
 </details>
 
-<p align="center"><sub><b>À essayer :</b> <a href="https://malikchopa.github.io/lullaby-lake/">lullaby-lake</a> · <a href="https://malikchopa.github.io/prismaze/">prismaze</a> · <a href="https://MalikChopa.github.io/sumi-niwa/">sumi-niwa</a> · <a href="https://malikchopa.github.io/huezz/">huezz</a> · <a href="https://malikchopa.github.io/">diapason</a> · <a href="https://malikchopa.github.io/">lyra-lyrics</a> · <a href="https://malikchopa.pages.dev/projets/design/">chopa-design</a></sub></p>
+<p align="center"><sub><b>À essayer :</b> <a href="https://malikchopa.github.io/lullaby-lake/">lullaby-lake</a> · <a href="https://malikchopa.github.io/prismaze/">prismaze</a> · <a href="https://MalikChopa.github.io/sumi-niwa/">sumi-niwa</a> · <a href="https://malikchopa.github.io/huezz/">huezz</a> · <a href="https://malikchopa.github.io/">diapason</a> · <a href="https://malikchopa.github.io/">lyra-lyrics</a></sub></p>
 <!-- PROJETS:FIN -->
 
 <details>

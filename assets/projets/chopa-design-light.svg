@@ -26,5 +26,4 @@
 <text x="22" y="251" font-size="13" class="muted">l&#x27;identité Chopa (63 pièces, 3 thèmes, un seul</text>
 <text x="22" y="270" font-size="13" class="muted">orange) et son site de documentation.</text>
 <circle cx="28" cy="300" r="5" fill="#6b6b6b"/><text x="42" y="304" font-size="12.5">JavaScript</text>
-<text x="380" y="304" font-size="12" class="mono" fill="#c2410c" text-anchor="end">démo en ligne ↗</text>
 </svg>
